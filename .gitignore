@@ -1,0 +1,38 @@
+# === GLOBAL ===
+.DS_Store
+*.log
+.env
+*.swp
+*.swo
+*.bak
+*~
+.vscode/
+.idea/
+
+# === FRONTEND : submit-ease-front (React + Vite) ===
+submit-ease-front/node_modules/
+submit-ease-front/dist/
+submit-ease-front/.vite/
+submit-ease-front/.env
+submit-ease-front/.DS_Store
+submit-ease-front/.cache/
+submit-ease-front/.next/
+submit-ease-front/.turbo/
+
+# === BACKEND : submit-ease-api (Rails API) ===
+submit-ease-api/log/
+submit-ease-api/tmp/
+submit-ease-api/db/*.sqlite3
+submit-ease-api/db/*.sqlite3-journal
+submit-ease-api/.env
+submit-ease-api/.DS_Store
+
+# Rails credentials & secrets
+submit-ease-api/config/master.key
+submit-ease-api/config/credentials.yml.enc
+
+# Rails build artifacts and vendored modules
+submit-ease-api/public/assets/
+submit-ease-api/node_modules/
+submit-ease-api/.bundle/
+submit-ease-api/vendor/

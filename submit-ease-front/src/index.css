@@ -1,0 +1,59 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+html, body, #root {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+
+  /* Couleurs de base */
+  --color-base-100: oklch(98% 0.015 250); /* fond général */
+  --color-base-200: oklch(96% 0.02 250);
+  --color-base-300: oklch(92% 0.03 250);
+  --color-base-content: oklch(18% 0.05 240); /* texte par défaut */
+
+  /* Couleurs principales */
+  --color-primary: oklch(58% 0.28 260); /* bleu profond et confiant */
+  --color-primary-content: oklch(98% 0.01 260); /* texte blanc */
+
+  --color-secondary: oklch(68% 0.23 190); /* bleu-gris moderne */
+  --color-secondary-content: oklch(98% 0.01 190);
+
+  --color-accent: oklch(65% 0.25 140); /* vert moderne */
+  --color-accent-content: oklch(98% 0.01 140);
+
+  --color-neutral: oklch(48% 0.05 240); /* gris pour fonds neutres */
+  --color-neutral-content: oklch(98% 0.01 240);
+
+  /* États */
+  --color-info: oklch(72% 0.18 230); /* bleu clair */
+  --color-success: oklch(64% 0.24 140); /* vert doux */
+  --color-warning: oklch(82% 0.23 80);  /* jaune orangé */
+  --color-error: oklch(62% 0.3 30);     /* rouge classique */
+
+  --color-info-content: oklch(98% 0.01 230);
+  --color-success-content: oklch(98% 0.01 140);
+  --color-warning-content: oklch(20% 0.05 80);
+  --color-error-content: oklch(98% 0.01 30);
+
+  /* Rayon */
+  --radius-selector: 0.75rem;
+  --radius-field: 0.375rem;
+  --radius-box: 0.5rem;
+
+  /* Tailles */
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+
+  /* Bordure */
+  --border: 1px;
+
+  /* Effets */
+  --depth: 1;
+  --noise: 0;
+}
