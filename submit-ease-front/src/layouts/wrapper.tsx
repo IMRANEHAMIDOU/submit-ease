@@ -10,10 +10,10 @@ export default function Wrapper() {
   }
 
   return (
-   <>
+   <div className=''>
     <Navbar />
     <Outlet />
-   </>
+   </div>
   )
   
 }

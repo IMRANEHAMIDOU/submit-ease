@@ -17,13 +17,13 @@ export default function Navbar() {
   }
 
   return (
-    <div className="navbar bg-base-100 shadow-sm px-4">
+    <div className="navbar bg-base-100 shadow-sm px-4 flex">
       <div className="flex-1">
         <Link to="/" className="text-4xl font-bold">Submit<span className='text-accent'>Ease</span> </Link>
       </div>
 
       <div className="hidden md:flex gap-4 items-center">
-        <Link to="/" className="btn btn-ghost">Accueil</Link>
+        <Link to="/" className="btn btn-ghost bg-accent">Accueil</Link>
         <Link to="/concours" className="btn btn-ghost">Concours</Link>
         <Link to="/verifier" className="btn btn-ghost">Vérifier résultat</Link>
          <ThemeSelector />
