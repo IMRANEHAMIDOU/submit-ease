@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  description: MyText
+  has_writen_test: false
+  has_interview: false
+  opening_date: 2025-06-29 15:21:57
+  closing_date: 2025-06-29 15:21:57
+  is_application_limited: false
+  max_application: 1
+  status: 1
+  organization: one
+  publication_link: MyString
+
+two:
+  title: MyString
+  description: MyText
+  has_writen_test: false
+  has_interview: false
+  opening_date: 2025-06-29 15:21:57
+  closing_date: 2025-06-29 15:21:57
+  is_application_limited: false
+  max_application: 1
+  status: 1
+  organization: two
+  publication_link: MyString

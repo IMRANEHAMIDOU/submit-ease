@@ -17,7 +17,7 @@ export default function Navbar() {
   }
 
   return (
-    <div className="navbar bg-base-100 shadow-sm px-4 flex">
+    <div className="fixed z-1000 navbar bg-base-100 shadow-sm px-4 flex">
       <div className="flex-1">
         <Link to="/" className="text-4xl font-bold">Submit<span className='text-accent'>Ease</span> </Link>
       </div>
@@ -29,7 +29,7 @@ export default function Navbar() {
          <ThemeSelector />
       </div>
 
-      <div className="flex-none gap-2">
+      <div className="flex flex-none gap-4">
         {isAuthenticated ? (
           <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
@@ -58,7 +58,7 @@ export default function Navbar() {
         ) : (
           <>
             <Link to="/login" className="btn btn-sm btn-outline">Login</Link>
-            <Link to="/register" className="btn btn-sm btn-primary">S'inscrire</Link>
+            <Link to="/signup" className="btn btn-sm btn-primary">S'inscrire</Link>
           </>
         )}
       </div>
@@ -77,7 +77,7 @@ export default function Navbar() {
           ) : (
             <>
               <li><Link to="/login">Login</Link></li>
-              <li><Link to="/register">S'inscrire</Link></li>
+              <li><Link to="/signup">S'inscrire</Link></li>
             </>
           )}
         </ul>

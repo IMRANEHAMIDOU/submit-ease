@@ -11,7 +11,10 @@ Rails.application.routes.draw do
       registrations: 'users/registrations'
     }
 
-  get "/", to: "welcome#index"
-
-  get '/users-list', to:'welcome#users'
+    #les route pour l'organisation
+    resources :organisations do
+      resources :applications do
+        
+      end
+    end
 end

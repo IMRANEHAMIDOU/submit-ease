@@ -1,0 +1,25 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  registration_number: MyString
+  user: one
+  compaign: one
+  compaign_profile: one
+  organization: one
+  application_status: MyString
+  status_reason: MyText
+  application_score: 1
+  writen_test_average: 9.99
+  interview_test_authorized: false
+
+two:
+  registration_number: MyString
+  user: two
+  compaign: two
+  compaign_profile: two
+  organization: two
+  application_status: MyString
+  status_reason: MyText
+  application_score: 1
+  writen_test_average: 9.99
+  interview_test_authorized: false

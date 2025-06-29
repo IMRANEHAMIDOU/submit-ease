@@ -5,6 +5,8 @@ import SignUp from './components/pages/signup'
 import Home from './components/pages/home'
 import Wrapper from './layouts/wrapper'
 import AuthLayout from './layouts/auth-layout'
+import HomeLayout from './layouts/home-layout'
+import NotFound from './components/pages/not-fount'
 
 function App() {
 
@@ -17,8 +19,14 @@ function App() {
           </Route>
 
           <Route element={<Wrapper />}>
-            <Route path='/' element={<Home />} />
+             
           </Route>
+
+          <Route element={<HomeLayout />}>
+             <Route path='/' element={<Home />} />
+          </Route>
+         
+          <Route path="*" element={<NotFound />} />
        </Routes>
     </BrowserRouter>
   )

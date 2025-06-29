@@ -17,7 +17,8 @@ import {
   Award,
   UserCheck,
   Search,
-  BarChart3
+  BarChart3,
+  User
 } from 'lucide-react'
 
 // === Types ===
@@ -254,12 +255,18 @@ export default function Home() {
                   />
                   <ProcessStep 
                     number="3"
+                    title="Créer un compte candidat"
+                    description="Vous créer facilement votre compte candidat"
+                    icon={User}
+                  />
+                  <ProcessStep 
+                    number="4"
                     title="Soumettez votre dossier"
                     description="Remplissez le formulaire intelligent et attachez tous les documents requis"
                     icon={UserCheck}
                   />
                   <ProcessStep 
-                    number="4"
+                    number="5"
                     title="Suivez votre candidature"
                     description="Vérifiez l'état de votre dossier à tout moment avec votre email ou téléphone"
                     icon={TrendingUp}

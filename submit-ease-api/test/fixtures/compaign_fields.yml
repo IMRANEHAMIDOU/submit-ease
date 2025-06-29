@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  label: MyString
+  description: MyText
+  options: MyText
+  is_required: false
+  organization: one
+
+two:
+  label: MyString
+  description: MyText
+  options: MyText
+  is_required: false
+  organization: two
