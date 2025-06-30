@@ -17,8 +17,8 @@ Rails.application.routes.draw do
   scope "/admin" do
     #get '/admin', to:''
     resources :organizations do
-      resources :compaingns do
-        resources :compaingn_profiles
+      resources :compaigns do
+        resources :compaign_profiles
       end
     end
   end
