@@ -11,10 +11,19 @@ Rails.application.routes.draw do
       registrations: 'users/registrations'
     }
 
-    #les route pour l'organisation
-    resources :organisations do
-      resources :applications do
-        
+  #/admin pour afficher les info du tableau de bord
+  #/admin/organizations : liste des
+  #/admin/organizations/1/applications
+  scope "/admin" do
+    #get '/admin', to:''
+    resources :organizations do
+      resources :compaingns do
+        resources :compaingn_profiles
       end
     end
+  end
+
+  resources :candidate_applications
+  resources :compaign_fields
+
 end

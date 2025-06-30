@@ -5,7 +5,7 @@ import useAuthUser from 'react-auth-kit/hooks/useAuthUser'
 import useSignOut from 'react-auth-kit/hooks/useSignOut'
 import type { UserType } from '../../types/type'
 import ThemeSelector from './theme-selector'
-
+import { publicRoutes } from '../../routes'
 export default function Navbar() {
   const isAuthenticated = useIsAuthenticated()
   const user : UserType|null = useAuthUser()
@@ -23,9 +23,7 @@ export default function Navbar() {
       </div>
 
       <div className="hidden md:flex gap-4 items-center">
-        <Link to="/" className="btn btn-ghost bg-accent">Accueil</Link>
-        <Link to="/concours" className="btn btn-ghost">Concours</Link>
-        <Link to="/verifier" className="btn btn-ghost">Vérifier résultat</Link>
+        {publicRoutes.map( route => <Link to={route.path} className="btn btn-ghost" key={route.name}>{route.name}</Link>  )}
          <ThemeSelector />
       </div>
 

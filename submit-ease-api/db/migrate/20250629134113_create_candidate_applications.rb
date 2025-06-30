@@ -1,6 +1,6 @@
-class CreateApplications < ActiveRecord::Migration[8.0]
+class CreateCandidateApplications < ActiveRecord::Migration[8.0]
   def change
-    create_table :applications do |t|
+    create_table :candidate_applications do |t|
       t.string :registration_number
       t.references :user, null: false, foreign_key: true
       t.references :compaign, null: false, foreign_key: true

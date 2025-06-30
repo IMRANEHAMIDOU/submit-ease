@@ -1,4 +1,4 @@
-class Application < ApplicationRecord
+class CandidateApplication < ApplicationRecord
   belongs_to :user
   belongs_to :compaign
   belongs_to :compaign_profile

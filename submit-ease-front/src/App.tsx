@@ -7,6 +7,7 @@ import Wrapper from './layouts/wrapper'
 import AuthLayout from './layouts/auth-layout'
 import HomeLayout from './layouts/home-layout'
 import NotFound from './components/pages/not-fount'
+import Compaigns from './components/pages/compaigns'
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
 
           <Route element={<HomeLayout />}>
              <Route path='/' element={<Home />} />
+             <Route path='/compaigns' element={<Compaigns />} />
           </Route>
          
           <Route path="*" element={<NotFound />} />

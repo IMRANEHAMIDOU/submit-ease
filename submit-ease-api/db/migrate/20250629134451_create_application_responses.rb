@@ -1,7 +1,7 @@
 class CreateApplicationResponses < ActiveRecord::Migration[8.0]
   def change
     create_table :application_responses do |t|
-      t.references :application, null: false, foreign_key: true
+      t.references :candidate_application, null: false, foreign_key: true
       t.references :compaign_field, null: false, foreign_key: true
       t.text :response_value
 

@@ -12,16 +12,16 @@
 
 ActiveRecord::Schema[8.0].define(version: 2025_06_29_134451) do
   create_table "application_responses", force: :cascade do |t|
-    t.integer "application_id", null: false
+    t.integer "candidate_application_id", null: false
     t.integer "compaign_field_id", null: false
     t.text "response_value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["application_id"], name: "index_application_responses_on_application_id"
+    t.index ["candidate_application_id"], name: "index_application_responses_on_candidate_application_id"
     t.index ["compaign_field_id"], name: "index_application_responses_on_compaign_field_id"
   end
 
-  create_table "applications", force: :cascade do |t|
+  create_table "candidate_applications", force: :cascade do |t|
     t.string "registration_number"
     t.integer "user_id", null: false
     t.integer "compaign_id", null: false
@@ -34,10 +34,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_29_134451) do
     t.boolean "interview_test_authorized", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["compaign_id"], name: "index_applications_on_compaign_id"
-    t.index ["compaign_profile_id"], name: "index_applications_on_compaign_profile_id"
-    t.index ["organization_id"], name: "index_applications_on_organization_id"
-    t.index ["user_id"], name: "index_applications_on_user_id"
+    t.index ["compaign_id"], name: "index_candidate_applications_on_compaign_id"
+    t.index ["compaign_profile_id"], name: "index_candidate_applications_on_compaign_profile_id"
+    t.index ["organization_id"], name: "index_candidate_applications_on_organization_id"
+    t.index ["user_id"], name: "index_candidate_applications_on_user_id"
   end
 
   create_table "compaign_fields", force: :cascade do |t|
@@ -47,10 +47,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_29_134451) do
     t.text "options"
     t.integer "order_number", default: 0
     t.boolean "is_required", default: false
-    t.integer "organization_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["organization_id"], name: "index_compaign_fields_on_organization_id"
   end
 
   create_table "compaign_profiles", force: :cascade do |t|
@@ -118,13 +116,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_29_134451) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "application_responses", "applications"
+  add_foreign_key "application_responses", "candidate_applications"
   add_foreign_key "application_responses", "compaign_fields"
-  add_foreign_key "applications", "compaign_profiles"
-  add_foreign_key "applications", "compaigns"
-  add_foreign_key "applications", "organizations"
-  add_foreign_key "applications", "users"
-  add_foreign_key "compaign_fields", "organizations"
+  add_foreign_key "candidate_applications", "compaign_profiles"
+  add_foreign_key "candidate_applications", "compaigns"
+  add_foreign_key "candidate_applications", "organizations"
+  add_foreign_key "candidate_applications", "users"
   add_foreign_key "compaign_profiles", "compaigns"
   add_foreign_key "compaigns", "organizations"
   add_foreign_key "users", "organizations"

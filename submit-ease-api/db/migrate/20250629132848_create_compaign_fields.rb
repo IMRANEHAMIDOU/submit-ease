@@ -7,7 +7,6 @@ class CreateCompaignFields < ActiveRecord::Migration[8.0]
       t.text :options, null: true
       t.integer :order_number, default: 0
       t.boolean :is_required, default: false
-      t.references :organization, null: false, foreign_key: true
 
       t.timestamps
     end

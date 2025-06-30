@@ -1,0 +1,2 @@
+class CompaingnProfilesController < ApplicationController
+end
