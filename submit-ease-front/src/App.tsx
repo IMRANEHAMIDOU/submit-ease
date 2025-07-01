@@ -10,43 +10,43 @@ import NotFound from './components/pages/not-fount'
 import Campaigns from './components/pages/campaigns'
 import CampaignDetail from './components/pages/campaingn-details'
 import AdminOrganization from './components/pages/admin/admin-organization'
+import SuperAdmin from './components/pages/super-admin/super-admin'
+import OrganizationsList from './components/pages/super-admin/organizations-list'
+import UsersList from './components/pages/super-admin/users-list'
+
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Routes d'authentification */}
+        {/* Auth routes */}
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
         </Route>
 
-        {/* Routes publiques avec HomeLayout */}
+        {/* Public routes */}
         <Route element={<HomeLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/campaigns" element={<Campaigns />} />
           <Route path="/campaigns/:id" element={<CampaignDetail />} />
         </Route>
 
-        {/* Routes administrateur */}
+        {/* Admin and superadmin routes */}
         <Route element={<AdminLayout />}>
           <Route path="/admin" element={<AdminOrganization />} />
-          <Route path='/admin/profile' />
-          <Route path='/admin/campaigns' />
-          <Route path="/admin/campaigns/new" />
-          <Route path="/admin/campaigns/1" />
-          <Route path="/admin/campaigns/1/edit" />
-          <Route path='/admin/campaigns/1/applications' />
-          <Route path='/admin/campaigns/1/applications/1' />
-
+          <Route path="/superadmin" element={<SuperAdmin />} />
+          <Route path="/superadmin/organizations" element={<OrganizationsList />} />
+          <Route path="/superadmin/users" element={<UsersList />} />
+          {/* Tu peux continuer à ajouter tes autres routes */}
         </Route>
 
-        {/* Wrapper pour routes protégées supplémentaires si nécessaire */}
+        {/* Wrapper routes */}
         <Route element={<Wrapper />}>
-          {/* Ajoutez ici d'autres routes protégées */}
+          {/* Protected routes si besoin */}
         </Route>
 
-        {/* Page 404 - doit être en dernier */}
+        {/* 404 */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

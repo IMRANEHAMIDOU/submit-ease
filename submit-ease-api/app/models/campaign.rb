@@ -1,4 +1,4 @@
-class Compaign < ApplicationRecord
+class Campaign < ApplicationRecord
   belongs_to :organization
 
   enum :status, { 

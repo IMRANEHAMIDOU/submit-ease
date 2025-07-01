@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import api from '../../services/api'
 import useSignIn from 'react-auth-kit/hooks/useSignIn'
 import { UserCheck } from 'lucide-react'
+import { apiLogin } from '../../services/auth-api'
 
 export default function Login() {
   const signIn = useSignIn()
@@ -12,41 +12,56 @@ export default function Login() {
   const [error, setError] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError('')
+  e.preventDefault();
+  setLoading(true);
+  setError('');
 
-    try {
-      const res = await api.post('/login', {
-        user: { email, password }
-      })
+  try {
+    const res = await apiLogin({ email, password });
 
-      const token = res.headers.authorization
-      const user = res.data.user
+    const token = res.headers.authorization;
+    const user = res.data.user;
 
-      const success = signIn({
-        auth: {
-          token: token,
-          type: 'Bearer',
-        },
-        userState: {
-          id: user.id,
-          email: user.email,
-        },
-      })
+    const success = signIn({
+      auth: {
+        token,
+        type: 'Bearer',
+      },
+      userState: {
+        id: user!.id,
+        email: user!.email,
+        organizationId: user?.organization_id,
+        role: user?.role
+      },
+    });
 
-      if (success) {
-        window.location.href = '/'
+    if (success) {
+         // Redirection en fonction du rôle
+      if (user!.role === "superadmin") {
+        window.location.href = "/superadmin";
+      } else if (user!.role === "admin") {
+        window.location.href = "/admin";
+      } else if (user!.role === "candidate") {
+        window.location.href = "/candidate";
       } else {
-        setError("Échec de connexion")
+        window.location.href = "/";
       }
-    } catch (err) {
-      console.error(err)
-      setError("Email ou mot de passe incorrect")
-    } finally {
-      setLoading(false)
+    } else {
+      setError("Échec de connexion");
     }
+  } catch (err: unknown) {
+    console.log("Erreur API complète :", err);
+
+    if (err && typeof err === 'object' && 'data' in err) {
+      setError("Email ou mot de passe incorrect");
+    } else {
+      setError("Une erreur inattendue s'est produite");
+    }
+  } finally {
+    setLoading(false);
   }
+}
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 px-4 w-full">

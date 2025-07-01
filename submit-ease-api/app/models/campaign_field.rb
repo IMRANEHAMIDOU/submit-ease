@@ -1,0 +1,3 @@
+class CampaignField < ApplicationRecord
+  
+end

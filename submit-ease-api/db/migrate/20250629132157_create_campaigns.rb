@@ -1,6 +1,6 @@
-class CreateCompaigns < ActiveRecord::Migration[8.0]
+class CreateCampaigns < ActiveRecord::Migration[8.0]
   def change
-    create_table :compaigns do |t|
+    create_table :campaigns do |t|
       t.string :title
       t.text :description
       t.boolean :has_writen_test, default:false

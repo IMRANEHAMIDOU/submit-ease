@@ -1,6 +1,6 @@
-class CreateCompaignFields < ActiveRecord::Migration[8.0]
+class CreateCampaignFields < ActiveRecord::Migration[8.0]
   def change
-    create_table :compaign_fields do |t|
+    create_table :campaign_fields do |t|
       t.string :label
       t.text :description, null: true
       t.text :field_type

@@ -1,4 +1,3 @@
-
 import { 
   Home, 
   Trophy, 
@@ -11,94 +10,108 @@ import {
   Edit, 
   FileText, 
   Eye,
-  Settings,
-  type LucideIcon
-} from 'lucide-react';
+  Users,
+  type LucideIcon,
+} from 'lucide-react'
 
 export type RouteType = {
-  path: string;
-  name: string;
-  icon: LucideIcon;
+  path: string
+  name: string
+  icon: LucideIcon // tu peux aussi garder LucideIcon si tu veux taper strict
 }
 
+// 🟢 Routes publiques
 export const publicRoutes: RouteType[] = [
   {
     path: '/',
     name: 'Accueil',
-    icon: Home
+    icon: Home,
   },
   {
     path: '/campaigns',
     name: 'Concours',
-    icon: Trophy
+    icon: Trophy,
   },
   {
     path: '/profile',
     name: 'Profil',
-    icon: User
+    icon: User,
   },
   {
     path: '/candidate/1',
     name: 'Espace candidat',
-    icon: UserCheck
+    icon: UserCheck,
   },
   {
     path: '/organizations/1',
     name: 'Espace organisation',
-    icon: Building2
-  }
-];
+    icon: Building2,
+  },
+]
 
+// 🟠 Routes administrateur
 export const adminRoutes: RouteType[] = [
   {
     path: '/admin',
     name: 'Tableau de bord',
-    icon: LayoutDashboard
+    icon: LayoutDashboard,
   },
   {
     path: '/admin/campaigns',
     name: 'Tous les concours',
-    icon: List
+    icon: List,
   },
   {
     path: '/admin/campaigns/new',
     name: 'Nouveau concours',
-    icon: Plus
+    icon: Plus,
   },
   {
     path: '/admin/campaigns/1/edit',
     name: 'Modifier concours',
-    icon: Edit
+    icon: Edit,
   },
   {
     path: '/admin/campaigns/1/applications',
     name: 'Liste des candidatures',
-    icon: FileText
+    icon: FileText,
   },
   {
     path: '/admin/campaigns/1/applications/1',
     name: 'Détails candidature',
-    icon: Eye
-  }
-];
+    icon: Eye,
+  },
+]
 
+// 🟡 Routes candidat
 export const candidateRoutes: RouteType[] = [
   {
     path: '/campaigns',
     name: 'Concours',
-    icon: Trophy
+    icon: Trophy,
   },
   {
     path: '/profile',
     name: 'Profil',
-    icon: User
-  }
-];
+    icon: User,
+  },
+]
 
+// 🔴 Routes superadmin
 export const superAdminRoutes: RouteType[] = [
   {
-    path: '/administration',
-    name: 'Administration',
-    icon: Settings
-  }
-];
+    path: '/superadmin',
+    name: 'Tableau de bord',
+    icon: LayoutDashboard,
+  },
+  {
+    path: '/superadmin/organizations',
+    name: 'Organisations',
+    icon: Building2,
+  },
+  {
+    path: '/superadmin/users',
+    name: 'Utilisateurs',
+    icon: Users,
+  },
+]

@@ -7,8 +7,9 @@ export type UserType = {
   birth_date: string | null
   phone: string | null
   avatar: string | null
-  role: number 
+  role: string 
   organization_id: number
+  organization? : OrganizationType
 }
 export type CompagnFieldType = {
   id: number

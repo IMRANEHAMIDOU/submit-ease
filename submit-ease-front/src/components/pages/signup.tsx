@@ -9,6 +9,7 @@ import {
   MapPin,
   Phone,
 } from 'lucide-react';
+import { apiSignup, type SignupData } from '../../services/auth-api';
 
 export default function SignUp() {
   const [userType, setUserType] = useState<'candidat' | 'organisation'>('candidat');
@@ -18,7 +19,7 @@ export default function SignUp() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // Organisation fields
+
   const [nom, setNom] = useState('');
   const [description, setDescription] = useState('');
   const [logo, setLogo] = useState<File | null>(null);
@@ -27,55 +28,103 @@ export default function SignUp() {
   const [adresse, setAdresse] = useState('');
   const [siteWeb, setSiteWeb] = useState('');
 
+
+
   const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setLogo(e.target.files[0]);
     }
   };
 
+  const validateForm = (): boolean => {
+    if (!email || !password || !passwordConfirmation) {
+      setError('Veuillez remplir tous les champs obligatoires');
+      return false;
+    }
+
+    if (password !== passwordConfirmation) {
+      setError('Les mots de passe ne correspondent pas');
+      return false;
+    }
+
+    if (password.length < 6) {
+      setError('Le mot de passe doit contenir au moins 6 caractères');
+      return false;
+    }
+
+    if (userType === 'organisation') {
+      if (!nom || !description || !domaine || !contact || !adresse) {
+        setError('Veuillez remplir tous les champs obligatoires de l\'organisation');
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  /*const resetForm = () => {
+    setEmail('');
+    setPassword('');
+    setPasswordConfirmation('');
+    setNom('');
+    setDescription('');
+    setDomaine('');
+    setContact('');
+    setAdresse('');
+    setSiteWeb('');
+    setLogo(null);
+    setError('');
+  };*/
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
+
     setLoading(true);
     setError('');
 
     try {
-      console.log('Form data:', {
-        userType,
-        email,
-        password,
-        ...(userType === 'organisation' && {
-          nom,
-          description,
-          domaine,
-          contact,
-          adresse,
-          siteWeb,
-          logo: logo?.name,
-        }),
-      });
+      const signupData: SignupData = userType === 'candidat' 
+        ? {
+            userType: 'candidat',
+            email,
+            password,
+            passwordConfirmation,
+          }
+        : {
+            userType: 'organisation',
+            email,
+            password,
+            passwordConfirmation,
+            nom,
+            description,
+            domaine,
+            contact,
+            adresse,
+            siteWeb,
+            logo: logo || undefined,
+          };
 
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      const response = await apiSignup(signupData);
 
-      if (userType === 'organisation') {
-        alert('Inscription réussie ! Votre compte sera validé sous 24-48h.');
+      if (response?.data) {
+        if (userType === 'organisation') {
+          alert('Inscription réussie ! Votre compte sera validé sous 24-48h.');
+        } else {
+          alert('Inscription réussie ! Bienvenue sur SubmitEase.');
+        }
+        window.location.href = "/login"
       } else {
-        alert('Inscription réussie ! Bienvenue sur SubmitEase.');
+        setError('Erreur lors de l\'inscription');
       }
-
-      // Reset
-      setEmail('');
-      setPassword('');
-      setPasswordConfirmation('');
-      setNom('');
-      setDescription('');
-      setDomaine('');
-      setContact('');
-      setAdresse('');
-      setSiteWeb('');
-      setLogo(null);
-    } catch (err) {
-      console.error(err);
-      setError("Erreur d'inscription : vérifiez vos informations");
+    } catch (err: unknown) {
+      if(err instanceof Error){
+        console.error('Erreur d\'inscription:', err);
+        setError(err.message || 'Une erreur inattendue s\'est produite');
+      }
     } finally {
       setLoading(false);
     }
@@ -107,7 +156,10 @@ export default function SignUp() {
           <button
             type="button"
             className={`tab tab-lg ${userType === 'candidat' ? 'tab-active' : ''}`}
-            onClick={() => setUserType('candidat')}
+            onClick={() => {
+              setUserType('candidat');
+              setError('');
+            }}
           >
             <User className="w-5 h-5 mr-2" />
             Candidat
@@ -115,7 +167,10 @@ export default function SignUp() {
           <button
             type="button"
             className={`tab tab-lg ${userType === 'organisation' ? 'tab-active' : ''}`}
-            onClick={() => setUserType('organisation')}
+            onClick={() => {
+              setUserType('organisation');
+              setError('');
+            }}
           >
             <Building2 className="w-5 h-5 mr-2" />
             Organisation

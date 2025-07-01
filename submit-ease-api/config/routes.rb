@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   #/admin/organizations : liste des
   #/admin/organizations/1/applications
   scope "/admin" do
-    #get '/admin', to:''
+    resources :users
     resources :organizations do
       resources :compaingns do
         resources :compaingn_profiles
@@ -25,5 +25,4 @@ Rails.application.routes.draw do
 
   resources :candidate_applications
   resources :compaign_fields
-
 end

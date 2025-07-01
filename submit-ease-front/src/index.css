@@ -1,13 +1,15 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-html, body , #root{
+html,
+body,
+#root {
   padding: 0;
   margin: 0;
   height: 100%;
   box-sizing: border-box;
 }
-#root{
+#root {
   width: 100%;
 }
 
@@ -37,8 +39,8 @@ html, body , #root{
   /* États */
   --color-info: oklch(72% 0.18 230); /* bleu clair */
   --color-success: oklch(64% 0.24 140); /* vert doux */
-  --color-warning: oklch(82% 0.23 80);  /* jaune orangé */
-  --color-error: oklch(62% 0.3 30);     /* rouge classique */
+  --color-warning: oklch(82% 0.23 80); /* jaune orangé */
+  --color-error: oklch(62% 0.3 30); /* rouge classique */
 
   --color-info-content: oklch(98% 0.01 230);
   --color-success-content: oklch(98% 0.01 140);
@@ -60,4 +62,8 @@ html, body , #root{
   /* Effets */
   --depth: 1;
   --noise: 0;
+}
+
+.toast {
+  z-index: 9999;
 }
