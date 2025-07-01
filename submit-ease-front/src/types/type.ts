@@ -1,4 +1,61 @@
 export type UserType = {
-    id: string,
-    email: string
+  id: number
+  email: string
+  first_name: string | null
+  last_name: string | null
+  gender: number  
+  birth_date: string | null
+  phone: string | null
+  avatar: string | null
+  role: number 
+  organization_id: number
+}
+export type CompagnFieldType = {
+  id: number
+  label: string
+  description: string
+  field_type: string
+  options: string
+  is_required: boolean
+}
+
+export type CompagnProfileType = {
+  id: number
+  name: string
+  description: string
+  positions_available: number
+}
+
+export type CampaignType = {
+  id: number
+  title: string
+  description: string
+  has_writen_test: boolean
+  has_interview: boolean
+  opening_date: string
+  closing_date: string
+  is_application_limited: boolean
+  max_application: number
+  status: number
+  organization_id: number
+  publication_link: string
+  profiles: CompagnProfileType[]
+  fields: CompagnFieldType[]
+}
+
+
+export type OrganizationType = {
+  id: number
+  name: string
+  description: string
+  logo: string
+  domain: string
+  contact_person: string
+  email: string
+  country: string
+  city: string
+  verified: boolean
+  is_active: boolean
+  address: string
+  website: string
 }

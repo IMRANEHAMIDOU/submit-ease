@@ -368,7 +368,7 @@ export default function Home() {
                 <GraduationCap className="w-12 h-12 text-blue-500 mb-4" />
                 <h3 className="card-title text-xl mb-2">Écoles & Universités</h3>
                 <p className="text-base-content/70">
-                  Admissions, concours d'entrée, sélection de bourses
+                  Admissions, concours d'entrée
                 </p>
               </div>
             </div>

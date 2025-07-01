@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState } from 'react';
 import {
   UserPlus,
   Building2,
@@ -8,35 +8,35 @@ import {
   Mail,
   MapPin,
   Phone,
-} from 'lucide-react'
+} from 'lucide-react';
 
 export default function SignUp() {
-  const [userType, setUserType] = useState<'candidat' | 'organisation'>('candidat')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [passwordConfirmation, setPasswordConfirmation] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
+  const [userType, setUserType] = useState<'candidat' | 'organisation'>('candidat');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   // Organisation fields
-  const [nom, setNom] = useState('')
-  const [description, setDescription] = useState('')
-  const [logo, setLogo] = useState<File | null>(null)
-  const [domaine, setDomaine] = useState('')
-  const [contact, setContact] = useState('')
-  const [adresse, setAdresse] = useState('')
-  const [siteWeb, setSiteWeb] = useState('')
+  const [nom, setNom] = useState('');
+  const [description, setDescription] = useState('');
+  const [logo, setLogo] = useState<File | null>(null);
+  const [domaine, setDomaine] = useState('');
+  const [contact, setContact] = useState('');
+  const [adresse, setAdresse] = useState('');
+  const [siteWeb, setSiteWeb] = useState('');
 
   const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setLogo(e.target.files[0])
+      setLogo(e.target.files[0]);
     }
-  }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError('')
+    e.preventDefault();
+    setLoading(true);
+    setError('');
 
     try {
       console.log('Form data:', {
@@ -52,37 +52,37 @@ export default function SignUp() {
           siteWeb,
           logo: logo?.name,
         }),
-      })
+      });
 
-      await new Promise(resolve => setTimeout(resolve, 2000))
+      await new Promise(resolve => setTimeout(resolve, 2000));
 
       if (userType === 'organisation') {
-        alert('Inscription réussie ! Votre compte sera validé sous 24-48h.')
+        alert('Inscription réussie ! Votre compte sera validé sous 24-48h.');
       } else {
-        alert('Inscription réussie ! Bienvenue sur SubmitEase.')
+        alert('Inscription réussie ! Bienvenue sur SubmitEase.');
       }
 
       // Reset
-      setEmail('')
-      setPassword('')
-      setPasswordConfirmation('')
-      setNom('')
-      setDescription('')
-      setDomaine('')
-      setContact('')
-      setAdresse('')
-      setSiteWeb('')
-      setLogo(null)
+      setEmail('');
+      setPassword('');
+      setPasswordConfirmation('');
+      setNom('');
+      setDescription('');
+      setDomaine('');
+      setContact('');
+      setAdresse('');
+      setSiteWeb('');
+      setLogo(null);
     } catch (err) {
-      console.error(err)
-      setError("Erreur d'inscription : vérifiez vos informations")
+      console.error(err);
+      setError("Erreur d'inscription : vérifiez vos informations");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
-    <div className="flex justify-center px-4 py-16 bg-gradient-to-br from-sky-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 transition-colors w-full ">
+    <div className="flex justify-center px-4 py-16 bg-gradient-to-br from-sky-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 transition-colors w-full">
       <div className="w-full max-w-2xl bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-8">
         <div className="flex justify-center mb-6">
           <div className="w-20 h-20 rounded-full bg-accent/10 flex items-center justify-center">
@@ -133,7 +133,7 @@ export default function SignUp() {
             <input
               type="email"
               placeholder="votre@email.com"
-              className="input input-bordered w-full"
+              className="input input-bordered w-full dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -148,7 +148,7 @@ export default function SignUp() {
               <input
                 type="password"
                 placeholder="••••••••"
-                className="input input-bordered w-full"
+                className="input input-bordered w-full dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -162,7 +162,7 @@ export default function SignUp() {
               <input
                 type="password"
                 placeholder="••••••••"
-                className="input input-bordered w-full"
+                className="input input-bordered w-full dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600"
                 value={passwordConfirmation}
                 onChange={(e) => setPasswordConfirmation(e.target.value)}
                 required
@@ -186,7 +186,7 @@ export default function SignUp() {
                 <input
                   type="text"
                   placeholder="Ex: ONG SubmitEase..."
-                  className="input input-bordered w-full"
+                  className="input input-bordered w-full dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600"
                   value={nom}
                   onChange={(e) => setNom(e.target.value)}
                   required
@@ -199,7 +199,7 @@ export default function SignUp() {
                 </label>
                 <textarea
                   placeholder="Décrivez votre organisation..."
-                  className="textarea textarea-bordered h-24 w-full"
+                  className="textarea textarea-bordered h-24 w-full dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   required
@@ -212,7 +212,7 @@ export default function SignUp() {
                     <span className="label-text">Domaine d'activité *</span>
                   </label>
                   <select
-                    className="select select-bordered w-full"
+                    className="select select-bordered w-full dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600"
                     value={domaine}
                     onChange={(e) => setDomaine(e.target.value)}
                     required
@@ -240,7 +240,7 @@ export default function SignUp() {
                   <input
                     type="tel"
                     placeholder="+227 XX XX XX XX"
-                    className="input input-bordered w-full"
+                    className="input input-bordered w-full dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600"
                     value={contact}
                     onChange={(e) => setContact(e.target.value)}
                     required
@@ -258,7 +258,7 @@ export default function SignUp() {
                 <input
                   type="text"
                   placeholder="Adresse complète"
-                  className="input input-bordered w-full"
+                  className="input input-bordered w-full dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600"
                   value={adresse}
                   onChange={(e) => setAdresse(e.target.value)}
                   required
@@ -276,7 +276,7 @@ export default function SignUp() {
                   <input
                     type="url"
                     placeholder="https://votre-site.com"
-                    className="input input-bordered w-full"
+                    className="input input-bordered w-full dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600"
                     value={siteWeb}
                     onChange={(e) => setSiteWeb(e.target.value)}
                   />
@@ -291,7 +291,7 @@ export default function SignUp() {
                   <input
                     type="file"
                     accept="image/*"
-                    className="file-input file-input-bordered w-full"
+                    className="file-input file-input-bordered w-full dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600"
                     onChange={handleLogoChange}
                   />
                 </div>
@@ -305,7 +305,7 @@ export default function SignUp() {
 
           <button
             type="submit"
-            className="btn btn-accent w-full btn-lg mt-6"
+            className="btn btn-accent w-full btn-lg mt-6 dark:bg-accent dark:text-accent-content hover:dark:bg-accent-focus"
             disabled={loading}
           >
             {loading ? (
@@ -343,5 +343,5 @@ export default function SignUp() {
         </p>
       </div>
     </div>
-  )
+  );
 }

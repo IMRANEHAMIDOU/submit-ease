@@ -16,6 +16,10 @@ export default function Navbar() {
     window.location.href = '/login'
   }
 
+  const isActiveRoute = (path: string) => {
+    return location.pathname === path
+  }
+
   return (
     <div className="fixed z-1000 navbar bg-base-100 shadow-sm px-4 flex">
       <div className="flex-1">
@@ -23,7 +27,22 @@ export default function Navbar() {
       </div>
 
       <div className="hidden md:flex gap-4 items-center">
-        {publicRoutes.map( route => <Link to={route.path} className="btn btn-ghost" key={route.name}>{route.name}</Link>  )}
+         <div className="hidden md:flex items-center space-x-8">
+            {publicRoutes.map((route) => (
+              <Link
+                key={route.path}
+                to={route.path}
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  isActiveRoute(route.path)
+                    ? 'text-accent bg-accent/10'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
+                }`}
+              >
+                {route.name}
+              </Link>
+            ))}
+          </div>
+
          <ThemeSelector />
       </div>
 

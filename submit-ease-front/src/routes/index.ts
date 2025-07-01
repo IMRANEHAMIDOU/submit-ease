@@ -1,74 +1,104 @@
-type routeType = {
-    path:string,
-    name:string,
+
+import { 
+  Home, 
+  Trophy, 
+  User, 
+  UserCheck, 
+  Building2, 
+  LayoutDashboard, 
+  List, 
+  Plus, 
+  Edit, 
+  FileText, 
+  Eye,
+  Settings,
+  type LucideIcon
+} from 'lucide-react';
+
+export type RouteType = {
+  path: string;
+  name: string;
+  icon: LucideIcon;
 }
-export const publicRoutes : routeType[] = [
-    {
-        path: '/',
-        name: 'Acceuil',
-    },
-     {
-        path: '/compaigns',
-        name: 'Concours',
-    },
-    {
-        path: '/profile',
-        name: 'Profile'
-    },
-    {
-        path: '/candidate/1',
-        name: 'Espace candidat'
-    },
-    
-      {
-        path: '/organizations/1',
-        name: 'Espace organisation'
-    }
 
-]
+export const publicRoutes: RouteType[] = [
+  {
+    path: '/',
+    name: 'Accueil',
+    icon: Home
+  },
+  {
+    path: '/campaigns',
+    name: 'Concours',
+    icon: Trophy
+  },
+  {
+    path: '/profile',
+    name: 'Profil',
+    icon: User
+  },
+  {
+    path: '/candidate/1',
+    name: 'Espace candidat',
+    icon: UserCheck
+  },
+  {
+    path: '/organizations/1',
+    name: 'Espace organisation',
+    icon: Building2
+  }
+];
 
-export const adminRoutes :  routeType[] = [
-    {
-        path: '/admin',
-        name: 'Tableau de bord'
-    },
-     {
-        path: '/admin/compaigns',
-        name: 'Tout les concours'
-    },
-     {
-        path: '/admin/compaingns/new',
-        name: 'Nouvel concours'
-    },
-     {
-        path: '/admin/compaingns/1/edit',
-        name: 'Modifier concours'
-    },
-     {
-        path: '/admin/compaingns/1/applications',
-        name: 'Liste des candidature'
-    },
-     {
-        path: '/admin/compaingns/1/applications/1',
-        name: 'Details candidature'
-    }
+export const adminRoutes: RouteType[] = [
+  {
+    path: '/admin',
+    name: 'Tableau de bord',
+    icon: LayoutDashboard
+  },
+  {
+    path: '/admin/campaigns',
+    name: 'Tous les concours',
+    icon: List
+  },
+  {
+    path: '/admin/campaigns/new',
+    name: 'Nouveau concours',
+    icon: Plus
+  },
+  {
+    path: '/admin/campaigns/1/edit',
+    name: 'Modifier concours',
+    icon: Edit
+  },
+  {
+    path: '/admin/campaigns/1/applications',
+    name: 'Liste des candidatures',
+    icon: FileText
+  },
+  {
+    path: '/admin/campaigns/1/applications/1',
+    name: 'Détails candidature',
+    icon: Eye
+  }
+];
 
-]
+export const candidateRoutes: RouteType[] = [
+  {
+    path: '/campaigns',
+    name: 'Concours',
+    icon: Trophy
+  },
+  {
+    path: '/profile',
+    name: 'Profil',
+    icon: User
+  }
+];
 
-export const candiateRoutes : routeType[] = [
-    {
-        path: '/compains',
-        name: 'Concours'
-    },
-    {
-        path: '/profile',
-        name: 'Profile'
-    },
-]
-
-export const superAdminRoutes : routeType[] = [
-    {
-        path: '/administration',
-        name: 'Administration'
-    }
-]
+export const superAdminRoutes: RouteType[] = [
+  {
+    path: '/administration',
+    name: 'Administration',
+    icon: Settings
+  }
+];

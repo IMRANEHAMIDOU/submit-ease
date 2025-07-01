@@ -1,2 +1,5 @@
 class CompaingnFieldsController < ApplicationController
+
+    
+
 end
