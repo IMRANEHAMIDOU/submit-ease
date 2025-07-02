@@ -2,10 +2,11 @@ import { useEffect } from "react";
 
 type ToastProps = {
   message: string;
+  type?: string
   onClose: () => void;
 };
 
-const Toast = ({message, onClose} : ToastProps) => {
+const Toast = ({message,type, onClose} : ToastProps) => {
      useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
@@ -16,7 +17,7 @@ const Toast = ({message, onClose} : ToastProps) => {
 
   return (
     <div className="toast toast-top toast-end">
-      <div className="alert alert-success text-white font-bold">
+      <div className={`alert alert-${type ? type : 'success'} text-white font-bold`}>
         <span>{message}</span>
       </div>
     </div>
