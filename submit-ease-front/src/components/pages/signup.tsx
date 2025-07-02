@@ -12,7 +12,7 @@ import {
 import { apiSignup, type SignupData } from '../../services/auth-api';
 
 export default function SignUp() {
-  const [userType, setUserType] = useState<'candidat' | 'organisation'>('candidat');
+  const [userType, setUserType] = useState<'candidate' | 'organisation'>('candidate');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
@@ -87,9 +87,9 @@ export default function SignUp() {
     setError('');
 
     try {
-      const signupData: SignupData = userType === 'candidat' 
+      const signupData: SignupData = userType === 'candidate' 
         ? {
-            userType: 'candidat',
+            userType: 'candidate',
             email,
             password,
             passwordConfirmation,
@@ -155,9 +155,9 @@ export default function SignUp() {
         <div className="tabs tabs-boxed justify-center mb-8 bg-base-200 p-1">
           <button
             type="button"
-            className={`tab tab-lg ${userType === 'candidat' ? 'tab-active' : ''}`}
+            className={`tab tab-lg ${userType === 'candidate' ? 'tab-active' : ''}`}
             onClick={() => {
-              setUserType('candidat');
+              setUserType('candidate');
               setError('');
             }}
           >

@@ -8,6 +8,7 @@ export type UserType = {
   phone: string | null
   avatar: string | null
   role: string 
+  is_active?: boolean
   organization_id: number
   organization? : OrganizationType
 }

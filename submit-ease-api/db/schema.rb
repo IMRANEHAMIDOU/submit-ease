@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_29_134451) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_01_221142) do
   create_table "application_responses", force: :cascade do |t|
     t.integer "candidate_application_id", null: false
     t.integer "compaign_field_id", null: false
@@ -111,6 +111,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_29_134451) do
     t.string "avatar"
     t.integer "role"
     t.integer "organization_id"
+    t.boolean "is_active", default: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["organization_id"], name: "index_users_on_organization_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

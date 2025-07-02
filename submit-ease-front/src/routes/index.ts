@@ -86,13 +86,13 @@ export const adminRoutes: RouteType[] = [
 // 🟡 Routes candidat
 export const candidateRoutes: RouteType[] = [
   {
-    path: '/campaigns',
-    name: 'Concours',
+    path: '/candidate/campaigns',
+    name: 'Mes concours',
     icon: Trophy,
   },
   {
-    path: '/profile',
-    name: 'Profil',
+    path: '/candidate/profile',
+    name: 'Mon profile',
     icon: User,
   },
 ]

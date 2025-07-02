@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { Plus } from "lucide-react";
-import { apiUsers, createUser, updateUser } from "../../../services/user-api";
+import { activeOrDisableUser, apiUsers, createUser, updateUser } from "../../../services/user-api";
 import { apiOrganizations } from "../../../services/organization-api";
 import type { UserType, OrganizationType } from "../../../types/type";
 import type { AxiosError } from "axios";
 import UserModal from "./user-modal";
 import Toast from "../../ui/toast";
+import ViewUserModal from "./view-user-modal";
 
 const UsersList = () => {
   const [users, setUsers] = useState<UserType[]>([]);
@@ -16,6 +17,10 @@ const UsersList = () => {
   const [formErrors, setFormErrors] = useState<string[]>([]);
 
   const [toastMessage, setToastMessage] = useState("");
+
+  //gestion de la vue user
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
 
   const [userData, setUserData] = useState<{
     id?:number
@@ -52,6 +57,11 @@ const UsersList = () => {
     setIsModalOpen(false);
     setUserData({ email: "", role: "admin", organization_id: "" });
   };
+
+  const handleViewUser = (user : UserType)=>{
+    setSelectedUser(user)
+    setIsViewModalOpen(true)
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -98,6 +108,16 @@ const UsersList = () => {
     setIsModalOpen(true);
 };
 
+  const handleChangleIsActive = async(id:number, value:boolean)=>{
+    try {
+      await activeOrDisableUser(id,value)
+      await fetchUsers();
+      setToastMessage("Utilisateur modifier avec succès !")
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
@@ -116,6 +136,7 @@ const UsersList = () => {
               <th>Email</th>
               <th>Rôle</th>
               <th>Organisation</th>
+              <th>Activé</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -128,7 +149,10 @@ const UsersList = () => {
                   <td>{user.role}</td>
                   <td>{user.organization ? user.organization.name : "-"}</td>
                   <td>
-                    <button className="btn btn-sm btn-outline">Voir</button>
+                    <input type="checkbox" checked={user.is_active} className="checkbox" onChange={(e)=>handleChangleIsActive(user.id, e.target.checked)}/>
+                  </td>
+                  <td>
+                    <button className="btn btn-sm text-info btn-outline " onClick={()=>handleViewUser(user)}>Voir</button>
                     <button className="btn btn-sm text-accent btn-outline ml-2" onClick={()=>handleEdit(user)}>Edit</button>
                   </td>
                 </tr>
@@ -154,6 +178,12 @@ const UsersList = () => {
             organizations={organizations}
             loading={loading}
             formErrors={formErrors}
+        />
+
+        <ViewUserModal
+          isOpen={isViewModalOpen}
+          onClose={() => setIsViewModalOpen(false)}
+          user={selectedUser}
         />
 
         {toastMessage && <Toast message={toastMessage} onClose={() => setToastMessage("")} />}

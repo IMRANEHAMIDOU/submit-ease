@@ -9,14 +9,14 @@ const Toast = ({message, onClose} : ToastProps) => {
      useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
-    }, 3000);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, [onClose]);
 
   return (
     <div className="toast toast-top toast-end">
-      <div className="alert alert-success">
+      <div className="alert alert-success text-white font-bold">
         <span>{message}</span>
       </div>
     </div>

@@ -2,7 +2,7 @@ import api from './api';
 
 // Types pour les données d'inscription
 export interface CandidatSignupData {
-  userType: 'candidat';
+  userType: 'candidate';
   email: string;
   password: string;
   passwordConfirmation: string;
@@ -67,11 +67,11 @@ export const apiSignup = async (data: SignupData) => {
   try {
     const formData = new FormData();
     
-    if (data.userType === 'candidat') {
+    if (data.userType === 'candidate') {
       formData.append('user[email]', data.email);
       formData.append('user[password]', data.password);
       formData.append('user[password_confirmation]', data.passwordConfirmation);
-      formData.append('user[role]', 'candidat');
+      formData.append('user[role]', 'candidate');
       
       const response = await api.post('/signup', formData, {
         headers: {

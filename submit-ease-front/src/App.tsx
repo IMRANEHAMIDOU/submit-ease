@@ -13,6 +13,7 @@ import AdminOrganization from './components/pages/admin/admin-organization'
 import SuperAdmin from './components/pages/super-admin/super-admin'
 import OrganizationsList from './components/pages/super-admin/organizations-list'
 import UsersList from './components/pages/super-admin/users-list'
+import CanditateAdmin from './components/pages/candidate/canditate-admin'
 
 
 function App() {
@@ -39,6 +40,8 @@ function App() {
           <Route path="/superadmin/organizations" element={<OrganizationsList />} />
           <Route path="/superadmin/users" element={<UsersList />} />
           {/* Tu peux continuer à ajouter tes autres routes */}
+
+          <Route path="/candidate" element={<CanditateAdmin />} />
         </Route>
 
         {/* Wrapper routes */}

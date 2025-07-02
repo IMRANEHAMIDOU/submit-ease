@@ -20,7 +20,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     else
       # Cas candidat
       build_resource(sign_up_params)
-      resource.role = 'candidat'
+      resource.role = 0
       resource.save!
 
       sign_up(resource_name, resource) if resource.persisted?

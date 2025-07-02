@@ -38,3 +38,16 @@ export const updateUser = async (id:number, data : formUser)=>{
         throw error; 
     }
 }
+export const activeOrDisableUser = async (id:number, value:boolean)=>{
+    try {
+        const res = await api.patch(`/admin/users/${id}`, {
+          user: {
+            is_active: value
+          }
+        })
+        return res.data
+    } catch (error) {
+        console.error("Erreur API création user :", error);
+        throw error; 
+    }
+}

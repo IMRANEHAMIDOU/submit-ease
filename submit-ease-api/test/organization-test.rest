@@ -1,0 +1,50 @@
+### Variables
+
+GET http://localhost:3000/admin/users
+Accept: application/json
+
+###
+
+GET http://localhost:3000/admin/organizations
+Accept: application/json
+
+###
+GET http://localhost:3000/admin/organizations/1
+Accept: application/json
+
+###
+POST http://localhost:3000/admin/organizations
+Accept: application/json
+Content-Type: application/json
+
+
+{
+   "organization" : {
+        "name": "IFUTUR",
+        "description": "Solution financières Digital et Inclusives",
+        "logo": null,
+        "domain": "Fintech",
+        "contact_person": "+227 88 88 88 88",
+        "email": "ifutur@gmail.com",
+        "contry": "Niger",
+        "city": "Niamey",
+        "address": "NIGER",
+        "website": null
+   }
+}
+
+###
+PATCH  http://localhost:3000/admin/organizations/2
+Accept: application/json
+Content-Type: application/json
+
+
+{
+   "organization" : {
+        "city": "Maradi"
+   }
+}
+
+###
+DELETE   http://localhost:3000/admin/organizations/2
+Accept: application/json

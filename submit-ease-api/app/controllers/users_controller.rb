@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!
+  
   before_action :set_user, only: [:update]
 
   def index
-    users = User.includes(:organization).select(:id, :email, :role, :organization_id)
+    users = User.includes(:organization).select(:id, :email, :role, :is_active, :organization_id)
     render json: users.as_json(include: { organization: { only: [:id, :name] } })
   end
 
@@ -32,7 +32,7 @@ class UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(:email, :role, :organization_id)
+    params.require(:user).permit(:email, :role, :organization_id, :is_active)
   end
 
   def set_user
