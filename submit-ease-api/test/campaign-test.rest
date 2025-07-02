@@ -1,0 +1,117 @@
+### Variables
+
+GET http://localhost:3000/admin/organizations/1/campaigns
+Accept: application/json
+
+###
+GET http://localhost:3000/admin/organizations/1/campaigns/5
+Accept: application/json
+
+###
+POST http://localhost:3000/admin/organizations/1/campaigns
+Accept: application/json
+Content-Type: application/json
+
+{
+  "campaign": {
+    "title": "Campagne INS",
+    "description": "Recrutement 800 agents",
+    "has_writen_test": true,
+    "has_interview": true,
+    "opening_date": "2025-07-10T00:00:00Z",
+    "closing_date": "2025-07-25T23:59:59Z",
+    "is_application_limited": true,
+    "max_application": 200,
+    "publication_link": "https://ifutur.com/offres",
+    "organization_id": 1
+  },
+  "campaign_fields": [
+    {
+      "label": "CV",
+      "description": "Curriculum Vitae du candidat",
+      "field_type": "file",
+      "options": null,
+      "order_number": 1,
+      "is_required": true
+    },
+    {
+      "label": "Lettre de motivation",
+      "description": "Lettre expliquant votre intérêt",
+      "field_type": "text",
+      "options": null,
+      "order_number": 2,
+      "is_required": false
+    }
+  ],
+  "campaign_profiles": [
+    {
+      "name": "Agent enquêteur",
+      "description": "Collecter des données sur le terrain",
+      "positions_available": 500
+    },
+    {
+      "name": "Agent superviseur",
+      "description": "Superviser les enquêteurs sur le terrain",
+      "positions_available": 50
+    }
+  ]
+}
+
+
+###
+PATCH http://localhost:3000/admin/organizations/1/campaigns/2
+Content-Type: application/json
+Accept: application/json
+
+
+{
+  "campaign": {
+    "title": "Campagne INS (mise à jour)",
+    "description": "Recrutement actualisé de 900 agents",
+    "has_writen_test": true,
+    "has_interview": false,
+    "opening_date": "2025-07-15T00:00:00Z",
+    "closing_date": "2025-07-30T23:59:59Z",
+    "is_application_limited": true,
+    "max_application": 300,
+    "publication_link": "https://ifutur.com/nouvelles-offres",
+    "organization_id": 1
+  },
+  "campaign_fields": [
+    {
+      "id": 2,
+      "label": "CV actualisé",
+      "description": "Version mise à jour du CV",
+      "field_type": "file",
+      "options": null,
+      "order_number": 1,
+      "is_required": true
+    },
+    {
+      "label": "Certificat médical",
+      "description": "Certificat d'aptitude médicale",
+      "field_type": "file",
+      "options": null,
+      "order_number": 2,
+      "is_required": false
+    }
+  ],
+  "campaign_profiles": [
+    {
+      "id": 3,
+      "name": "Agent enquêteur confirmé",
+      "description": "Agents expérimentés pour superviser les enquêtes",
+      "positions_available": 400
+    },
+    {
+      "name": "Agent logisticien",
+      "description": "Gestion de la logistique et du matériel",
+      "positions_available": 50
+    }
+  ]
+}
+
+
+###
+DELETE   http://localhost:3000/admin/organizations/2
+Accept: application/json

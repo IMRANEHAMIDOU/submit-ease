@@ -1,5 +1,8 @@
 class Campaign < ApplicationRecord
   belongs_to :organization
+  
+  has_many :campaign_fields, dependent: :destroy
+  has_many :campaign_profiles, dependent: :destroy
 
   enum :status, { 
     draft: 0, 

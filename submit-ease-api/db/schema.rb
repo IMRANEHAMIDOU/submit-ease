@@ -10,15 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_01_221142) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_02_120823) do
   create_table "application_responses", force: :cascade do |t|
     t.integer "candidate_application_id", null: false
-    t.integer "compaign_field_id", null: false
+    t.integer "campaign_field_id", null: false
     t.text "response_value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["campaign_field_id"], name: "index_application_responses_on_campaign_field_id"
     t.index ["candidate_application_id"], name: "index_application_responses_on_candidate_application_id"
-    t.index ["compaign_field_id"], name: "index_application_responses_on_compaign_field_id"
   end
 
   create_table "campaign_fields", force: :cascade do |t|
@@ -30,16 +30,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_01_221142) do
     t.boolean "is_required", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "campaign_id", null: false
+    t.index ["campaign_id"], name: "index_campaign_fields_on_campaign_id"
   end
 
   create_table "campaign_profiles", force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.integer "positions_available"
-    t.integer "compaign_id", null: false
+    t.integer "campaign_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["compaign_id"], name: "index_campaign_profiles_on_compaign_id"
+    t.index ["campaign_id"], name: "index_campaign_profiles_on_campaign_id"
   end
 
   create_table "campaigns", force: :cascade do |t|
@@ -62,8 +64,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_01_221142) do
   create_table "candidate_applications", force: :cascade do |t|
     t.string "registration_number"
     t.integer "user_id", null: false
-    t.integer "compaign_id", null: false
-    t.integer "compaign_profile_id", null: false
+    t.integer "campaign_id", null: false
+    t.integer "campaign_profile_id", null: false
     t.integer "organization_id", null: false
     t.integer "application_status", default: 0
     t.text "status_reason"
@@ -72,8 +74,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_01_221142) do
     t.boolean "interview_test_authorized", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["compaign_id"], name: "index_candidate_applications_on_compaign_id"
-    t.index ["compaign_profile_id"], name: "index_candidate_applications_on_compaign_profile_id"
+    t.index ["campaign_id"], name: "index_candidate_applications_on_campaign_id"
+    t.index ["campaign_profile_id"], name: "index_candidate_applications_on_campaign_profile_id"
     t.index ["organization_id"], name: "index_candidate_applications_on_organization_id"
     t.index ["user_id"], name: "index_candidate_applications_on_user_id"
   end
@@ -117,12 +119,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_01_221142) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "application_responses", "campaign_fields"
   add_foreign_key "application_responses", "candidate_applications"
-  add_foreign_key "application_responses", "compaign_fields"
-  add_foreign_key "campaign_profiles", "compaigns"
+  add_foreign_key "campaign_fields", "campaigns"
+  add_foreign_key "campaign_profiles", "campaigns"
   add_foreign_key "campaigns", "organizations"
-  add_foreign_key "candidate_applications", "compaign_profiles"
-  add_foreign_key "candidate_applications", "compaigns"
+  add_foreign_key "candidate_applications", "campaign_profiles"
+  add_foreign_key "candidate_applications", "campaigns"
   add_foreign_key "candidate_applications", "organizations"
   add_foreign_key "candidate_applications", "users"
   add_foreign_key "users", "organizations"
