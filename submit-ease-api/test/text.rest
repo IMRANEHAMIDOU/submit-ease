@@ -1,0 +1,7 @@
+
+@baseUrl = http://localhost:3000/organizations
+@orgId = 1
+
+### 📌 1️⃣ Lister toutes les organisations
+GET {{baseUrl}}
+Accept: text/html

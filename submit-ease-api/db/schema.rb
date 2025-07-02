@@ -21,44 +21,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_01_221142) do
     t.index ["compaign_field_id"], name: "index_application_responses_on_compaign_field_id"
   end
 
-  create_table "campaign_fields", force: :cascade do |t|
-    t.string "label"
-    t.text "description"
-    t.text "field_type"
-    t.text "options"
-    t.integer "order_number", default: 0
-    t.boolean "is_required", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "campaign_profiles", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
-    t.integer "positions_available"
-    t.integer "compaign_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["compaign_id"], name: "index_campaign_profiles_on_compaign_id"
-  end
-
-  create_table "campaigns", force: :cascade do |t|
-    t.string "title"
-    t.text "description"
-    t.boolean "has_writen_test", default: false
-    t.boolean "has_interview", default: false
-    t.datetime "opening_date"
-    t.datetime "closing_date"
-    t.boolean "is_application_limited", default: false
-    t.integer "max_application", default: 0
-    t.integer "status", default: 0
-    t.integer "organization_id", null: false
-    t.string "publication_link", default: ""
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["organization_id"], name: "index_campaigns_on_organization_id"
-  end
-
   create_table "candidate_applications", force: :cascade do |t|
     t.string "registration_number"
     t.integer "user_id", null: false
@@ -76,6 +38,44 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_01_221142) do
     t.index ["compaign_profile_id"], name: "index_candidate_applications_on_compaign_profile_id"
     t.index ["organization_id"], name: "index_candidate_applications_on_organization_id"
     t.index ["user_id"], name: "index_candidate_applications_on_user_id"
+  end
+
+  create_table "compaign_fields", force: :cascade do |t|
+    t.string "label"
+    t.text "description"
+    t.text "field_type"
+    t.text "options"
+    t.integer "order_number", default: 0
+    t.boolean "is_required", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "compaign_profiles", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.integer "positions_available"
+    t.integer "compaign_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["compaign_id"], name: "index_compaign_profiles_on_compaign_id"
+  end
+
+  create_table "compaigns", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.boolean "has_writen_test", default: false
+    t.boolean "has_interview", default: false
+    t.datetime "opening_date"
+    t.datetime "closing_date"
+    t.boolean "is_application_limited", default: false
+    t.integer "max_application", default: 0
+    t.integer "status", default: 0
+    t.integer "organization_id", null: false
+    t.string "publication_link", default: ""
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_compaigns_on_organization_id"
   end
 
   create_table "organizations", force: :cascade do |t|
@@ -119,11 +119,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_01_221142) do
 
   add_foreign_key "application_responses", "candidate_applications"
   add_foreign_key "application_responses", "compaign_fields"
-  add_foreign_key "campaign_profiles", "compaigns"
-  add_foreign_key "campaigns", "organizations"
   add_foreign_key "candidate_applications", "compaign_profiles"
   add_foreign_key "candidate_applications", "compaigns"
   add_foreign_key "candidate_applications", "organizations"
   add_foreign_key "candidate_applications", "users"
+  add_foreign_key "compaign_profiles", "compaigns"
+  add_foreign_key "compaigns", "organizations"
   add_foreign_key "users", "organizations"
 end

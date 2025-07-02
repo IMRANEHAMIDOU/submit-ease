@@ -61,3 +61,18 @@ export type OrganizationType = {
   address: string
   website: string
 }
+
+export type formOrganization = {
+  id?: number;
+  name: string;
+  description: string;
+  domain: string;
+  email: string;
+  contact_person: string;
+  country: string;
+  city: string;
+  address: string;
+  website: string;
+  verified: boolean;
+  is_active: boolean;
+};
