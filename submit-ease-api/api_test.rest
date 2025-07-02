@@ -1,0 +1,17 @@
+POST http://127.0.0.1:3000/admin/organizations/1/compaingns
+Content-Type: application/json
+
+{
+  "compaingn": {
+    "nom": "Premier concours",
+    "description": "Concours test",
+    "test_ecris": true,
+    "entretien": false,
+    "date_ouverture": "2025-07-01",
+    "date_cloture": "2025-07-15",
+    "nbre_dossier_limité": false,
+    "nombre_dossier": 0,
+    "status": "ouvert",
+    "lien_publication": "http://lien.com"
+  }
+}
