@@ -30,7 +30,7 @@ export default function Login() {
       userState: {
         id: user!.id,
         email: user!.email,
-        organizationId: user?.organization_id,
+        organization_id: user?.organization_id,
         role: user?.role
       },
     });
@@ -62,30 +62,29 @@ export default function Login() {
   }
 }
 
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 px-4 w-full">
-      <div className="w-full max-w-md bg-white dark:bg-gray-900 rounded-lg shadow-2xl p-8">
+    <div className="min-h-screen flex items-center justify-center bg-base-200/50 px-4 w-full">
+      <div className="w-full max-w-md bg-base-100 rounded-lg shadow-2xl border border-base-300 p-8">
         <div className="flex justify-center mb-6">
-          <div className="w-20 h-20 rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center">
-            <UserCheck className="w-10 h-10 text-emerald-500" />
+          <div className="w-20 h-20 rounded-full bg-success/10 border border-success/20 flex items-center justify-center">
+            <UserCheck className="w-10 h-10 text-success" />
           </div>
         </div>
-        <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-gray-200 mb-4">
+        <h2 className="text-2xl font-bold text-center text-base-content mb-4">
           Se connecter
         </h2>
 
         {error && (
-          <p className="text-sm bg-red-600 text-white p-2 rounded mb-2 text-center">
-            {error}
-          </p>
+          <div className="alert alert-error mb-4">
+            <span className="text-sm">{error}</span>
+          </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="email"
             placeholder="Email"
-            className="input input-bordered w-full bg-base-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200"
+            className="input input-bordered w-full"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -93,25 +92,32 @@ export default function Login() {
           <input
             type="password"
             placeholder="Mot de passe"
-            className="input input-bordered w-full bg-base-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200"
+            className="input input-bordered w-full"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
           <button
             type="submit"
-            className="btn bg-emerald-500 text-white w-full hover:bg-emerald-600 transition-all disabled:opacity-50"
+            className="btn btn-success w-full transition-all"
             disabled={loading}
           >
-            {loading ? "Connexion..." : "Se connecter"}
+            {loading ? (
+              <>
+                <span className="loading loading-spinner loading-sm"></span>
+                Connexion...
+              </>
+            ) : (
+              "Se connecter"
+            )}
           </button>
         </form>
 
-        <p className="mt-4 text-center text-sm text-gray-600 dark:text-gray-400">
+        <p className="mt-4 text-center text-sm text-base-content/70">
           Vous n'avez pas de compte ?{" "}
           <Link
             to="/signup"
-            className="text-emerald-500 hover:underline font-medium"
+            className="text-success hover:underline font-medium transition-colors"
           >
             Créer un compte
           </Link>

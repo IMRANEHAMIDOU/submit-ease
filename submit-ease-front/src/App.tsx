@@ -14,6 +14,7 @@ import SuperAdmin from './components/pages/super-admin/super-admin'
 import OrganizationsList from './components/pages/super-admin/organizations-list'
 import UsersList from './components/pages/super-admin/users-list'
 import CanditateAdmin from './components/pages/candidate/canditate-admin'
+import CampaignList from './components/pages/admin/campaign-list'
 
 
 function App() {
@@ -36,6 +37,8 @@ function App() {
         {/* Admin and superadmin routes */}
         <Route element={<AdminLayout />}>
           <Route path="/admin" element={<AdminOrganization />} />
+          <Route path="/admin/campaigns" element={<CampaignList />} />
+
           <Route path="/superadmin" element={<SuperAdmin />} />
           <Route path="/superadmin/organizations" element={<OrganizationsList />} />
           <Route path="/superadmin/users" element={<UsersList />} />

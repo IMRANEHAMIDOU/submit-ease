@@ -4,7 +4,7 @@ GET http://localhost:3000/admin/organizations/1/campaigns
 Accept: application/json
 
 ###
-GET http://localhost:3000/admin/organizations/1/campaigns/5
+GET http://localhost:3000/admin/organizations/1/campaigns/1
 Accept: application/json
 
 ###
@@ -59,7 +59,7 @@ Content-Type: application/json
 
 
 ###
-PATCH http://localhost:3000/admin/organizations/1/campaigns/2
+PATCH http://localhost:3000/admin/organizations/1/campaigns/1
 Content-Type: application/json
 Accept: application/json
 
@@ -79,15 +79,7 @@ Accept: application/json
   },
   "campaign_fields": [
     {
-      "id": 2,
-      "label": "CV actualisé",
-      "description": "Version mise à jour du CV",
-      "field_type": "file",
-      "options": null,
-      "order_number": 1,
-      "is_required": true
-    },
-    {
+      "id": 5,
       "label": "Certificat médical",
       "description": "Certificat d'aptitude médicale",
       "field_type": "file",
@@ -98,13 +90,14 @@ Accept: application/json
   ],
   "campaign_profiles": [
     {
-      "id": 3,
+      "id": 5,
       "name": "Agent enquêteur confirmé",
       "description": "Agents expérimentés pour superviser les enquêtes",
       "positions_available": 400
     },
     {
-      "name": "Agent logisticien",
+      "id": 6,
+      "name": "Agent logisticien modifier",
       "description": "Gestion de la logistique et du matériel",
       "positions_available": 50
     }
@@ -113,5 +106,5 @@ Accept: application/json
 
 
 ###
-DELETE   http://localhost:3000/admin/organizations/2
+DELETE   http://localhost:3000/admin/organizations/1/campaigns/1
 Accept: application/json

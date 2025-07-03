@@ -51,34 +51,38 @@ class CampaignsController < ApplicationController
     end
     end
 
-    def update
+def update
         @campaign = Campaign.includes(:campaign_fields, :campaign_profiles).find(params[:id])
 
-        if @campaign.update(campaign_params)
-            # --- Synchroniser les fields ---
+    # Encapsuler toute la logique dans une transaction
+    ActiveRecord::Base.transaction do
+        # Mettre à jour la campagne principale
+        if @campaign.update!(campaign_params)
+            
+            # ---- Gérer les fields ----
             if params[:campaign_fields]
+                # IDs actuels en base
                 current_field_ids = @campaign.campaign_fields.pluck(:id)
+                # IDs reçus dans le payload
                 received_field_ids = params[:campaign_fields].map { |f| f[:id] }.compact
 
-                # Supprimer ceux qui ne sont plus présents
+                # Supprimer ceux retirés
                 fields_to_delete = current_field_ids - received_field_ids
                 @campaign.campaign_fields.where(id: fields_to_delete).destroy_all
 
-                # Mettre à jour ou créer
+                # Parcourir ceux reçus (update ou create)
                 params[:campaign_fields].each do |field_attrs|
                     if field_attrs[:id]
                         # Update
-                        field = CampaignField.find_by!(id: field_attrs[:id], campaign_id: @campaign.id)
-                       if field.nil?
-                             field.update!(
-                                label: field_attrs[:label],
-                                description: field_attrs[:description],
-                                field_type: field_attrs[:field_type],
-                                options: field_attrs[:options],
-                                order_number: field_attrs[:order_number],
-                                is_required: field_attrs[:is_required]
-                            )
-                       end
+                        field = @campaign.campaign_fields.find(field_attrs[:id])
+                        field.update!(
+                            label: field_attrs[:label],
+                            description: field_attrs[:description],
+                            field_type: field_attrs[:field_type],
+                            options: field_attrs[:options],
+                            order_number: field_attrs[:order_number],
+                            is_required: field_attrs[:is_required]
+                        )
                     else
                         # Create
                         @campaign.campaign_fields.create!(
@@ -93,29 +97,23 @@ class CampaignsController < ApplicationController
                 end
             end
 
-            # --- Synchroniser les profiles ---
+            # ---- Gérer les profiles ----
             if params[:campaign_profiles]
                 current_profile_ids = @campaign.campaign_profiles.pluck(:id)
                 received_profile_ids = params[:campaign_profiles].map { |p| p[:id] }.compact
 
-                # Supprimer ceux qui ne sont plus présents
                 profiles_to_delete = current_profile_ids - received_profile_ids
                 @campaign.campaign_profiles.where(id: profiles_to_delete).destroy_all
 
-                # Mettre à jour ou créer
                 params[:campaign_profiles].each do |profile_attrs|
                     if profile_attrs[:id]
-                        # Update
-                        profile = CampaignProfile.find_by!(id: profile_attrs[:id], campaign_id: @campaign.id)
-                        if profile.nil?
-                            profile.update!(
-                                name: profile_attrs[:name],
-                                description: profile_attrs[:description],
-                                positions_available: profile_attrs[:positions_available]
-                            )
-                        end
+                        profile = @campaign.campaign_profiles.find(profile_attrs[:id])
+                        profile.update!(
+                            name: profile_attrs[:name],
+                            description: profile_attrs[:description],
+                            positions_available: profile_attrs[:positions_available]
+                        )
                     else
-                        # Create
                         @campaign.campaign_profiles.create!(
                             name: profile_attrs[:name],
                             description: profile_attrs[:description],
@@ -125,11 +123,19 @@ class CampaignsController < ApplicationController
                 end
             end
 
+            # Réponse finale
+            @campaign = Campaign.includes(:campaign_fields, :campaign_profiles).find(params[:id])
+
             render json: @campaign.as_json(include: [:campaign_fields, :campaign_profiles]), status: :ok
+
         else
             render json: { errors: @campaign.errors.full_messages }, status: :unprocessable_entity
         end
+    rescue ActiveRecord::RecordInvalid => e
+        render json: { errors: [e.message] }, status: :unprocessable_entity
     end
+end
+
 
 
   # Supprimer un concours
@@ -139,7 +145,7 @@ class CampaignsController < ApplicationController
         head :no_content
     end
 
-    # Les methodes invisibles par l'utilisateur
+
     private
 
     # Protéger les données reçues
@@ -157,14 +163,6 @@ class CampaignsController < ApplicationController
             :publication_link,
             :organization_id
         )
-    end
-
-    def campaign_fields_params
-        params.permit(campaign_fields: [:label, :description, :field_type, :options, :order_number, :is_required])
-    end
-
-    def campaign_profiles_params
-        params.permit(campaign_profiles: [:name, :description, :positions_available])
     end
 
 end
