@@ -2,7 +2,6 @@ import {
   Home, 
   Trophy, 
   User, 
-  UserCheck, 
   Building2, 
   LayoutDashboard, 
   List, 
@@ -30,21 +29,6 @@ export const publicRoutes: RouteType[] = [
     name: 'Concours',
     icon: Trophy,
   },
-  {
-    path: '/profile',
-    name: 'Profil',
-    icon: User,
-  },
-  {
-    path: '/candidate/1',
-    name: 'Espace candidat',
-    icon: UserCheck,
-  },
-  {
-    path: '/organizations/1',
-    name: 'Espace organisation',
-    icon: Building2,
-  },
 ]
 
 // 🟠 Routes administrateur
@@ -68,6 +52,11 @@ export const adminRoutes: RouteType[] = [
     path: '/admin/campaigns/1/applications/1',
     name: 'Détails candidature',
     icon: Eye,
+  },
+   {
+    path: '/admin/profile',
+    name: 'Mon profile',
+    icon: User,
   },
 ]
 
@@ -101,5 +90,10 @@ export const superAdminRoutes: RouteType[] = [
     path: '/superadmin/users',
     name: 'Utilisateurs',
     icon: Users,
+  },
+   {
+    path: '/superadmin/profile',
+    name: 'Mon profile',
+    icon: User,
   },
 ]

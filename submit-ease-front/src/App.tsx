@@ -15,6 +15,7 @@ import OrganizationsList from './components/pages/super-admin/organizations-list
 import UsersList from './components/pages/super-admin/users-list'
 import CanditateAdmin from './components/pages/candidate/canditate-admin'
 import CampaignList from './components/pages/admin/campaign-list'
+import ProfileUser from './components/pages/super-admin/ProfileUser'
 
 
 function App() {
@@ -45,6 +46,9 @@ function App() {
           {/* Tu peux continuer à ajouter tes autres routes */}
 
           <Route path="/candidate" element={<CanditateAdmin />} />
+          <Route path="/candidate/profile" element={<ProfileUser />} />
+          <Route path="/admin/profile" element={<ProfileUser />} />
+          <Route path="/superadmin/profile" element={<ProfileUser />} />
         </Route>
 
         {/* Wrapper routes */}

@@ -19,6 +19,16 @@ export default function Navbar() {
     window.location.href = '/login'
   }
 
+  const handleProfile = ()=>{
+    if(user?.role=='candidat'){
+      window.location.href ='/candidate/profile'
+    }else if(user?.role=='admin'){
+      window.location.href = '/admin/profile'
+    }else{
+      window.location.href = '/superadmin/profile'
+    }
+  }
+
   const isActiveRoute = (path: string) => {
     return location.pathname === path
   }
@@ -57,13 +67,13 @@ export default function Navbar() {
           <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full bg-gray-200 flex items-center justify-center">
-                <User className="w-8 h-8 text-gray-700" />
+                {user?.avatar ? (<img src={user.avatar} className='w-8 h-8 rounded-full' />) : <User className="w-8 h-8 text-gray-700" />}
               </div>
             </div>
             <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow">
-              <li>
-                <div className="flex flex-col text-sm px-2 py-1">
-                  <span className="font-semibold">{user?.email}</span>
+              <li onClick={handleProfile}>
+                <div className="flex flex-col text-sm px-2 py-1" >
+                  <span className="font-semibold" >{user?.email}</span>
                 </div>
               </li>
               <div className="divider my-0"></div>

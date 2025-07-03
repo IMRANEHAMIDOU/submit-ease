@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import useSignIn from 'react-auth-kit/hooks/useSignIn'
 import { UserCheck } from 'lucide-react'
 import { apiLogin } from '../../services/auth-api'
+import type { UserType } from '../../types/type'
 
 export default function Login() {
   const signIn = useSignIn()
@@ -20,7 +21,7 @@ export default function Login() {
     const res = await apiLogin({ email, password });
 
     const token = res.headers.authorization;
-    const user = res.data.user;
+    const user = res.data.user as UserType;
 
     const success = signIn({
       auth: {
@@ -31,7 +32,8 @@ export default function Login() {
         id: user!.id,
         email: user!.email,
         organization_id: user?.organization_id,
-        role: user?.role
+        role: user?.role,
+        avatar: user.avatar
       },
     });
 

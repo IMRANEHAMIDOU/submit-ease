@@ -1,10 +1,17 @@
 class UsersController < ApplicationController
   
-  before_action :set_user, only: [:update]
+  before_action :set_user, only: [:update, :show]
 
   def index
     users = User.includes(:organization).select(:id, :email, :role, :is_active, :organization_id)
     render json: users.as_json(include: { organization: { only: [:id, :name] } })
+  end
+
+  def show
+    render json: @user.as_json(
+      include: { organization: { only: [:id, :name] } },
+      except: [:password_digest, :created_at, :updated_at]
+    )
   end
 
   def create
@@ -32,10 +39,16 @@ class UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(:email, :role, :organization_id, :is_active)
+    params.require(:user).permit(
+      :email, :role, :organization_id, :is_active,
+      :first_name, :last_name, :gender, :birth_date, :phone, :avatar
+    )
   end
 
   def set_user
-    @user = User.find(params[:id])
+    @user = User.includes(:organization).find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: "Utilisateur non trouvé" }, status: :not_found
   end
+
 end

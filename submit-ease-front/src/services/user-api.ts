@@ -51,3 +51,14 @@ export const activeOrDisableUser = async (id:number, value:boolean)=>{
         throw error; 
     }
 }
+
+//ouveau : récupérer le profil utilisateur par ID
+export const apiProfile = async (id: number) => {
+    try {
+        const res = await api.get(`/admin/users/${id}`);
+        return res.data;
+    } catch (error) {
+        console.error("Erreur API récupération profil :", error);
+        throw error;
+    }
+};
