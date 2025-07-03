@@ -78,7 +78,9 @@ export type CampaignProfileType = {
   description?: string
   positions_available: number
 }
-
+export type CandidateApplicationType = {
+  id: number
+}
 export type CampaignType = {
   id?: number
   title: string
@@ -94,4 +96,5 @@ export type CampaignType = {
   status?:string
   campaign_fields: CampaignFieldType[]
   campaign_profiles: CampaignProfileType[]
+  candidate_applications?: CandidateApplicationType[]; //
 }

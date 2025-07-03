@@ -21,6 +21,9 @@ Rails.application.routes.draw do
     end
   end
 
+  #public concours
+  get '/campaigns', to:"campaigns#public_campaigns"
+
   resources :candidate_applications
   resources :compaign_fields
 end

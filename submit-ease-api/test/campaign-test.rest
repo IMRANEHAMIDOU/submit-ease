@@ -4,6 +4,12 @@ GET http://localhost:3000/admin/organizations/1/campaigns
 Accept: application/json
 
 ###
+# tout les concours non cloturé
+
+GET http://localhost:3000/campaigns
+Accept: application/json
+
+###
 GET http://localhost:3000/admin/organizations/1/campaigns/1
 Accept: application/json
 

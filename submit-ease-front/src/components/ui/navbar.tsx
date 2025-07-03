@@ -20,7 +20,7 @@ export default function Navbar() {
   }
 
   const handleProfile = ()=>{
-    if(user?.role=='candidat'){
+    if(user?.role=='candidate'){
       window.location.href ='/candidate/profile'
     }else if(user?.role=='admin'){
       window.location.href = '/admin/profile'

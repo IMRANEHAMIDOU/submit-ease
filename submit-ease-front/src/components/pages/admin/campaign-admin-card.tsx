@@ -2,9 +2,7 @@ import { Calendar, Edit3, Eye, FileText, MessageCircle, Trash2, Users } from 'lu
 import type { CampaignType } from '../../../types/type';
 
 const CampaignAdminCard = ({ campaign, confirmDelete , onEdit}: { campaign: CampaignType, confirmDelete: (campaign: CampaignType)=>void , onEdit: (campaign: CampaignType)=>void}) => {
-       const progressPercent = campaign.max_application
-      ? 50
-      : 0
+
 
     const getStatus = () => {
         switch (campaign.status) {
@@ -60,11 +58,11 @@ const CampaignAdminCard = ({ campaign, confirmDelete , onEdit}: { campaign: Camp
         </div>
 
         <div className="p-6">
-          <div className="grid grid-cols-2 gap-4 mb-6">
+          <div className="grid grid-cols-3 gap-4 mb-6">
             <div className="bg-base-200/50 rounded-xl p-4 hover:bg-primary/10 transition-colors flex items-center gap-3">
               <Users className="w-5 h-5 text-primary" />
               <div>
-                <p className="text-2xl font-bold text-base-content">{105}</p>
+                <p className="text-2xl font-bold text-base-content">{campaign.candidate_applications?.length}</p>
                 <p className="text-xs text-base-content/60">Candidatures</p>
               </div>
             </div>
@@ -80,24 +78,17 @@ const CampaignAdminCard = ({ campaign, confirmDelete , onEdit}: { campaign: Camp
                 <p className="text-xs text-base-content/60">Jours restants</p>
               </div>
             </div>
-          </div>
-
-          {campaign.is_application_limited && (
-            <div className="mb-6">
-              <div className="flex justify-between items-center mb-2">
-                <span className="text-sm font-medium text-base-content">Progression</span>
-                <span className="text-xs text-base-content/60">
-                 10/20
-                </span>
-              </div>
-              <div className="w-full bg-base-300 rounded-full h-2 overflow-hidden">
-                <div
-                  className="h-full bg-gradient-to-r from-primary to-secondary rounded-full transition-all duration-500 ease-out"
-                  style={{ width: `${progressPercent}%` }}
-                ></div>
+            <div className="bg-base-200/50 rounded-xl p-4 hover:bg-secondary/10 transition-colors flex items-center gap-3">
+              <Calendar className="w-5 h-5 text-secondary" />
+              <div>
+                <p className="text-2xl font-bold text-base-content">
+                  {campaign.max_application}
+                </p>
+                <p className="text-xs text-base-content/60">Max Dossier</p>
               </div>
             </div>
-          )}
+          </div>
+
 
           <div className="flex flex-wrap gap-2 mb-6">
             {campaign.has_writen_test && (

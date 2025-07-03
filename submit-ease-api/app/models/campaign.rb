@@ -3,7 +3,8 @@ class Campaign < ApplicationRecord
   
   has_many :campaign_fields, dependent: :destroy
   has_many :campaign_profiles, dependent: :destroy
-
+  has_many :candidate_applications
+  
   enum :status, { 
     draft: 0, 
     open: 1, 

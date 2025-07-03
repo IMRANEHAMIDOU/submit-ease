@@ -12,6 +12,16 @@ export const apiCampaigns = async (organization_id:number): Promise<CampaignType
   }
 };
 
+// Récupérer toutes les organisations
+export const apiPublicCampaigns = async (): Promise<CampaignType[]> => {
+  try {
+    const res = await api.get(`/campaigns`);
+    return res.data;
+  } catch (error) {
+    console.error("Erreur API récupération organizations :", error);
+    throw error;
+  }
+};
 
 
 export const createCampaign = async (data : { campaign: CampaignType, organization_id:number }): Promise<CampaignType> => {

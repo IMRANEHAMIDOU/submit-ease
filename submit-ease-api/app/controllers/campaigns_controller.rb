@@ -1,10 +1,22 @@
 class CampaignsController < ApplicationController
 
+    def public_campaigns
+        @campaigns = Campaign.includes(:campaign_fields, :campaign_profiles).where(status: 1,).order(id: :desc)
+        render json: @campaigns.as_json(include: { campaign_profiles: {} }), status: :ok
+    end
+
   # Voir la liste des concours de l'organisation en question
     def index
         @campaigns = Campaign.includes(:campaign_fields, :campaign_profiles).where(organization_id: params[:organization_id])
-         render json: @campaigns.as_json(include: { campaign_fields: {}, campaign_profiles: {} }), status: :ok
+         render json: @campaigns.as_json(
+    include: {
+      campaign_fields: {},
+      campaign_profiles: {},
+      candidate_applications: { only: [:id] }
+    }
+  ), status: :ok
     end
+
 
     def show
     @campaign = Campaign.includes(:campaign_fields, :campaign_profiles).find_by(id: params[:id])
