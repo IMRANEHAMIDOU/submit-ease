@@ -35,7 +35,13 @@ export const updateCampaign = async (
   data : { campaign: CampaignType, organization_id:number }
 ): Promise<CampaignType> => {
   try {
-     const res = await api.patch(`/admin/organizations/${data.organization_id}/campaigns/${data.campaign.id}`)
+     const res = await api.patch(`/admin/organizations/${data.organization_id}/campaigns/${data.campaign.id}`,
+      {
+        campaign: data.campaign,
+        campaign_fields: data.campaign.campaign_fields,
+        campaign_profiles: data.campaign.campaign_profiles
+      }
+     )
     return res.data;
   } catch (error) {
     console.error("Erreur API mise à jour organization :", error);

@@ -2,8 +2,8 @@ class CampaignsController < ApplicationController
 
   # Voir la liste des concours de l'organisation en question
     def index
-        @campaigns = Campaign.where(organization_id: params[:organization_id])
-        render json: @campaigns
+        @campaigns = Campaign.includes(:campaign_fields, :campaign_profiles).where(organization_id: params[:organization_id])
+         render json: @campaigns.as_json(include: { campaign_fields: {}, campaign_profiles: {} }), status: :ok
     end
 
     def show
@@ -150,7 +150,7 @@ end
 
     # Protéger les données reçues
     def campaign_params
-        params.require(:campaign).permit(
+        permitted = params.require(:campaign).permit(
             :title,
             :description,
             :has_writen_test,
@@ -163,6 +163,11 @@ end
             :publication_link,
             :organization_id
         )
+
+         # Convertir status en entier si présent
+        permitted[:status] = permitted[:status].to_i if permitted[:status].present?
+
+        permitted
     end
 
 end

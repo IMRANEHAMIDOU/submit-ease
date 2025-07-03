@@ -17,7 +17,7 @@ const Toast = ({message,type, onClose} : ToastProps) => {
 
   return (
     <div className="toast toast-top toast-end">
-      <div className={`alert alert-${type ? type : 'success'} text-white font-bold`}>
+      <div className={`alert alert-info text-white font-bold`}>
         <span>{message}</span>
       </div>
     </div>

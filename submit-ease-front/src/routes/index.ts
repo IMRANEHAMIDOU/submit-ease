@@ -6,8 +6,6 @@ import {
   Building2, 
   LayoutDashboard, 
   List, 
-  Plus, 
-  Edit, 
   FileText, 
   Eye,
   Users,
@@ -60,16 +58,6 @@ export const adminRoutes: RouteType[] = [
     path: '/admin/campaigns',
     name: 'Tous les concours',
     icon: List,
-  },
-  {
-    path: '/admin/campaigns/new',
-    name: 'Nouveau concours',
-    icon: Plus,
-  },
-  {
-    path: '/admin/campaigns/1/edit',
-    name: 'Modifier concours',
-    icon: Edit,
   },
   {
     path: '/admin/campaigns/1/applications',
