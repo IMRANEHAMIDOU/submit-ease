@@ -37,3 +37,4 @@ const ViewOrganizationModal = ({ isOpen, onClose, organization }: Props) => {
 };
 
 export default ViewOrganizationModal;
+

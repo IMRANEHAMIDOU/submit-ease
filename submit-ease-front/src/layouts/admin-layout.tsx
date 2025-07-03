@@ -63,14 +63,13 @@ const getRoutesByRole = (): RouteType[] => {
     }
   }
 
-
   const routes = getRoutesByRole()
 
   return (
     <>
       {/* Topbar */}
       <div
-        className={`fixed top-0 right-0 z-50 navbar bg-base-100 shadow-sm px-4 ${
+        className={`fixed top-0 right-0 z-50 navbar bg-base-100 shadow-sm border-b border-base-300 px-4 ${
           isLargeScreen ? 'left-80' : 'left-0'
         }`}
       >
@@ -83,7 +82,7 @@ const getRoutesByRole = (): RouteType[] => {
               <Menu className="w-6 h-6" />
             </button>
           )}
-          <Link to="/" className="text-4xl font-bold" onClick={!isLargeScreen ? closeMobileMenu : undefined}>
+          <Link to="/" className="text-4xl font-bold text-base-content" onClick={!isLargeScreen ? closeMobileMenu : undefined}>
             Submit<span className="text-accent">Ease</span>
           </Link>
         </div>
@@ -92,14 +91,14 @@ const getRoutesByRole = (): RouteType[] => {
       {/* Overlay mobile */}
       {!isLargeScreen && isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity"
+          className="fixed inset-0 bg-black/50 z-40 transition-opacity"
           onClick={closeMobileMenu}
         />
       )}
 
       {/* Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-full w-80 bg-base-100 shadow-xl z-50 transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 left-0 h-full w-80 bg-base-100 shadow-xl border-r border-base-300 z-50 transition-transform duration-300 ease-in-out ${
           isLargeScreen
             ? 'translate-x-0'
             : isMobileMenuOpen
@@ -107,7 +106,7 @@ const getRoutesByRole = (): RouteType[] => {
             : '-translate-x-full'
         }`}
       >
-        <div className="flex items-center justify-between p-4 border-b border-base-200">
+        <div className="flex items-center justify-between p-4 border-b border-base-300">
           {!isLargeScreen && (
             <button
               onClick={closeMobileMenu}
@@ -132,7 +131,7 @@ const getRoutesByRole = (): RouteType[] => {
                     className={`flex items-center gap-3 p-3 rounded-lg transition-colors ${
                       isActive
                         ? 'bg-primary text-primary-content font-semibold'
-                        : 'hover:bg-base-200'
+                        : 'text-base-content hover:bg-base-200'
                     }`}
                   >
                     <Icon className="w-5 h-5" />
@@ -144,18 +143,18 @@ const getRoutesByRole = (): RouteType[] => {
           </ul>
         </nav>
 
-        <div className="absolute bottom-0 left-0 right-0 border-t border-base-200 p-4 bg-base-100">
+        <div className="absolute bottom-0 left-0 right-0 border-t border-base-300 p-4 bg-base-100">
           <div className="flex justify-between mb-4">
-            <p>Thème</p>
+            <p className="text-base-content">Thème</p>
             <ThemeSelector />
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3 flex-1 min-w-0">
-              <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
-                <User className="w-5 h-5 text-gray-700" />
+              <div className="w-8 h-8 rounded-full bg-base-300 flex items-center justify-center flex-shrink-0">
+                <User className="w-5 h-5 text-base-content/70" />
               </div>
               <div className="flex flex-col min-w-0 flex-1">
-                <span className="text-sm font-medium truncate">
+                <span className="text-sm font-medium truncate text-base-content">
                   {user?.email}
                 </span>
               </div>

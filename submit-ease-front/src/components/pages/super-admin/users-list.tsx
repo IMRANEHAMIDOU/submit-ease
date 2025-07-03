@@ -7,6 +7,7 @@ import type { AxiosError } from "axios";
 import UserModal from "./user-modal";
 import Toast from "../../ui/toast";
 import ViewUserModal from "./view-user-modal";
+import Loading from "../../ui/loading";
 
 const UsersList = () => {
   const [users, setUsers] = useState<UserType[]>([]);
@@ -17,6 +18,8 @@ const UsersList = () => {
   const [formErrors, setFormErrors] = useState<string[]>([]);
 
   const [toastMessage, setToastMessage] = useState("");
+
+  const [loadingFetch, setLoadingFetch] = useState(false)
 
   //gestion de la vue user
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
@@ -34,8 +37,15 @@ const UsersList = () => {
   });
 
    const fetchUsers = async () => {
-      const data = await apiUsers();
+    setLoadingFetch(true)
+     try {
+       const data = await apiUsers();
       if (data) setUsers(data);
+     } catch (error) {
+      console.log(error)
+     }finally{
+       setLoadingFetch(false)
+     }
     };
 
   useEffect(() => {
@@ -129,7 +139,10 @@ const UsersList = () => {
       </div>
 
       <div className="overflow-x-auto">
-        <table className="table table-zebra w-full">
+       {loadingFetch ? (<Loading />)
+      :
+      (
+         <table className="table table-zebra w-full">
           <thead>
             <tr>
               <th>#</th>
@@ -166,6 +179,8 @@ const UsersList = () => {
             )}
           </tbody>
         </table>
+      )
+      }
       </div>
 
   

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
+
 import {
   apiOrganizations,
   createOrganization,
@@ -9,17 +10,29 @@ import {
 } from "../../../services/organization-api";
 import type { OrganizationType, formOrganization } from "../../../types/type";
 import type { AxiosError } from "axios";
+
 import OrganizationModal from "./organization-modal";
 import ViewOrganizationModal from "./view-organization-modal";
 import Toast from "../../ui/toast";
+import Loading from "../../ui/loading";
+import { DeleteConfirmModal } from "../../ui/delete-confirm-modal";
 
 const OrganizationsList = () => {
   const [organizations, setOrganizations] = useState<OrganizationType[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [orgToDelete, setOrgToDelete] = useState<OrganizationType | null>(null);
+  const [loadingDelete, setLoadingDelete] = useState(false);
+
   const [loading, setLoading] = useState(false);
+  const [loadingFetch, setLoadingFetch] = useState(false);
+
   const [formErrors, setFormErrors] = useState<string[]>([]);
   const [toastMessage, setToastMessage] = useState("");
+  const [toastMessageType, setToastMessageType] = useState<"success" | "error">("success");
+
   const [selectedOrganization, setSelectedOrganization] = useState<OrganizationType | null>(null);
 
   const [organizationData, setOrganizationData] = useState<formOrganization>({
@@ -36,15 +49,24 @@ const OrganizationsList = () => {
     is_active: true,
   });
 
+  // Fetch organizations list
   const fetchOrganizations = async () => {
-    const data = await apiOrganizations();
-    if (data) setOrganizations(data);
+    setLoadingFetch(true);
+    try {
+      const data = await apiOrganizations();
+      if (data) setOrganizations(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoadingFetch(false);
+    }
   };
 
   useEffect(() => {
     fetchOrganizations();
   }, []);
 
+  // Modal handlers
   const openModal = () => {
     setFormErrors([]);
     setIsModalOpen(true);
@@ -67,11 +89,13 @@ const OrganizationsList = () => {
     });
   };
 
+  // View modal
   const handleViewOrganization = (org: OrganizationType) => {
     setSelectedOrganization(org);
     setIsViewModalOpen(true);
   };
 
+  // Submit create/update
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -85,6 +109,7 @@ const OrganizationsList = () => {
       await fetchOrganizations();
       closeModal();
       setToastMessage("Organisation enregistrée avec succès !");
+      setToastMessageType("success");
     } catch (error: unknown) {
       const err = error as AxiosError<{ errors: string[] }>;
       if (err.response?.data?.errors) {
@@ -92,11 +117,13 @@ const OrganizationsList = () => {
       } else {
         setFormErrors(["Une erreur inattendue s'est produite."]);
       }
+      setToastMessageType("error");
     } finally {
       setLoading(false);
     }
   };
 
+  // Edit handler
   const handleEdit = (org: OrganizationType) => {
     setOrganizationData({
       id: org.id,
@@ -116,27 +143,44 @@ const OrganizationsList = () => {
     setIsModalOpen(true);
   };
 
+  // Activate/deactivate
   const handleChangeIsActive = async (id: number, value: boolean) => {
     try {
       await activeOrDisableOrganization(id, value);
       await fetchOrganizations();
       setToastMessage(`Organisation ${value ? "activée" : "désactivée"} avec succès !`);
+      setToastMessageType("success");
     } catch (error) {
       console.error("Erreur changement statut organisation :", error);
+      setToastMessage("Erreur lors du changement de statut.");
+      setToastMessageType("error");
     }
   };
 
-  const handleDelete = async (id: number) => {
-    if (!confirm("Voulez-vous vraiment supprimer cette organisation ? Cette action est irréversible.")) {
-      return;
-    }
+  // Confirm delete modal open
+  const confirmDelete = (org: OrganizationType) => {
+    setOrgToDelete(org);
+    setIsDeleteModalOpen(true);
+  };
+
+  // Delete handler
+  const handleConfirmDelete = async () => {
+    if (!orgToDelete) return;
+
+    setLoadingDelete(true);
     try {
-      await deleteOrganization(id);
+      await deleteOrganization(orgToDelete.id);
       await fetchOrganizations();
       setToastMessage("Organisation supprimée avec succès !");
+      setToastMessageType("success");
     } catch (error) {
       console.error("Erreur suppression organisation :", error);
-      setToastMessage("Erreur lors de la suppression.");
+      setToastMessage("Vous ne pouvez pas supprimer une organisation qui a des utilisateurs !");
+      setToastMessageType("error");
+    } finally {
+      setLoadingDelete(false);
+      setIsDeleteModalOpen(false);
+      setOrgToDelete(null);
     }
   };
 
@@ -151,72 +195,76 @@ const OrganizationsList = () => {
       </div>
 
       <div className="overflow-x-auto">
-        <table className="table table-zebra w-full">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Nom</th>
-              <th>Email</th>
-              <th>Domaine</th>
-              <th>Activé</th>
-              <th>Vérifié</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {organizations.length > 0 ? (
-              organizations.map((org, i) => (
-                <tr key={org.id}>
-                  <td>{i + 1}</td>
-                  <td>{org.name}</td>
-                  <td>{org.email}</td>
-                  <td>{org.domain}</td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      checked={org.is_active ?? false}
-                      className="checkbox"
-                      onChange={(e) => handleChangeIsActive(org.id, e.target.checked)}
-                    />
-                  </td>
-                  <td>
-                    {org.verified ? (
-                      <span className="badge badge-success">Oui</span>
-                    ) : (
-                      <span className="badge badge-ghost">Non</span>
-                    )}
-                  </td>
-                  <td className="flex gap-2 flex-wrap">
-                    <button
-                      className="btn btn-xs text-info btn-outline"
-                      onClick={() => handleViewOrganization(org)}
-                    >
-                      Voir
-                    </button>
-                    <button
-                      className="btn btn-xs text-accent btn-outline"
-                      onClick={() => handleEdit(org)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="btn btn-xs btn-error btn-outline"
-                      onClick={() => handleDelete(org.id)}
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
+        {loadingFetch ? (
+          <Loading />
+        ) : (
+          <table className="table table-zebra w-full">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Domaine</th>
+                <th>Activé</th>
+                <th>Vérifié</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {organizations.length > 0 ? (
+                organizations.map((org, i) => (
+                  <tr key={org.id}>
+                    <td>{i + 1}</td>
+                    <td>{org.name}</td>
+                    <td>{org.email}</td>
+                    <td>{org.domain}</td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        checked={org.is_active ?? false}
+                        className="checkbox"
+                        onChange={(e) => handleChangeIsActive(org.id, e.target.checked)}
+                      />
+                    </td>
+                    <td>
+                      {org.verified ? (
+                        <span className="badge badge-success">Oui</span>
+                      ) : (
+                        <span className="badge badge-ghost">Non</span>
+                      )}
+                    </td>
+                    <td className="flex gap-2 flex-wrap">
+                      <button
+                        className="btn btn-xs text-info btn-outline"
+                        onClick={() => handleViewOrganization(org)}
+                      >
+                        Voir
+                      </button>
+                      <button
+                        className="btn btn-xs text-accent btn-outline"
+                        onClick={() => handleEdit(org)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="btn btn-xs btn-error btn-outline"
+                        onClick={() => confirmDelete(org)}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={7} className="text-center">
+                    Aucune organisation pour le moment.
                   </td>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={7} className="text-center">
-                  Aucune organisation pour le moment.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              )}
+            </tbody>
+          </table>
+        )}
       </div>
 
       <OrganizationModal
@@ -235,7 +283,20 @@ const OrganizationsList = () => {
         organization={selectedOrganization}
       />
 
-      {toastMessage && <Toast message={toastMessage} onClose={() => setToastMessage("")} />}
+      <DeleteConfirmModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => {
+          setIsDeleteModalOpen(false);
+          setOrgToDelete(null);
+        }}
+        onConfirm={handleConfirmDelete}
+        itemName={orgToDelete?.name}
+        loading={loadingDelete}
+      />
+
+      {toastMessage && (
+        <Toast type={toastMessageType} message={toastMessage} onClose={() => setToastMessage("")} />
+      )}
     </div>
   );
 };

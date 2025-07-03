@@ -61,3 +61,4 @@ export const deleteOrganization = async (id: number): Promise<void> => {
     throw error;
   }
 };
+

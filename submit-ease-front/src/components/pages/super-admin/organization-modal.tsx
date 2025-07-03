@@ -1,4 +1,3 @@
-import type { OrganizationType } from "../../../types/type";
 import Alert from "../../ui/alert";
 
 type formOrganization = {
@@ -37,7 +36,7 @@ export default function OrganizationModal({
 }: Props) {
   return (
     <dialog className={`modal ${isOpen ? "modal-open" : ""}`}>
-      <div className="modal-box">
+      <div className="modal-box w-lg">
         <h3 className="font-bold text-lg mb-4">
           {organizationData.id ? "Modification d'organisation" : "Ajouter une organisation"}
         </h3>
@@ -45,32 +44,34 @@ export default function OrganizationModal({
         {formErrors.length > 0 && <Alert messages={formErrors} />}
 
         <form onSubmit={onSubmit} className="space-y-3">
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Nom</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Nom de l'organisation"
-              className="input input-bordered w-full"
-              value={organizationData.name}
-              onChange={(e) => setOrganizationData({ ...organizationData, name: e.target.value })}
-              required
-            />
-          </div>
+          <div className="flex gap-2">
+            <div className="form-control w-1/2">
+              <label className="label">
+                <span className="label-text">Nom</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Nom de l'organisation"
+                className="input input-bordered w-full"
+                value={organizationData.name}
+                onChange={(e) => setOrganizationData({ ...organizationData, name: e.target.value })}
+                required
+              />
+            </div>
 
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Email</span>
-            </label>
-            <input
-              type="email"
-              placeholder="email@exemple.com"
-              className="input input-bordered w-full"
-              value={organizationData.email}
-              onChange={(e) => setOrganizationData({ ...organizationData, email: e.target.value })}
-              required
-            />
+            <div className="form-control w-1/2">
+              <label className="label">
+                <span className="label-text">Email</span>
+              </label>
+              <input
+                type="email"
+                placeholder="email@exemple.com"
+                className="input input-bordered w-full"
+                value={organizationData.email}
+                onChange={(e) => setOrganizationData({ ...organizationData, email: e.target.value })}
+                required
+              />
+            </div>
           </div>
 
           <div className="form-control">
@@ -99,7 +100,6 @@ export default function OrganizationModal({
             />
           </div>
 
-          {/* Group Pays + Ville */}
           <div className="flex gap-2">
             <div className="form-control w-1/2">
               <label className="label">
@@ -177,3 +177,5 @@ export default function OrganizationModal({
     </dialog>
   );
 }
+
+

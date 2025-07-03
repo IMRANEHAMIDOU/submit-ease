@@ -81,6 +81,11 @@ export const adminRoutes: RouteType[] = [
     name: 'Détails candidature',
     icon: Eye,
   },
+  {
+    path: '/admin/profile',
+    name: 'Profil',
+    icon: User,
+  },
 ]
 
 // 🟡 Routes candidat
@@ -95,6 +100,7 @@ export const candidateRoutes: RouteType[] = [
     name: 'Mon profile',
     icon: User,
   },
+  
 ]
 
 // 🔴 Routes superadmin
@@ -113,5 +119,10 @@ export const superAdminRoutes: RouteType[] = [
     path: '/superadmin/users',
     name: 'Utilisateurs',
     icon: Users,
+  },
+  {
+    path: '/superadmin/profile',
+    name: 'Profil',
+    icon: User,
   },
 ]

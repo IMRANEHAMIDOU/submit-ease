@@ -1,2 +1,0 @@
-class CompaingnsController < ApplicationController
-end

@@ -5,7 +5,6 @@ class CreateCampaignProfiles < ActiveRecord::Migration[8.0]
       t.string :description
       t.integer :positions_available
       t.references :compaign, null: false, foreign_key: true
-
       t.timestamps
     end
   end
