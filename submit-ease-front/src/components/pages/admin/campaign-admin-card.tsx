@@ -1,5 +1,6 @@
-import { Calendar, Edit3, Eye, FileText, MessageCircle, Trash2, Users } from 'lucide-react';
+import { Calendar, Copy, Edit3, ExternalLink, Eye, FileText, MessageCircle, Trash2, Users } from 'lucide-react';
 import type { CampaignType } from '../../../types/type';
+import { Link } from 'react-router-dom';
 
 const CampaignAdminCard = ({ campaign, confirmDelete , onEdit}: { campaign: CampaignType, confirmDelete: (campaign: CampaignType)=>void , onEdit: (campaign: CampaignType)=>void}) => {
 
@@ -33,6 +34,14 @@ const CampaignAdminCard = ({ campaign, confirmDelete , onEdit}: { campaign: Camp
             return "bg-gray-100 text-gray-500 border-gray-200"
         }
     }
+
+    const copyToClipboard = (text  : string) => {
+      navigator.clipboard.writeText(text).then(() => {
+        //console.log('Lien copié !');
+      }).catch(err => {
+        console.error('Erreur lors de la copie:', err);
+      });
+    };
 
 
     return (
@@ -111,6 +120,36 @@ const CampaignAdminCard = ({ campaign, confirmDelete , onEdit}: { campaign: Camp
             )}
           </div>
 
+          {/** lien de plublication */}
+          <div className="bg-base-200/30 rounded-xl p-4 mb-6">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex-1 min-w-0">
+                <p className="text-base-content/60 mb-1 text-sm">Lien de publication</p>
+                <p className="font-medium text-base-content truncate" title={campaign.publication_link}>
+                  {campaign.publication_link}
+                </p>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => copyToClipboard(campaign.publication_link!)}
+                  className="btn btn-ghost btn-sm rounded-lg hover:bg-primary/10 transition-colors flex items-center justify-center"
+                  title="Copier le lien"
+                >
+                  <Copy className="w-4 h-4" />
+                </button>
+                <a
+                  href={campaign.publication_link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-ghost btn-sm rounded-lg hover:bg-primary/10 transition-colors flex items-center justify-center"
+                  title="Ouvrir dans un nouvel onglet"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+              </div>
+            </div>
+          </div>
+
           <div className="bg-base-200/30 rounded-xl p-4 mb-6 grid grid-cols-2 gap-4 text-sm">
             <div>
               <p className="text-base-content/60 mb-1">Ouverture</p>
@@ -123,10 +162,10 @@ const CampaignAdminCard = ({ campaign, confirmDelete , onEdit}: { campaign: Camp
           </div>
 
           <div className="flex gap-2">
-            <button className="flex-1 btn btn-primary rounded-xl font-medium transition-all duration-200 hover:shadow-lg transform hover:scale-105 flex items-center justify-center gap-2">
+            <Link to={'/admin/campaigns/'+campaign.id} className="flex-1 btn btn-primary rounded-xl font-medium transition-all duration-200 hover:shadow-lg transform hover:scale-105 flex items-center justify-center gap-2">
               <Eye className="w-4 h-4" />
               Voir
-            </button>
+            </Link>
             <button onClick={()=>onEdit(campaign)} className="flex-1 btn btn-outline rounded-xl font-medium transition-all duration-200 hover:shadow-lg transform hover:scale-105 flex items-center justify-center gap-2">
               <Edit3 className="w-4 h-4" />
               Modifier

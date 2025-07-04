@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import CampaignCard from './campaign/campaign-card';
-import { apiPublicCampaigns } from '../../services/campaign-api';
-import type { CampaignType } from '../../types/type';
-import Loading from '../ui/loading';
+import CampaignCard from './campaign-card';
+import { apiPublicCampaigns } from '../../../services/campaign-api';
+import type { CampaignType } from '../../../types/type';
+import Loading from '../../ui/loading';
 
 const Campaigns = () => {
   const [campaigns, setCampaigns] = useState<CampaignType[]>([]);

@@ -23,6 +23,24 @@ export const apiPublicCampaigns = async (): Promise<CampaignType[]> => {
   }
 };
 
+export const showCampaignPublic = async(id:string = '', link:string='' )=>{
+  try {
+    const res = await api.get(`/campaigns/show?link=${link}&id=${id}`)
+    //console.log( res.data)
+    return res.data as CampaignType
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const showCampaignAdmin = async(id:number, organization_id:number)=>{
+  try {
+    const res = await api.get(`/admin/organizations/${organization_id}/campaigns/${id}`)
+    return res.data as CampaignType
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 export const createCampaign = async (data : { campaign: CampaignType, organization_id:number }): Promise<CampaignType> => {
   try {

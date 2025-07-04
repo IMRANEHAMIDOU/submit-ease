@@ -64,6 +64,11 @@ export const adminRoutes: RouteType[] = [
 export const candidateRoutes: RouteType[] = [
   {
     path: '/candidate/campaigns',
+    name: 'Tous les concours',
+    icon: Trophy,
+  },
+  {
+    path: '/candidate/mycampaigns',
     name: 'Mes concours',
     icon: Trophy,
   },

@@ -5,27 +5,50 @@ class CampaignsController < ApplicationController
         render json: @campaigns.as_json(include: { campaign_profiles: {} }), status: :ok
     end
 
+    def show_campaign_public
+        if params[:id].present?
+            campaign = Campaign.includes(:campaign_fields, :campaign_profiles, :candidate_applications).find(id:params[:id])
+        elsif params[:link].present?
+            campaign = Campaign.includes(:campaign_fields, :campaign_profiles, :candidate_applications).find_by(publication_link: params[:link])
+        else
+            render json: { message: "Concours introuvable" }, status: :not_found
+            return
+        end
+
+        if campaign
+            render json: campaign.as_json(
+                include: {
+                    campaign_fields: {},
+                    campaign_profiles: {},
+                    candidate_applications: {}
+                }
+                ), status: :ok
+        else
+            render json: { message: "Concours introuvable" }, status: :not_found
+        end
+    end
+
   # Voir la liste des concours de l'organisation en question
     def index
         @campaigns = Campaign.includes(:campaign_fields, :campaign_profiles).where(organization_id: params[:organization_id])
          render json: @campaigns.as_json(
-    include: {
-      campaign_fields: {},
-      campaign_profiles: {},
-      candidate_applications: { only: [:id] }
-    }
-  ), status: :ok
+            include: {
+            campaign_fields: {},
+            campaign_profiles: {},
+            candidate_applications: { only: [:id] }
+            }
+        ), status: :ok
     end
 
 
     def show
-    @campaign = Campaign.includes(:campaign_fields, :campaign_profiles).find_by(id: params[:id])
+        @campaign = Campaign.includes(:campaign_fields, :campaign_profiles, :candidate_applications).find_by(id: params[:id])
 
-    if @campaign
-        render json: @campaign.as_json(include: { campaign_fields: {}, campaign_profiles: {} }), status: :ok
-    else
-        render json: { error: "Campagne introuvable." }, status: :not_found
-    end
+        if @campaign
+            render json: @campaign.as_json(include: { campaign_fields: {}, campaign_profiles: {}, candidate_applications:{} }), status: :ok
+        else
+            render json: { error: "Campagne introuvable." }, status: :not_found
+        end
     end
 
     def create

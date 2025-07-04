@@ -1,7 +1,7 @@
 class CandidateApplication < ApplicationRecord
   belongs_to :user
-  belongs_to :compaign
-  belongs_to :compaign_profile
+  belongs_to :campaign
+  belongs_to :campaign_profile
   belongs_to :organization
 
   enum :application_status, { 

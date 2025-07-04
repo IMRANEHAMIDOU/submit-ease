@@ -78,9 +78,41 @@ export type CampaignProfileType = {
   description?: string
   positions_available: number
 }
+
 export type CandidateApplicationType = {
-  id: number
-}
+  id: number;
+  registration_number: string;
+  user_id: number;
+  campaign_id: number;
+  campaign_profile_id: number;
+  organization_id: number;
+  application_status: string;
+  status_reason?: string;
+  application_score: number;
+  writen_test_average?: number;
+  interview_test_authorized: boolean;
+  created_at: string;
+  updated_at: string;
+
+
+  user?: UserType;
+  campaign?: CampaignType;
+  campaign_profile?: CampaignProfileType;
+  organization?: OrganizationType;
+  application_responses?: ApplicationResponseType[];
+};
+
+export type ApplicationResponseType = {
+  id: number;
+  candidate_application_id: number;
+  campaign_field_id: number;
+  response_value: string;
+  created_at: string;
+  updated_at: string;
+  campaign_field?: CampaignFieldType;
+};
+
+
 export type CampaignType = {
   id?: number
   title: string

@@ -96,8 +96,8 @@ const CampaignCard = ({ campaign }: { campaign: CampaignType }) => {
 
         {/* Action */}
         <div className="card-actions justify-between items-center">
-          <Link to={`/campaigns/${campaign.id}`} className="btn btn-primary btn-sm flex-1">
-            Postuler
+          <Link to={`/c/${campaign.publication_link}`} className="btn btn-primary btn-sm flex-1">
+            Voir plus et Postuler
             <ChevronRight className="w-4 h-4" />
           </Link>
         </div>
