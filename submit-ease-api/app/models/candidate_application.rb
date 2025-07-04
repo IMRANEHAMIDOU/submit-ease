@@ -1,8 +1,7 @@
 class CandidateApplication < ApplicationRecord
-  belongs_to :user
-  belongs_to :compaign
-  belongs_to :compaign_profile
-  belongs_to :organization
+  belongs_to :campaign, optional: true
+  belongs_to :campaign_profile, optional: true
+  belongs_to :organization, optional: true
 
   enum :application_status, { 
     pending: 0, 
