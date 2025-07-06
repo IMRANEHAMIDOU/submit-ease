@@ -30,19 +30,19 @@ export type CompagnProfileType = {
 }
 
 export type OrganizationType = {
-  id: number
+  id?: number
   name: string
-  description: string
-  logo: string
-  domain: string
-  contact_person: string
-  email: string
-  country: string
-  city: string
-  verified: boolean
-  is_active: boolean
-  address: string
-  website: string
+  description?: string
+  logo?: string
+  domain?: string
+  contact_person?: string
+  email?: string
+  country?: string
+  city?: string
+  verified?: boolean
+  is_active?: boolean
+  address?: string
+  website?: string
 }
 
 export type FormOrganization = {
@@ -93,8 +93,6 @@ export type CandidateApplicationType = {
   interview_test_authorized: boolean;
   created_at: string;
   updated_at: string;
-
-
   user?: UserType;
   campaign?: CampaignType;
   campaign_profile?: CampaignProfileType;
@@ -130,3 +128,11 @@ export type CampaignType = {
   campaign_profiles: CampaignProfileType[]
   candidate_applications?: CandidateApplicationType[]; //
 }
+
+
+//--------------------------------------------
+export type ToastProps = {
+  message: string;
+  type?: string
+  onClose: () => void;
+};

@@ -1,24 +1,25 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Login from './components/pages/login'
-import SignUp from './components/pages/signup'
-import Home from './components/pages/home'
-import Wrapper from './layouts/wrapper'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Login from './pages/auth/login'
+import SignUp from './pages/auth/signup'
+import Home from './pages/home'
+import NotFound from './pages/not-fount'
+import Campaigns from './pages/public/campaigns'
+import CampaignList from './pages/admin/campaign-list'
+import CampaignAdminShow from './pages/admin/campaign-admin-show'
+import OrganizationsList from './pages/superadmin/organization-list'
+import UsersList from './pages/superadmin/users-list'
+import SuperAdminDashboard from './pages/superadmin/super-admin'
+import MyCampaigns from './pages/candidate/my-campaigns'
+import Postule from './pages/candidate/postule'
+
 import AuthLayout from './layouts/auth-layout'
 import HomeLayout from './layouts/home-layout'
-import AdminLayout from './layouts/admin-layout'
-import NotFound from './components/pages/not-fount'
-import Campaigns from './components/pages/campaign/campaigns'
-import AdminOrganization from './components/pages/admin/admin-organization'
-import SuperAdmin from './components/pages/super-admin/super-admin'
-import OrganizationsList from './components/pages/super-admin/organizations-list'
-import UsersList from './components/pages/super-admin/users-list'
-import CanditateAdmin from './components/pages/candidate/canditate-admin'
-import CampaignList from './components/pages/admin/campaign-list'
-import ProfileUser from './components/pages/super-admin/ProfileUser'
-import CampaignAdminShow from './components/pages/admin/campaign-show'
-import Postule from './components/pages/candidate/postule'
-import MyCampaigns from './components/pages/candidate/my-campaigns'
-
+import AdminDashboard from './pages/admin/admin-dashboard'
+import CampaignPublicShow from './pages/public/campaign-public-show'
+import CandidateDashboard from './pages/candidate/candidate-dashboard'
+import ProfileUser from './pages/shared/profile-user'
+import RequireAuth from './layouts/RequireAuth'
+import BaseLayout from './layouts/BaseLayout'
 
 function App() {
   return (
@@ -34,33 +35,30 @@ function App() {
         <Route element={<HomeLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/campaigns" element={<Campaigns />} />
-          <Route path="/c/:link" element={<CampaignAdminShow role='candidate' />} />
+          <Route path="/c/:link" element={<CampaignPublicShow />} />
         </Route>
 
-        {/* Admin and superadmin routes */}
-        <Route element={<AdminLayout />}>
-          <Route path="/admin" element={<AdminOrganization />} />
+        {/* Connected routes (BaseLayout commun) */}
+        <Route element={<RequireAuth allowedRoles={['admin', 'superadmin', 'candidate']}>
+          <BaseLayout /></RequireAuth>}>
+
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/campaigns" element={<CampaignList />} />
-          <Route path="/admin/campaigns/:id" element={<CampaignAdminShow role='admin' />} />
+          <Route path="/admin/campaigns/:id" element={<CampaignAdminShow />} />
+          <Route path="/admin/profile" element={<ProfileUser />} />
 
-          <Route path="/superadmin" element={<SuperAdmin />} />
-          <Route path="/superadmin/organizations" element={<OrganizationsList />} />
-          <Route path="/superadmin/users" element={<UsersList />} />
-          {/* Tu peux continuer à ajouter tes autres routes */}
-
-          <Route path="/candidate" element={<CanditateAdmin />} />
+          {/* Candidate */}
+          <Route path="/candidate/dashboard" element={<CandidateDashboard/>} />
           <Route path="/candidate/campaigns" element={<Campaigns />} />
           <Route path="/candidate/mycampaigns" element={<MyCampaigns />} />
           <Route path="/candidate/c/:link" element={<Postule />} />
           <Route path="/candidate/profile" element={<ProfileUser />} />
 
-          <Route path="/admin/profile" element={<ProfileUser />} />
+          {/* SuperAdmin */}
+          <Route path="/superadmin/dashboard" element={<SuperAdminDashboard />} />
+          <Route path="/superadmin/organizations" element={<OrganizationsList />} />
+          <Route path="/superadmin/users" element={<UsersList />} />
           <Route path="/superadmin/profile" element={<ProfileUser />} />
-        </Route>
-
-        {/* Wrapper routes */}
-        <Route element={<Wrapper />}>
-          {/* Protected routes si besoin */}
         </Route>
 
         {/* 404 */}

@@ -4,16 +4,16 @@ import { useState, useEffect } from 'react'
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser'
 import useSignOut from 'react-auth-kit/hooks/useSignOut'
-import type { UserType } from '../types/type'
 import ThemeSelector from '../components/theme-selector'
-import { adminRoutes, candidateRoutes, publicRoutes, superAdminRoutes, type RouteType } from '../routes/AppRoutes'
+import type { UserType } from '../types/type'
+import { adminRoutes, candidateRoutes, publicRoutes, superAdminRoutes } from '../routes/AppRoutes'
 
-export default function AdminLayout() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [isLargeScreen, setIsLargeScreen] = useState(false)
+export default function BaseLayout() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
+  const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false)
   const location = useLocation()
   const isAuthenticated = useIsAuthenticated()
-  const user: UserType | null = useAuthUser()
+  const user : UserType|null = useAuthUser()
   const signOut = useSignOut()
 
   useEffect(() => {
@@ -25,7 +25,6 @@ export default function AdminLayout() {
     return () => window.removeEventListener('resize', checkScreenSize)
   }, [])
 
-  // Redirection si non connecté
   if (!isAuthenticated) {
     window.location.href = '/login'
     return null
@@ -36,22 +35,13 @@ export default function AdminLayout() {
     window.location.href = '/login'
   }
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen)
-  }
+  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen)
+  const closeMobileMenu = () => setIsMobileMenuOpen(false)
+  const isActiveLink = (path : string) => location.pathname === path
 
-  const closeMobileMenu = () => {
-    setIsMobileMenuOpen(false)
-  }
-
-  const isActiveLink = (path: string) => {
-    return location.pathname === path
-  }
-
-const getRoutesByRole = (): RouteType[] => {
-  if (!user?.role) return []
-
-  switch (user.role) {
+  const getRoutesByRole = () => {
+    if (!user?.role) return publicRoutes
+    switch (user.role) {
       case 'admin':
         return adminRoutes
       case 'candidate':

@@ -16,7 +16,7 @@ class Campaign < ApplicationRecord
 
   private
   def generate_publication_link
-    base_link = title.paramsterize
+    base_link = title.parameterize
     unique_part = SecureRandom.hex(2)
     self.publication_link = "#{base_link}-#{unique_part}"
   end

@@ -1,6 +1,6 @@
 class CandidateApplicationsController < ApplicationController
-  # Si besoin d'authentification API
-  # before_action :authenticate_user!
+
+  before_action :authenticate_user!
 
   def create
     # Créer la candidature
@@ -21,6 +21,30 @@ class CandidateApplicationsController < ApplicationController
       render json: { message: "Candidature créée avec succès", application: application }, status: :created
     else
       render json: { errors: application.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  def show
+    @application = CandidateApplication
+      .includes(
+        :user,
+        :campaign_profile,
+        application_responses: [:campaign_field]
+      )
+      .find_by(id: params[:id])
+
+    if @application
+      render json: @application.as_json(
+        include: {
+          user: {},
+          campaign_profile: {},
+          application_responses: {
+            include: :campaign_field
+          }
+        }
+      ), status: :ok
+    else
+      render json: { error: "Candidature introuvable." }, status: :not_found
     end
   end
 

@@ -25,6 +25,8 @@ Rails.application.routes.draw do
   get '/campaigns', to:"campaigns#public_campaigns"
   get '/campaigns/show', to:"campaigns#show_campaign_public"
 
+  
+
   resources :candidate_applications
   resources :compaign_fields
 end

@@ -17,3 +17,8 @@ export const createCandidateApplication = async (
     throw error
   }
 }
+
+export const apiGetCandidateApplication = async (id: number) => {
+  const res = await api.get(`/candidate_applications/${id}`);
+  return res.data;
+};
