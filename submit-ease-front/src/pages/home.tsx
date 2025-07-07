@@ -20,6 +20,7 @@ import {
   BarChart3,
   User
 } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 // === Types ===
 
@@ -149,10 +150,10 @@ export default function Home() {
                 Découvrir la plateforme
                 <ChevronRight className="w-5 h-5 ml-2" />
               </button>
-              <button className="btn border-accent text-accent btn-lg hover:bg-accent hover:text-accent-content transition-all">
+              <Link to={'/signup'} className="btn border-accent text-accent btn-lg hover:bg-accent hover:text-accent-content transition-all">
                 <Play className="w-5 h-5 mr-2" />
                 Voir la démo
-              </button>
+              </Link>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
@@ -406,13 +407,11 @@ export default function Home() {
             Rejoignez les centaines d'organisations qui font confiance à SubmitEase
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="btn btn-lg bg-white text-accent hover:bg-base-100 border-none shadow-lg transform hover:scale-105 transition-all duration-300">
-              Commencer gratuitement
+            <Link to={'/signup'} className="btn btn-lg bg-white text-accent hover:bg-base-100 border-none shadow-lg transform hover:scale-105 transition-all duration-300">
+              Commencer gratuitement, en créant votre compte organisation
               <ArrowRight className="w-5 h-5 ml-2" />
-            </button>
-            <button className="btn btn-lg btn-outline border-white text-white hover:bg-white hover:text-accent transition-all duration-300">
-              Demander une démo
-            </button>
+            </Link>
+
           </div>
         </div>
       </section>
