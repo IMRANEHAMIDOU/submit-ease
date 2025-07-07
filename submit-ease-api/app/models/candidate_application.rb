@@ -3,7 +3,8 @@ class CandidateApplication < ApplicationRecord
   belongs_to :campaign
   belongs_to :campaign_profile
   belongs_to :organization
-  has_many :application_responses
+
+  has_many :application_responses, dependent: :destroy
 
   enum :application_status, { 
     pending: 0, 

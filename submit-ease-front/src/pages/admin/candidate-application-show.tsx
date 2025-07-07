@@ -1,14 +1,16 @@
-import type { CandidateApplicationType } from '../../types/type';
 import { Calendar, Mail, Phone, User, Download, Eye, FileText, Image, Save } from 'lucide-react';
-import { formatDate } from '../../utils/utils';
+import { formatDate, getAxiosErrorMessage } from '../../utils/utils';
 import { useState } from 'react';
+import { updateCandidateApplication } from '../../services/candidate-application-api';
+import type { CandidateApplicationType } from '../../types/type';
+import Toast from '../../components/toast';
 
 const CandidateApplicationShow = ({ 
   application, 
-  onClose 
+  onClose,
 }: { 
   application: CandidateApplicationType, 
-  onClose: (v: boolean) => void 
+  onClose: (v: boolean) => void,
 }) => {
   
   const [formData, setFormData] = useState({
@@ -20,6 +22,8 @@ const CandidateApplicationShow = ({
   });
 
   const [isEditing, setIsEditing] = useState(false);
+  const [toastData, setToastData] = useState<{message:string, type?:string}>({message: ''})
+  const applicationInital : CandidateApplicationType = application
 
   const handleInputChange = (field: string, value: any) => {
     setFormData(prev => ({
@@ -28,12 +32,23 @@ const CandidateApplicationShow = ({
     }));
   };
 
-  const handleSave = () => {
-    // Ici vous pouvez appeler votre API pour sauvegarder les changements
-    console.log('Données à sauvegarder:', formData);
-    // Exemple d'appel API:
-    // updateCandidateApplication(application.id, formData);
-    setIsEditing(false);
+  const handleSave = async() => {
+    setIsEditing(true)
+    try {
+      await updateCandidateApplication(application.id, formData)
+
+      setToastData({
+        message: 'Modification effectuer avec succès'
+      })
+    } catch (error) {
+       setToastData({
+        message: getAxiosErrorMessage(error)
+      })
+      application = applicationInital
+    }finally{
+      setIsEditing(false);
+    }
+  
   };
 
   const handleCancel = () => {
@@ -86,7 +101,6 @@ const CandidateApplicationShow = ({
     };
   };
 
-  // Composant pour afficher un fichier
   const FileViewer = ({ base64String, fileName }: { base64String: string, fileName?: string }) => {
     const fileInfo = getFileInfo(base64String);
     
@@ -413,9 +427,6 @@ const CandidateApplicationShow = ({
             </div>
           )}
 
-          {/* Note Test écrit - Section supprimée car intégrée dans la section Candidature */}
-
-          {/* Entretien autorisé - Section supprimée car intégrée dans la section Candidature */}
 
           {/* Réponses du formulaire */}
           {application.application_responses && application.application_responses.length > 0 && (
@@ -474,6 +485,8 @@ const CandidateApplicationShow = ({
           </button>
         </div>
       </div>
+
+      <Toast message={toastData.message} type={toastData.type} onClose={()=>setToastData({message: ''})}/>
     </div>
   );
 };

@@ -7,6 +7,7 @@ import Loading from "../../components/loading";
 import { Send, AlertCircle } from "lucide-react";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import Toast from "../../components/toast";
+import { getAxiosErrorMessage } from "../../utils/utils";
 
 
 
@@ -131,7 +132,7 @@ const Postule = () => {
       console.error("Erreur lors de la soumission:", error);
       setToastData({
         type: 'error',
-        message: 'Une erreur est survenue lors de la soumission. Veuillez réessayer.'
+        message: getAxiosErrorMessage(error)
       });
     } finally {
       setSubmitting(false);

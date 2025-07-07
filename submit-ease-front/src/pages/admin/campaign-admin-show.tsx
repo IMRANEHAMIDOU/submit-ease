@@ -308,7 +308,7 @@ const CampaignAdminShow = () => {
         </div>
       </div>
 
-      <CandidateApplicationsTable candidate_applications={campaign.candidate_applications!} />
+      <CandidateApplicationsTable candidate_applications={campaign.candidate_applications!} refresh={fetchCampaign} />
 
     </div>
   );

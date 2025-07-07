@@ -22,3 +22,17 @@ export const apiGetCandidateApplication = async (id: number) => {
   const res = await api.get(`/candidate_applications/${id}`);
   return res.data;
 };
+
+type updateProps = {
+    application_status: string,
+    status_reason: string,
+    application_score:number,
+    writen_test_average: number,
+    interview_test_authorized: boolean
+  }
+export const updateCandidateApplication = async (id:number, data:updateProps) => {
+  const res = await api.patch(`/candidate_applications/${id}`, {
+    candidate_application :{...data}
+  });
+  return res.data;
+};

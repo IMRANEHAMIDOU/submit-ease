@@ -3,6 +3,14 @@ class CandidateApplicationsController < ApplicationController
   before_action :authenticate_user!
 
   def create
+    existing_application = CandidateApplication.find_by(user_id: application_params[:user_id], campaign_id: application_params[:campaign_id])
+
+    if existing_application
+      render json: { error: "Vous avez déjà postulé à cette concours." }, status: :unprocessable_entity
+      return
+    end
+
+
     # Créer la candidature
     application = CandidateApplication.new(application_params)
 
@@ -48,10 +56,19 @@ class CandidateApplicationsController < ApplicationController
     end
   end
 
-  private
+  def update
+    application = CandidateApplication.find(params[:id])
+    if application.update(application_params)
+      render json: { message: "Modification effectuer avec succès", application: application }, status: :ok
+    else
+      render json: { errors: application.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
 
+  private
   def application_params
     params.require(:candidate_application).permit(
+      :id,
       :registration_number,
       :user_id,
       :campaign_id,

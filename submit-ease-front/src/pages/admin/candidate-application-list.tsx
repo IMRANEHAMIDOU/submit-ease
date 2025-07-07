@@ -6,14 +6,14 @@ import {
   XCircle,
   Clock,
 } from 'lucide-react';
-import type { CandidateApplicationType } from '../../types/type';
+import type {CandidateApplicationType } from '../../types/type';
 import { formatDate } from '../../utils/utils';
 import CandidateApplicationShow from './candidate-application-show';
 import { apiGetCandidateApplication } from '../../services/candidate-application-api';
 
 
 
-const CandidateApplicationsTable = ({candidate_applications}: {candidate_applications:CandidateApplicationType[]}) => {
+const CandidateApplicationsTable = ({candidate_applications,refresh }: {candidate_applications:CandidateApplicationType[], refresh: () => Promise<void> }) => {
   const [selectedApplication, setSelectedApplication] = useState<CandidateApplicationType | null>(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [statusFilter, setStatusFilter] = useState<string>('all');
@@ -62,9 +62,6 @@ const handleViewDetails = async (id: number) => {
     statusFilter === 'all' || app.application_status == statusFilter
   );
 
-  console.log(candidate_applications)
-
-  // === Render ===
   return (
     <div className="min-h-screen bg-base-200/50 p-6">
       <div className="container mx-auto">
@@ -165,7 +162,9 @@ const handleViewDetails = async (id: number) => {
 
         {/* Modal détails */}
         {isDetailModalOpen && selectedApplication && (
-          <CandidateApplicationShow application={selectedApplication} onClose={() => setIsDetailModalOpen(false)} />
+          <CandidateApplicationShow application={selectedApplication} onClose={() => {
+            setIsDetailModalOpen(false)
+            refresh()}} />
         )}
       </div>
     </div>
