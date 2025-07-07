@@ -21,6 +21,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/candidate/mycampaigns', to: 'candidate_applications#my_campaigns'
+
   #public concours
   get '/campaigns', to:"campaigns#public_campaigns"
   get '/campaigns/show', to:"campaigns#show_campaign_public"

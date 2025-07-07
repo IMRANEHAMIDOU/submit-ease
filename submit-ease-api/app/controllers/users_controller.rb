@@ -36,6 +36,24 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET /candidate/mycampaigns
+  # Affiche les candidatures du candidat connecté
+  def my_campaigns
+    user = current_user || User.first # Pour test sans devise
+
+    applications = user.candidate_applications
+                      .includes(:campaign)
+                      .order(created_at: :desc)
+
+    render json: applications.as_json(
+      only: [:id, :registration_number, :application_status, :created_at],
+      include: {
+        campaign: {
+          only: [:id, :nom, :description, :date_ouverture, :date_cloture]
+        }
+      }
+    )
+  end
 
   private
   def user_params

@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+  # Associations
+  has_many :candidate_applications
+  
   devise :database_authenticatable,
          :registerable,
          :recoverable,
