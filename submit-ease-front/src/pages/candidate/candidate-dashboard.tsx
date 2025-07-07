@@ -1,10 +1,8 @@
-import React from 'react';
+import MyApplications from './my-campaigns';
 
 const CandidateDashboard = () => {
     return (
-        <div>
-            <h1>Dashboard Candidate</h1>
-        </div>
+        <MyApplications />
     );
 }
 

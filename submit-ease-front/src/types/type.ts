@@ -124,8 +124,8 @@ export type CampaignType = {
   publication_link?: string
   organization_id: number
   status?:string
-  campaign_fields: CampaignFieldType[]
-  campaign_profiles: CampaignProfileType[]
+  campaign_fields?: CampaignFieldType[]
+  campaign_profiles?: CampaignProfileType[]
   candidate_applications?: CandidateApplicationType[]; //
 }
 
