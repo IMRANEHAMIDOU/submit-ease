@@ -19,6 +19,9 @@ Rails.application.routes.draw do
     resources :organizations do
       resources :campaigns
     end
+
+    get '/admin_dashboard', to:'admins#admin_dashboard'
+    get '/superadmin_dashboard', to:'admins#superadmin_dashboard'
   end
 
   #public concours

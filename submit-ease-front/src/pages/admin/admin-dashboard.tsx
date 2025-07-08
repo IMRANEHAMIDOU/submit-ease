@@ -1,27 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Building2, 
   Users, 
   Trophy, 
   Zap,
   Activity,
-  Eye,
-  MoreHorizontal,
-  ArrowUpRight,
-  ArrowDownRight,
-  BarChart3,
   Shield,
-  Globe
+  Globe,
+  ArrowUpRight,
+  Unlock,
+  FileText
 } from 'lucide-react';
+import { fetchAdminStats } from '../../services/admin-api';
+import type { AdminStatsType } from '../../types/type';
+import StatCard from '../../components/stat-card';
+import Loading from '../../components/loading';
 
-interface StatCardProps {
-  title: string;
-  value: string;
-  icon: React.ReactNode;
-  trend: number;
-  color: string;
-  description: string;
-}
 
 interface ActivityItem {
   id: number;
@@ -32,25 +25,24 @@ interface ActivityItem {
 }
 
 const AdminDashboard: React.FC = () => {
-  const [stats, setStats] = useState({
-    managedUsers: 124,
-    managedContests: 8,
-    pendingApprovals: 3,
-  });
-
+    const [stats, setStats] = useState<AdminStatsType | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Simulation fetch données spécifiques à l'admin
   useEffect(() => {
-    setTimeout(() => {
-      setStats({
-        managedUsers: 150,
-        managedContests: 10,
-        pendingApprovals: 2,
-      });
-      setLoading(false);
-    }, 1200);
+    const loadStats = async () => {
+      try {
+        const data = await fetchAdminStats();
+        setStats(data);
+      } catch (error) {
+        console.error('Erreur en chargeant les stats admin:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadStats();
   }, []);
+
 
   const recentActivities: ActivityItem[] = [
     {
@@ -76,43 +68,6 @@ const AdminDashboard: React.FC = () => {
     },
   ];
 
-  const StatCard: React.FC<StatCardProps> = ({ title, value, icon, trend, color, description }) => (
-    <div className="card bg-gradient-to-br from-base-100 to-base-200 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border border-base-300/50">
-      <div className="card-body p-6">
-        <div className="flex items-start justify-between">
-          <div className="flex-1">
-            <div className={`w-12 h-12 rounded-xl ${color} flex items-center justify-center mb-4 shadow-lg`}>
-              {icon}
-            </div>
-            <h3 className="text-base-content/70 text-sm font-medium mb-1">{title}</h3>
-            {loading ? (
-              <div className="skeleton h-8 w-20"></div>
-            ) : (
-              <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-bold text-base-content">{value}</span>
-                <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
-                  trend >= 0 ? 'bg-success/10 text-success' : 'bg-error/10 text-error'
-                }`}>
-                  {trend >= 0 ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
-                  {Math.abs(trend)}%
-                </div>
-              </div>
-            )}
-            <p className="text-base-content/50 text-xs mt-2">{description}</p>
-          </div>
-          <div className="dropdown dropdown-end">
-            <label tabIndex={0} className="btn btn-ghost btn-sm btn-circle">
-              <MoreHorizontal className="w-4 h-4" />
-            </label>
-            <ul tabIndex={0} className="dropdown-content menu p-2 shadow-lg bg-base-100 rounded-box w-52 border border-base-300">
-              <li><a className="text-sm"><Eye className="w-4 h-4" /> Voir détails</a></li>
-              <li><a className="text-sm"><BarChart3 className="w-4 h-4" /> Statistiques</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
 
   const ActivityCard: React.FC<{ activity: ActivityItem }> = ({ activity }) => {
     const getIcon = () => {
@@ -145,10 +100,13 @@ const AdminDashboard: React.FC = () => {
     );
   };
 
+  if(loading){
+    return <Loading />
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-base-200 to-base-300 p-6">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-secondary to-secondary-focus flex items-center justify-center">
@@ -165,31 +123,35 @@ const AdminDashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <StatCard
-            title="Utilisateurs gérés"
-            value={stats.managedUsers.toString()}
-            icon={<Users className="w-6 h-6 text-white" />}
+            title="Utilisateurs"
+            value={stats!.users_count}
+            icon={<Users className="w-6 h-6 text-primary" />}
+            trend={12}
+            color="bg-primary/10"
+            description="Comparé au mois dernier"
+            loading={false}
+          />
+
+          <StatCard
+            title="Tous les concours"
+            value={stats!.campaigns_count}
+            icon={<FileText className="w-6 h-6 text-primary" />}
+            trend={8}
+            color="bg-primary/10"
+            description="Nombre total de concours créés"
+            loading={false}
+          />
+
+          <StatCard
+            title="Concours ouverts"
+            value={stats!.opened_campaigns_count}
+            icon={<Unlock className="w-6 h-6 text-primary" />}
             trend={5}
-            color="bg-gradient-to-r from-secondary to-secondary-focus"
-            description="Utilisateurs actifs sous votre gestion"
-          />
-          <StatCard
-            title="Concours gérés"
-            value={stats.managedContests.toString()}
-            icon={<Trophy className="w-6 h-6 text-white" />}
-            trend={-2}
-            color="bg-gradient-to-r from-accent to-accent-focus"
-            description="Concours dans votre périmètre"
-          />
-          <StatCard
-            title="Demandes en attente"
-            value={stats.pendingApprovals.toString()}
-            icon={<Zap className="w-6 h-6 text-white" />}
-            trend={3}
-            color="bg-gradient-to-r from-warning to-warning-focus"
-            description="Approvals à traiter"
+            color="bg-primary/10"
+            description="Actuellement ouverts aux candidatures"
+            loading={false}
           />
         </div>
 
@@ -210,30 +172,6 @@ const AdminDashboard: React.FC = () => {
               {recentActivities.map((activity) => (
                 <ActivityCard key={activity.id} activity={activity} />
               ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Actions rapides */}
-        <div className="card bg-base-100 shadow-xl border border-base-300/50 mt-6">
-          <div className="card-body">
-            <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-              <Zap className="w-5 h-5 text-accent" />
-              Actions Rapides
-            </h2>
-            <div className="space-y-3">
-              <button className="btn btn-secondary btn-block justify-start">
-                <Users className="w-4 h-4" />
-                Gérer Utilisateurs
-              </button>
-              <button className="btn btn-accent btn-block justify-start">
-                <Trophy className="w-4 h-4" />
-                Gérer Concours
-              </button>
-              <button className="btn btn-outline btn-block justify-start">
-                <BarChart3 className="w-4 h-4" />
-                Voir Rapports
-              </button>
             </div>
           </div>
         </div>

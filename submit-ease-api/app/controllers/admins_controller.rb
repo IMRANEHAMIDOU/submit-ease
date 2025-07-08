@@ -1,35 +1,31 @@
 class AdminsController < ApplicationController
   before_action :authenticate_user!
-  before_action :authorize_admin!
 
-  # Informations nécessaires pour le tableau de bord admin
-  def index
-    
-    # Nombre d'organisations gérées : souvent 1 (celle de l'admin), sinon adapte selon ta logique
-    organizations_count = current_user.organization.present? ? 1 : 0
-
-    # Utilisateurs de l'organisation de l'admin
+  def admin_dashboard
     users_count = User.where(organization_id: current_user.organization_id).count
-
-    # Concours actifs de l'organisation de l'admin
-    active_contests_count = Contest.where(status: 'active', organization_id: current_user.organization_id).count
-
-    # Utilisateurs en attente d'activation dans l'organisation
-    pending_approvals_count = User.where(organization_id: current_user.organization_id, is_active: false).count
+    opened_campaigns_count = Campaign.where(status: 'open', organization_id: current_user.organization_id).count
+    campaigns_count = Campaign.where(organization_id: current_user.organization_id).count
 
     render json: {
-      managedOrganizations: organizations_count,
-      managedUsers: users_count,
-      activeContests: active_contests_count,
-      pendingApprovals: pending_approvals_count
+        users_count: users_count,
+        opened_campaigns_count: opened_campaigns_count,
+        campaigns_count: campaigns_count
     }
   end
 
-  private
+  def superadmin_dashboard
+    organizations_count = Organization.count
+    users_count = User.count
+    opened_campaigns_count = Campaign.where(status: 'open').count
+    campaigns_count = Campaign.count
+    pending_organisation = Organization.where(verified: false).count
 
-  def authorize_admin!
-    unless current_user.admin? || current_user.superadmin?
-      render json: { error: 'Non autorisé' }, status: :forbidden
-    end
+    render json: {
+        users_count: users_count,
+        opened_campaigns_count: opened_campaigns_count,
+        campaigns_count: campaigns_count,
+        pending_organisation: pending_organisation,
+        organizations_count: organizations_count
+    }
   end
 end

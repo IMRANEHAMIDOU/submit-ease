@@ -4,24 +4,16 @@ import {
   Users, 
   Trophy, 
   Activity,
-  Eye,
-  MoreHorizontal,
   ArrowUpRight,
-  ArrowDownRight,
   Zap,
   Shield,
   Globe,
-  BarChart3
 } from 'lucide-react';
+import StatCard from '../../components/stat-card';
+import { fetchSuperAdminStats } from '../../services/admin-api';
+import type { AdminStatsType } from '../../types/type';
+import { Link } from 'react-router-dom';
 
-interface StatCardProps {
-  title: string;
-  value: string;
-  icon: React.ReactNode;
-  trend: number;
-  color: string;
-  description: string;
-}
 
 interface ActivityItem {
   id: number;
@@ -32,27 +24,24 @@ interface ActivityItem {
 }
 
 const SuperAdmin: React.FC = () => {
-  const [stats, setStats] = useState({
-    organizations: 0,
-    users: 0,
-    contests: 0,
-    activeContests: 0
-  });
-
-  const [loading, setLoading] = useState(true);
-
-  // Simulation du chargement des données
-  useEffect(() => {
-    setTimeout(() => {
-      setStats({
-        organizations: 247,
-        users: 18549,
-        contests: 156,
-        activeContests: 23
-      });
-      setLoading(false);
-    }, 1500);
-  }, []);
+   const [stats, setStats] = useState<AdminStatsType | null>(null);
+    const [loading, setLoading] = useState(true);
+  
+    useEffect(() => {
+      const loadStats = async () => {
+        try {
+          const data = await fetchSuperAdminStats();
+          setStats(data);
+        } catch (error) {
+          console.error('Erreur en chargeant les stats admin:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      loadStats();
+    }, []);
+  
 
   const recentActivities: ActivityItem[] = [
     {
@@ -77,52 +66,6 @@ const SuperAdmin: React.FC = () => {
       user: 'Marie Dubois'
     }
   ];
-
-  const StatCard: React.FC<StatCardProps> = ({ title, value, icon, trend, color, description }) => (
-    <div className="card bg-gradient-to-br from-base-100 to-base-200 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border border-base-300/50">
-      <div className="card-body p-6">
-        <div className="flex items-start justify-between">
-          <div className="flex-1">
-            <div className={`w-12 h-12 rounded-xl ${color} flex items-center justify-center mb-4 shadow-lg`}>
-              {icon}
-            </div>
-            <h3 className="text-base-content/70 text-sm font-medium mb-1">{title}</h3>
-            {loading ? (
-              <div className="flex items-center gap-2">
-                <div className="skeleton h-8 w-20"></div>
-              </div>
-            ) : (
-              <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-bold text-base-content">{value}</span>
-                <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
-                  trend > 0 
-                    ? 'bg-success/10 text-success' 
-                    : 'bg-error/10 text-error'
-                }`}>
-                  {trend > 0 ? (
-                    <ArrowUpRight className="w-3 h-3" />
-                  ) : (
-                    <ArrowDownRight className="w-3 h-3" />
-                  )}
-                  {Math.abs(trend)}%
-                </div>
-              </div>
-            )}
-            <p className="text-base-content/50 text-xs mt-2">{description}</p>
-          </div>
-          <div className="dropdown dropdown-end">
-            <label tabIndex={0} className="btn btn-ghost btn-sm btn-circle">
-              <MoreHorizontal className="w-4 h-4" />
-            </label>
-            <ul tabIndex={0} className="dropdown-content menu p-2 shadow-lg bg-base-100 rounded-box w-52 border border-base-300">
-              <li><a className="text-sm"><Eye className="w-4 h-4" />Voir détails</a></li>
-              <li><a className="text-sm"><BarChart3 className="w-4 h-4" />Statistiques</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
 
   const ActivityCard: React.FC<{ activity: ActivityItem }> = ({ activity }) => {
     const getActivityIcon = () => {
@@ -175,20 +118,26 @@ const SuperAdmin: React.FC = () => {
           </div>
         </div>
 
-        {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <StatCard
             title="Organisations"
-            value={loading ? "..." : stats.organizations.toLocaleString()}
+            value={loading ? "..." : stats!.organizations_count!}
             icon={<Building2 className="w-6 h-6 text-white" />}
             trend={12.5}
             color="bg-gradient-to-r from-primary to-primary-focus"
-            description="Total des organisations actives"
+            description="Total des organisations"
           />
-          
+          <StatCard
+            title="Organisations en attentes"
+            value={loading ? "..." : stats!.pending_organisation!}
+            icon={<Building2 className="w-6 h-6 text-white" />}
+            trend={12.5}
+            color="bg-gradient-to-r from-primary to-primary-focus"
+            description="En attente d'approbation"
+          />
           <StatCard
             title="Utilisateurs"
-            value={loading ? "..." : stats.users.toLocaleString()}
+            value={loading ? "..." : stats!.users_count!}
             icon={<Users className="w-6 h-6 text-white" />}
             trend={8.2}
             color="bg-gradient-to-r from-secondary to-secondary-focus"
@@ -197,24 +146,14 @@ const SuperAdmin: React.FC = () => {
           
           <StatCard
             title="Concours Total"
-            value={loading ? "..." : stats.contests.toString()}
+            value={loading ? "..." : stats!.campaigns_count!}
             icon={<Trophy className="w-6 h-6 text-white" />}
             trend={-2.1}
             color="bg-gradient-to-r from-accent to-accent-focus"
             description="Tous les concours créés"
           />
-          
-          <StatCard
-            title="Concours Actifs"
-            value={loading ? "..." : stats.activeContests.toString()}
-            icon={<Zap className="w-6 h-6 text-white" />}
-            trend={15.7}
-            color="bg-gradient-to-r from-success to-success-focus"
-            description="En cours actuellement"
-          />
         </div>
 
-        {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Activities */}
           <div className="lg:col-span-2">
@@ -248,22 +187,14 @@ const SuperAdmin: React.FC = () => {
                   Actions Rapides
                 </h2>
                 <div className="space-y-3">
-                  <button className="btn btn-primary btn-block justify-start">
+                  <Link to={'/superadmin/organizations'} className="btn btn-primary btn-block justify-start">
                     <Building2 className="w-4 h-4" />
                     Gérer les Organisations
-                  </button>
-                  <button className="btn btn-secondary btn-block justify-start">
+                  </Link>
+                  <Link to={'/superadmin/users'} className="btn btn-secondary btn-block justify-start">
                     <Users className="w-4 h-4" />
                     Gestion Utilisateurs
-                  </button>
-                  <button className="btn btn-accent btn-block justify-start">
-                    <Trophy className="w-4 h-4" />
-                    Modérer les Concours
-                  </button>
-                  <button className="btn btn-outline btn-block justify-start">
-                    <BarChart3 className="w-4 h-4" />
-                    Rapports Détaillés
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>

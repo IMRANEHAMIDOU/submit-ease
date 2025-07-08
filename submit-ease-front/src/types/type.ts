@@ -136,3 +136,11 @@ export type ToastProps = {
   type?: string
   onClose: () => void;
 };
+
+export type AdminStatsType = {
+  users_count: number;
+  opened_campaigns_count: number;
+  campaigns_count: number;
+  pending_organisation?:number,
+  organizations_count?:number
+};

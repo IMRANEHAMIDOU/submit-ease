@@ -5,8 +5,6 @@ import {
   Building2, 
   LayoutDashboard, 
   List, 
-  FileText, 
-  Eye,
   Users,
   type LucideIcon,
 } from 'lucide-react'
@@ -14,10 +12,10 @@ import {
 export type RouteType = {
   path: string
   name: string
-  icon: LucideIcon // tu peux aussi garder LucideIcon si tu veux taper strict
+  icon: LucideIcon
 }
 
-// 🟢 Routes publiques
+
 export const publicRoutes: RouteType[] = [
   {
     path: '/',
@@ -31,7 +29,6 @@ export const publicRoutes: RouteType[] = [
   },
 ]
 
-// 🟠 Routes administrateur
 export const adminRoutes: RouteType[] = [
   {
     path: '/admin/dashboard',
@@ -43,16 +40,6 @@ export const adminRoutes: RouteType[] = [
     name: 'Tous les concours',
     icon: List,
   },
-  {
-    path: '/admin/campaigns/1/applications',
-    name: 'Liste des candidatures',
-    icon: FileText,
-  },
-  {
-    path: '/admin/campaigns/1/applications/1',
-    name: 'Détails candidature',
-    icon: Eye,
-  },
    {
     path: '/admin/profile',
     name: 'Mon profile',
@@ -60,7 +47,6 @@ export const adminRoutes: RouteType[] = [
   },
 ]
 
-// 🟡 Routes candidat
 export const candidateRoutes: RouteType[] = [
   {
     path: '/candidate/dashboard',
@@ -79,7 +65,6 @@ export const candidateRoutes: RouteType[] = [
   },
 ]
 
-// 🔴 Routes superadmin
 export const superAdminRoutes: RouteType[] = [
   {
     path: '/superadmin/dashboard',
