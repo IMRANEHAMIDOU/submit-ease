@@ -37,6 +37,40 @@ class UsersController < ApplicationController
   end
 
 
+def my_campaigns
+  applications = CandidateApplication.includes(:campaign, :campaign_profile).where(user_id: current_user.id).order(id: :desc)
+
+  campaigns = applications.map do |application|
+    campaign_data = {
+      id: application.campaign.id,
+      title: application.campaign.title,
+      description: application.campaign.description,
+      status: application.campaign.status,
+      opening_date: application.campaign.opening_date,
+      closing_date: application.campaign.closing_date,
+      profile_name: application.campaign_profile.name,
+      registration_number: application.registration_number,
+      application_status: application.application_status,
+      created_at: application.created_at
+    }
+
+    if application.campaign.status == "closed"
+      campaign_data.merge!(
+        application_score: application.application_score,
+        writen_test_average: application.writen_test_average,
+        interview_test_authorized: application.interview_test_authorized,
+        status_reason: application.status_reason,
+      )
+    end
+
+    campaign_data
+  end
+
+  render json: campaigns, status: :ok
+end
+
+
+
   private
   def user_params
     params.require(:user).permit(

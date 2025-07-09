@@ -1,3 +1,4 @@
+import type { MyCampaignType } from "../types/type"
 import api from "./api"
 
 export const apiUsers = async ()=>{
@@ -61,4 +62,9 @@ export const apiProfile = async (id: number) => {
         console.error("Erreur API récupération profil :", error);
         throw error;
     }
+};
+
+export const apiMyCampaigns = async (): Promise<MyCampaignType[]> => {
+  const response = await api.get('/my_campaigns');
+  return response.data;
 };

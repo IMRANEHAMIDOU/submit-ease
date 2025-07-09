@@ -144,3 +144,21 @@ export type AdminStatsType = {
   pending_organisation?:number,
   organizations_count?:number
 };
+
+export type MyCampaignType = {
+  id: number
+  title: string
+  description?: string
+  status: string
+  opening_date?: string
+  closing_date?: string
+  profile_name: string 
+  registration_number?: string
+  application_score?: number
+  writen_test_average?: number
+  interview_test_authorized?: boolean
+  application_status?: string
+  status_reason?: string
+  created_at: string
+}
+
