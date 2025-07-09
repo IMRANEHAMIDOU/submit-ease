@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plateforme de Gestion de Candidatures</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            display: none;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            animation: slideIn 0.8s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slide-content {
+            max-width: 1200px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
+            }
+
+            to {
+                filter: drop-shadow(0 0 30px rgba(255, 165, 0, 0.8));
+            }
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #FFD700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-10px);
+            }
+
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .features-grid {
+            display: flex;
+            columns: 3;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+            width: 400px;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .feature-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #FFD700;
+        }
+
+        .feature-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .problem-solution {
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .problem-card,
+        .solution-card {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .problem-card {
+            border-left: 5px solid #ff6b6b;
+        }
+
+        .solution-card {
+            border-left: 5px solid #4ecdc4;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+            display: none
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            font-size: 1rem;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            min-width: 150px;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #FFD700;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .target-audience {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .audience-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            margin: 10px;
+            text-align: center;
+            min-width: 200px;
+            transition: transform 0.3s ease;
+        }
+
+        .audience-item:hover {
+            transform: scale(1.05);
+        }
+
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            flex: 1;
+            margin: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            position: relative;
+            min-width: 250px;
+        }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #FFD700;
+            color: #333;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-icon {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .floating-icon:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-icon:nth-child(2) {
+            top: 20%;
+            right: 10%;
+            animation-delay: 1s;
+        }
+
+        .floating-icon:nth-child(3) {
+            bottom: 30%;
+            left: 15%;
+            animation-delay: 2s;
+        }
+
+        .floating-icon:nth-child(4) {
+            bottom: 10%;
+            right: 20%;
+            animation-delay: 3s;
+        }
+
+        .title-slide {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .title-slide::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveGrid 20s linear infinite;
+        }
+
+        @keyframes moveGrid {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        .cta-button {
+            margin-top: 20px;
+            display: inline-block;
+            text-decoration: none;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: #333;
+            padding: 20px 40px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .problem-solution {
+                flex-direction: column;
+            }
+
+            .process-steps {
+                flex-direction: column;
+            }
+
+            .stats-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="presentation-container">
+        <!-- Slide 1: Titre -->
+        <div class="slide active title-slide">
+            <div class="floating-elements">
+                <div class="floating-icon">📊</div>
+                <div class="floating-icon">💼</div>
+                <div class="floating-icon">🎯</div>
+                <div class="floating-icon">🚀</div>
+            </div>
+            <div class="slide-content">
+                <div class="icon">🚀</div>
+                <h1>Plateforme de Gestion de Candidatures <span class="text-green-500">SubitEase</span></h1>
+                <p class="subtitle">Pour concours, formations et offres d'emploi</p>
+                <p class="subtitle">Une solution moderne, sécurisée et centralisée</p>
+                <button class="cta-button">Découvrir la solution</button>
+            </div>
+        </div>
+
+        <!-- Slide 2: Problème -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="icon">❌</div>
+                <h2>Le Problème Actuel</h2>
+                <div class="problem-solution">
+                    <div class="problem-card">
+                        <div class="feature-icon">😵</div>
+                        <h3>Désorganisation</h3>
+                        <p>• Réception des dossiers par email<br>
+                            • Gestion manuelle sur Excel<br>
+                            • Communication confuse<br>
+                            • Retards et pertes d'informations</p>
+                    </div>
+                    <div class="solution-card">
+                        <div class="feature-icon">💡</div>
+                        <h3>Impact</h3>
+                        <p>• Perte de temps considérable<br>
+                            • Erreurs fréquentes<br>
+                            • Mauvaise expérience candidat<br>
+                            • Manque de transparence</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Solution -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="icon">✨</div>
+                <h2>Notre Solution</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🏢</div>
+                        <div class="feature-title">Pour les Structures</div>
+                        <div class="feature-description">
+                            Compte vérifié, création de campagnes, tableau de bord en temps réel
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">👥</div>
+                        <div class="feature-title">Pour les Candidats</div>
+                        <div class="feature-description">
+                            Inscription simplifiée, suivi en temps réel, notifications automatiques
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <div class="feature-title">Sécurisé</div>
+                        <div class="feature-description">
+                            Comptes vérifiés, données protégées, accès contrôlé
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Fonctionnalités Structures -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="icon">🏢</div>
+                <h2>Fonctionnalités pour les Structures</h2>
+                <div class="process-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Création de Compte</h3>
+                        <p>Compte vérifié par nos administrateurs pour éviter les faux profils</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Création de Campagne</h3>
+                        <p>Définition complète : intitulé, description, critères, pièces requises</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Gestion & Suivi</h3>
+                        <p>Tableau de bord en temps réel, validation des dossiers, résultats</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Fonctionnalités Candidats -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="icon">👥</div>
+                <h2>Expérience Candidat</h2>
+                <div class="process-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Accès Simplifié</h3>
+                        <p>Lien public partagé, consultation des détails, inscription directe</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Dépôt de Dossier</h3>
+                        <p>Formulaire intelligent, attachement des pièces, soumission sécurisée</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Suivi en Temps Réel</h3>
+                        <p>Vérification du statut, notifications automatiques, transparence totale</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Valeurs Clés -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="icon">💎</div>
+                <h2>Valeurs Clés du Projet</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔍</div>
+                        <div class="feature-title">Transparence</div>
+                        <div class="feature-description">
+                            Clarté totale dans la gestion des candidatures
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <div class="feature-title">Efficacité</div>
+                        <div class="feature-description">
+                            Gain de temps considérable pour les structures
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <div class="feature-title">Simplicité</div>
+                        <div class="feature-description">
+                            Suivi facile et intuitif pour les candidats
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🛡️</div>
+                        <div class="feature-title">Fiabilité</div>
+                        <div class="feature-description">
+                            Réduction des erreurs et pertes de dossiers
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Public Cible -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="icon">🎯</div>
+                <h2>Public Cible</h2>
+                <div class="target-audience">
+                    <div class="audience-item">
+                        <div class="feature-icon">🌍</div>
+                        <h3>ONG</h3>
+                        <p>Organisations non gouvernementales</p>
+                    </div>
+                    <div class="audience-item">
+                        <div class="feature-icon">🏛️</div>
+                        <h3>Institutions</h3>
+                        <p>Publiques et privées</p>
+                    </div>
+                    <div class="audience-item">
+                        <div class="feature-icon">🎓</div>
+                        <h3>Éducation</h3>
+                        <p>Écoles et universités</p>
+                    </div>
+                    <div class="audience-item">
+                        <div class="feature-icon">🏢</div>
+                        <h3>Entreprises</h3>
+                        <p>Tous secteurs d'activité</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Conclusion -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="icon">🎯</div>
+                <h2>Révolutionnons le Recrutement</h2>
+                <p class="subtitle">Une plateforme moderne pour une gestion efficace des candidatures</p>
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Numérique</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">0</span>
+                        <span class="stat-label">Perte de dossier</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-label">Disponible</span>
+                    </div>
+                </div>
+                <a href="http://127.0.0.1:5173/" target="_blank" rel="noopener noreferrer" class="cta-button">Commencer
+                    maintenant</a>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-counter">
+        <span id="current-slide">1</span> / <span id="total-slides">8</span>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" onclick="previousSlide()">← Précédent</button>
+        <button class="nav-btn" onclick="nextSlide()">Suivant →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('total-slides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function previousSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        // Navigation au clavier
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                previousSlide();
+            } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                nextSlide();
+            }
+        });
+
+        // Auto-avancement (optionnel)
+        // setInterval(nextSlide, 10000); // Change de slide toutes les 10 secondes
+    </script>
+</body>
+
+</html>
