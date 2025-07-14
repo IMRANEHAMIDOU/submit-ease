@@ -226,7 +226,7 @@ const Postule = () => {
                   <textarea
                     placeholder={`Votre réponse pour ${field.label}`}
                     className="textarea textarea-bordered w-full"
-                    value={responses[field.id!].toString() || ""}
+                    value={responses[field.id!] || ""}
                     onChange={(e) => handleChange(field.id!, e.target.value)}
                     required={field.is_required}
                     rows={4}

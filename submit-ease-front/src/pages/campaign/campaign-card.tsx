@@ -1,16 +1,9 @@
 import { Calendar, ChevronRight, Clock, FileText, MessageCircle, Users } from "lucide-react";
 import type { CampaignType } from "../../types/type";
 import { Link } from "react-router-dom";
+import { formatDate } from "../../utils/utils";
 
 const CampaignCard = ({ campaign }: { campaign: CampaignType }) => {
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("fr-FR", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
-  };
 
   const getDaysRemaining = (closingDate: string) => {
     const today = new Date();
@@ -37,8 +30,8 @@ const CampaignCard = ({ campaign }: { campaign: CampaignType }) => {
          <div className="flex items-center gap-2 text-sm">
             <Users className="w-4 h-4 text-primary" />
             <span>
-                {campaign.campaign_profiles.reduce((sum, p) => sum + (p.positions_available || 0), 0)} poste
-                {campaign.campaign_profiles.reduce((sum, p) => sum + (p.positions_available || 0), 0) > 1 ? "s" : ""} disponible
+                {campaign.campaign_profiles!.reduce((sum, p) => sum + (p.positions_available || 0), 0)} poste
+                {campaign.campaign_profiles!.reduce((sum, p) => sum + (p.positions_available || 0), 0) > 1 ? "s" : ""} disponible
             </span>
         </div>
           <div className="flex items-center gap-2 text-sm">
@@ -79,16 +72,16 @@ const CampaignCard = ({ campaign }: { campaign: CampaignType }) => {
         <div className="mb-4">
           <h4 className="text-sm font-semibold mb-2">Profils recherchés :</h4>
           <div className="space-y-1">
-            {campaign.campaign_profiles.slice(0, 2).map((profile) => (
+            {campaign.campaign_profiles!.slice(0, 2).map((profile) => (
               <div key={profile.id} className="text-xs text-base-content/60">
                 • {profile.name} ({profile.positions_available} poste{profile.positions_available > 1 ? "s" : ""})
               </div>
             ))}
-            {campaign.campaign_profiles.length > 2 && (
+            {campaign.campaign_profiles!.length > 2 && (
               <div className="text-xs text-accent">
-                +{campaign.campaign_profiles.length - 2} autre
-                {campaign.campaign_profiles.length - 2 > 1 ? "s" : ""} profil
-                {campaign.campaign_profiles.length - 2 > 1 ? "s" : ""}
+                +{campaign.campaign_profiles!.length - 2} autre
+                {campaign.campaign_profiles!.length - 2 > 1 ? "s" : ""} profil
+                {campaign.campaign_profiles!.length - 2 > 1 ? "s" : ""}
               </div>
             )}
           </div>

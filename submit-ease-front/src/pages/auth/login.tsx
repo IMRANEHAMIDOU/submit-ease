@@ -112,6 +112,14 @@ export default function Login() {
             Créer un compte
           </Link>
         </p>
+         <p className="mt-4 text-center text-sm text-base-content/70">
+          <Link
+            to="/"
+            className="text-success hover:underline font-medium transition-colors"
+          >
+            Retourner sur l'acceuil
+          </Link>
+        </p>
       </div>
     </div>
   )

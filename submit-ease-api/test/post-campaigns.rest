@@ -1,0 +1,359 @@
+// 1. Campagne de Recrutement - Ministère de l'Éducation
+POST http://localhost:3000/admin/organizations/2/campaigns
+Accept: application/json
+Content-Type: application/json
+
+{
+  "campaign": {
+    "title": "Recrutement Enseignants Primaire 2025",
+    "description": "Recrutement de 1200 instituteurs pour les écoles primaires publiques",
+    "has_writen_test": true,
+    "has_interview": true,
+    "opening_date": "2025-08-01T00:00:00Z",
+    "closing_date": "2025-08-31T23:59:59Z",
+    "is_application_limited": true,
+    "max_application": 3000,
+    "publication_link": "https://education.gouv.ne/concours",
+    "organization_id": 3
+  },
+  "campaign_fields": [
+    {
+      "label": "Diplôme BEPC ou équivalent",
+      "description": "Copie certifiée conforme du diplôme",
+      "field_type": "file",
+      "options": null,
+      "order_number": 1,
+      "is_required": true
+    },
+    {
+      "label": "Certificat médical",
+      "description": "Certificat d'aptitude physique datant de moins de 3 mois",
+      "field_type": "file",
+      "options": null,
+      "order_number": 2,
+      "is_required": true
+    },
+    {
+      "label": "Région de préférence",
+      "description": "Choisissez votre région d'affectation souhaitée",
+      "field_type": "select",
+      "options": ["Niamey", "Tillabéri", "Dosso", "Tahoua", "Maradi", "Zinder", "Diffa", "Agadez"],
+      "order_number": 3,
+      "is_required": true
+    }
+  ],
+  "campaign_profiles": [
+    {
+      "name": "Instituteur classe préparatoire",
+      "description": "Enseignement en classe préparatoire (CP)",
+      "positions_available": 400
+    },
+    {
+      "name": "Instituteur classe élémentaire",
+      "description": "Enseignement du CE1 au CM2",
+      "positions_available": 700
+    },
+    {
+      "name": "Instituteur spécialisé",
+      "description": "Enseignement spécialisé (éducation inclusive)",
+      "positions_available": 100
+    }
+  ]
+}
+
+// 2. Campagne de Recrutement - Ministère de la Santé
+POST http://localhost:3000/admin/organizations/3/campaigns
+Accept: application/json
+Content-Type: application/json
+
+{
+  "campaign": {
+    "title": "Recrutement Personnel Soignant 2025",
+    "description": "Recrutement de 800 agents de santé pour renforcer le système sanitaire",
+    "has_writen_test": true,
+    "has_interview": true,
+    "opening_date": "2025-07-15T00:00:00Z",
+    "closing_date": "2025-08-15T23:59:59Z",
+    "is_application_limited": true,
+    "max_application": 2500,
+    "publication_link": "https://sante.gouv.ne/recrutement",
+    "organization_id": 3
+  },
+  "campaign_fields": [
+    {
+      "label": "Diplôme professionnel",
+      "description": "Diplôme d'État en sciences infirmières ou équivalent",
+      "field_type": "file",
+      "options": null,
+      "order_number": 1,
+      "is_required": true
+    },
+    {
+      "label": "Expérience professionnelle",
+      "description": "Attestations de travail et certificats d'expérience",
+      "field_type": "file",
+      "options": null,
+      "order_number": 2,
+      "is_required": false
+    },
+    {
+      "label": "Spécialité médicale",
+      "description": "Votre domaine de spécialisation",
+      "field_type": "select",
+      "options": ["Soins généraux", "Pédiatrie", "Gynécologie", "Chirurgie", "Anesthésie", "Laboratoire", "Radiologie"],
+      "order_number": 3,
+      "is_required": true
+    },
+    {
+      "label": "Mobilité géographique",
+      "description": "Acceptez-vous une affectation en zone rurale ?",
+      "field_type": "radio",
+      "options": ["Oui, sans restriction", "Oui, avec conditions", "Non, zone urbaine uniquement"],
+      "order_number": 4,
+      "is_required": true
+    }
+  ],
+  "campaign_profiles": [
+    {
+      "name": "Infirmier diplômé d'État",
+      "description": "Soins infirmiers généraux en hôpital et centres de santé",
+      "positions_available": 500
+    },
+    {
+      "name": "Sage-femme",
+      "description": "Accompagnement des femmes enceintes et accouchements",
+      "positions_available": 200
+    },
+    {
+      "name": "Technicien de laboratoire",
+      "description": "Analyses médicales et examens de laboratoire",
+      "positions_available": 100
+    }
+  ]
+}
+
+// 3. Campagne de Recrutement - Banque Centrale
+POST http://localhost:3000/admin/organizations/4/campaigns
+Accept: application/json
+Content-Type: application/json
+
+{
+  "campaign": {
+    "title": "Recrutement Cadres Bancaires 2025",
+    "description": "Recrutement de 50 cadres spécialisés pour la supervision bancaire",
+    "has_writen_test": true,
+    "has_interview": true,
+    "opening_date": "2025-09-01T00:00:00Z",
+    "closing_date": "2025-09-30T23:59:59Z",
+    "is_application_limited": true,
+    "max_application": 500,
+    "publication_link": "https://bceao.int/careers",
+    "organization_id": 1
+  },
+  "campaign_fields": [
+    {
+      "label": "Diplôme Master/Maîtrise",
+      "description": "Master en Finance, Économie, ou Gestion",
+      "field_type": "file",
+      "options": null,
+      "order_number": 1,
+      "is_required": true
+    },
+    {
+      "label": "Relevé de notes",
+      "description": "Relevé de notes des 2 dernières années d'études",
+      "field_type": "file",
+      "options": null,
+      "order_number": 2,
+      "is_required": true
+    },
+    {
+      "label": "Langues parlées",
+      "description": "Niveau de maîtrise des langues",
+      "field_type": "checkbox",
+      "options": ["Français (courant)", "Anglais (courant)", "Arabe", "Haoussa", "Zarma", "Fulfuldé"],
+      "order_number": 3,
+      "is_required": true
+    },
+    {
+      "label": "Lettre de motivation",
+      "description": "Exposez vos motivations et projet professionnel (max 2 pages)",
+      "field_type": "textarea",
+      "options": null,
+      "order_number": 4,
+      "is_required": true
+    }
+  ],
+  "campaign_profiles": [
+    {
+      "name": "Analyste financier",
+      "description": "Analyse des risques et supervision des établissements bancaires",
+      "positions_available": 25
+    },
+    {
+      "name": "Inspecteur bancaire",
+      "description": "Contrôle et inspection des banques et institutions financières",
+      "positions_available": 15
+    },
+    {
+      "name": "Économiste",
+      "description": "Études économiques et prévisions macroéconomiques",
+      "positions_available": 10
+    }
+  ]
+}
+
+// 4. Campagne de Recrutement - Municipalité de Niamey
+POST http://localhost:3000/admin/organizations/5/campaigns
+Accept: application/json
+Content-Type: application/json
+
+{
+  "campaign": {
+    "title": "Recrutement Agents Municipaux 2025",
+    "description": "Recrutement de 300 agents pour l'amélioration des services municipaux",
+    "has_writen_test": false,
+    "has_interview": true,
+    "opening_date": "2025-07-20T00:00:00Z",
+    "closing_date": "2025-08-10T23:59:59Z",
+    "is_application_limited": true,
+    "max_application": 1000,
+    "publication_link": "https://ville-niamey.ne/emploi",
+    "organization_id": 3
+  },
+  "campaign_fields": [
+    {
+      "label": "Pièce d'identité",
+      "description": "Copie de la carte d'identité ou passeport",
+      "field_type": "file",
+      "options": null,
+      "order_number": 1,
+      "is_required": true
+    },
+    {
+      "label": "Âge",
+      "description": "Votre âge (18-45 ans)",
+      "field_type": "number",
+      "options": null,
+      "order_number": 2,
+      "is_required": true
+    },
+    {
+      "label": "Arrondissement de résidence",
+      "description": "Dans quel arrondissement habitez-vous ?",
+      "field_type": "select",
+      "options": ["Niamey I", "Niamey II", "Niamey III", "Niamey IV", "Niamey V"],
+      "order_number": 3,
+      "is_required": true
+    },
+    {
+      "label": "Expérience pertinente",
+      "description": "Décrivez votre expérience dans le domaine public ou privé",
+      "field_type": "textarea",
+      "options": null,
+      "order_number": 4,
+      "is_required": false
+    }
+  ],
+  "campaign_profiles": [
+    {
+      "name": "Agent d'hygiène et salubrité",
+      "description": "Nettoyage et maintenance des espaces publics",
+      "positions_available": 150
+    },
+    {
+      "name": "Agent de sécurité municipale",
+      "description": "Surveillance et sécurité des bâtiments municipaux",
+      "positions_available": 100
+    },
+    {
+      "name": "Agent d'accueil",
+      "description": "Accueil et orientation du public dans les services municipaux",
+      "positions_available": 50
+    }
+  ]
+}
+
+// 5. Campagne de Recrutement - Compagnie Minière
+POST http://localhost:3000/admin/organizations/6/campaigns
+Accept: application/json
+Content-Type: application/json
+
+{
+  "campaign": {
+    "title": "Recrutement Techniciens Miniers 2025",
+    "description": "Recrutement de 200 techniciens pour l'exploitation aurifère d'Agadez",
+    "has_writen_test": true,
+    "has_interview": true,
+    "opening_date": "2025-08-15T00:00:00Z",
+    "closing_date": "2025-09-15T23:59:59Z",
+    "is_application_limited": true,
+    "max_application": 800,
+    "publication_link": "https://somairmines.com/carrieres",
+    "organization_id": 3
+  },
+  "campaign_fields": [
+    {
+      "label": "Diplôme technique",
+      "description": "BTS/DUT en mines, géologie, ou mécanique industrielle",
+      "field_type": "file",
+      "options": null,
+      "order_number": 1,
+      "is_required": true
+    },
+    {
+      "label": "Certificat de sécurité",
+      "description": "Formations en sécurité industrielle et minière",
+      "field_type": "file",
+      "options": null,
+      "order_number": 2,
+      "is_required": false
+    },
+    {
+      "label": "Expérience en milieu hostile",
+      "description": "Avez-vous déjà travaillé en zone désertique ?",
+      "field_type": "radio",
+      "options": ["Oui, plus de 2 ans", "Oui, moins de 2 ans", "Non, mais motivé", "Non"],
+      "order_number": 3,
+      "is_required": true
+    },
+    {
+      "label": "Disponibilité",
+      "description": "Acceptez-vous les rotations 28 jours sur site / 14 jours repos ?",
+      "field_type": "radio",
+      "options": ["Oui, sans problème", "Oui, avec conditions familiales", "Non"],
+      "order_number": 4,
+      "is_required": true
+    },
+    {
+      "label": "Compétences techniques",
+      "description": "Cochez vos domaines d'expertise",
+      "field_type": "checkbox",
+      "options": ["Forage", "Explosifs", "Maintenance mécanique", "Électricité industrielle", "Topographie", "Laboratoire", "Sécurité"],
+      "order_number": 5,
+      "is_required": true
+    }
+  ],
+  "campaign_profiles": [
+    {
+      "name": "Technicien de forage",
+      "description": "Conduite et maintenance des équipements de forage",
+      "positions_available": 80
+    },
+    {
+      "name": "Technicien de maintenance",
+      "description": "Maintenance préventive et corrective des équipements lourds",
+      "positions_available": 70
+    },
+    {
+      "name": "Technicien HSE",
+      "description": "Hygiène, Sécurité et Environnement sur site minier",
+      "positions_available": 30
+    },
+    {
+      "name": "Technicien de laboratoire",
+      "description": "Analyses géochimiques et contrôle qualité des minerais",
+      "positions_available": 20
+    }
+  ]
+}

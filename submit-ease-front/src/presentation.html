@@ -5,44 +5,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plateforme de Gestion de Candidatures</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': 'oklch(58% 0.28 260)',
+                        'primary-content': 'oklch(98% 0.01 260)',
+                        'secondary': 'oklch(68% 0.23 190)',
+                        'secondary-content': 'oklch(98% 0.01 190)',
+                        'accent': 'oklch(65% 0.25 140)',
+                        'accent-content': 'oklch(98% 0.01 140)',
+                        'neutral': 'oklch(48% 0.05 240)',
+                        'neutral-content': 'oklch(98% 0.01 240)',
+                        'base-100': 'oklch(98% 0.015 250)',
+                        'base-200': 'oklch(96% 0.02 250)',
+                        'base-300': 'oklch(92% 0.03 250)',
+                        'base-content': 'oklch(18% 0.05 240)',
+                        'info': 'oklch(72% 0.18 230)',
+                        'success': 'oklch(64% 0.24 140)',
+                        'warning': 'oklch(82% 0.23 80)',
+                        'error': 'oklch(62% 0.3 30)',
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            overflow: hidden;
-        }
-
-        .presentation-container {
-            width: 100vw;
-            height: 100vh;
-            position: relative;
-        }
-
-        .slide {
-            width: 100%;
-            height: 100%;
-            display: none;
-            padding: 40px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .slide.active {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            animation: slideIn 0.8s ease-out;
-        }
-
         @keyframes slideIn {
             from {
                 opacity: 0;
@@ -55,23 +45,6 @@
             }
         }
 
-        .slide-content {
-            max-width: 1200px;
-            text-align: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        h1 {
-            font-size: 3.5rem;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            background: linear-gradient(45deg, #FFD700, #FFA500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
         @keyframes glow {
             from {
                 filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
@@ -80,27 +53,6 @@
             to {
                 filter: drop-shadow(0 0 30px rgba(255, 165, 0, 0.8));
             }
-        }
-
-        h2 {
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            color: #FFD700;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-        }
-
-        .subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 40px;
-            opacity: 0.9;
-            font-weight: 300;
-        }
-
-        .icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            display: inline-block;
-            animation: bounce 2s infinite;
         }
 
         @keyframes bounce {
@@ -122,214 +74,6 @@
             }
         }
 
-        .features-grid {
-            display: flex;
-            columns: 3;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .feature-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-align: center;
-            width: 400px;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .feature-title {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            color: #FFD700;
-        }
-
-        .feature-description {
-            font-size: 1rem;
-            line-height: 1.6;
-            opacity: 0.9;
-        }
-
-        .problem-solution {
-            display: flex;
-            justify-content: space-between;
-            gap: 40px;
-            margin-top: 40px;
-        }
-
-        .problem-card,
-        .solution-card {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .problem-card {
-            border-left: 5px solid #ff6b6b;
-        }
-
-        .solution-card {
-            border-left: 5px solid #4ecdc4;
-        }
-
-        .navigation {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 20px;
-            z-index: 1000;
-            display: none
-        }
-
-        .nav-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            padding: 15px 30px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .nav-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .slide-counter {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 10px 20px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            font-size: 1rem;
-        }
-
-        .stats-container {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 40px;
-        }
-
-        .stat-item {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            min-width: 150px;
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: bold;
-            color: #FFD700;
-            display: block;
-        }
-
-        .stat-label {
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-
-        .target-audience {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 40px;
-            flex-wrap: wrap;
-        }
-
-        .audience-item {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            margin: 10px;
-            text-align: center;
-            min-width: 200px;
-            transition: transform 0.3s ease;
-        }
-
-        .audience-item:hover {
-            transform: scale(1.05);
-        }
-
-        .process-steps {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-            flex-wrap: wrap;
-        }
-
-        .step {
-            flex: 1;
-            margin: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            text-align: center;
-            position: relative;
-            min-width: 250px;
-        }
-
-        .step-number {
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #FFD700;
-            color: #333;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        .floating-elements {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .floating-icon {
-            position: absolute;
-            font-size: 2rem;
-            opacity: 0.1;
-            animation: float 6s ease-in-out infinite;
-        }
-
         @keyframes float {
 
             0%,
@@ -342,48 +86,6 @@
             }
         }
 
-        .floating-icon:nth-child(1) {
-            top: 10%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .floating-icon:nth-child(2) {
-            top: 20%;
-            right: 10%;
-            animation-delay: 1s;
-        }
-
-        .floating-icon:nth-child(3) {
-            bottom: 30%;
-            left: 15%;
-            animation-delay: 2s;
-        }
-
-        .floating-icon:nth-child(4) {
-            bottom: 10%;
-            right: 20%;
-            animation-delay: 3s;
-        }
-
-        .title-slide {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .title-slide::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: moveGrid 20s linear infinite;
-        }
-
         @keyframes moveGrid {
             0% {
                 transform: translate(0, 0);
@@ -394,130 +96,147 @@
             }
         }
 
-        .cta-button {
-            margin-top: 20px;
-            display: inline-block;
-            text-decoration: none;
-            background: linear-gradient(45deg, #FFD700, #FFA500);
-            color: #333;
-            padding: 20px 40px;
-            border: none;
-            border-radius: 30px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 30px;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        .slide-active {
+            animation: slideIn 0.8s ease-out;
         }
 
-        .cta-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.5);
+        .glow-text {
+            animation: glow 2s ease-in-out infinite alternate;
         }
 
-        @media (max-width: 768px) {
-            .slide {
-                padding: 20px;
-            }
+        .bounce-icon {
+            animation: bounce 2s infinite;
+        }
 
-            h1 {
-                font-size: 2.5rem;
-            }
+        .float-icon {
+            animation: float 6s ease-in-out infinite;
+        }
 
-            h2 {
-                font-size: 2rem;
-            }
+        .move-grid {
+            animation: moveGrid 20s linear infinite;
+        }
 
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
+        .gradient-primary {
+            background: linear-gradient(135deg, oklch(58% 0.28 260) 0%, oklch(68% 0.23 190) 100%);
+        }
 
-            .problem-solution {
-                flex-direction: column;
-            }
+        .gradient-accent {
+            background: linear-gradient(45deg, oklch(65% 0.25 140), oklch(82% 0.23 80));
+        }
 
-            .process-steps {
-                flex-direction: column;
-            }
+        .gradient-text {
+            background: linear-gradient(45deg, oklch(65% 0.25 140), oklch(82% 0.23 80));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
-            .stats-container {
-                flex-direction: column;
-                gap: 20px;
-            }
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .floating-bg::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveGrid 20s linear infinite;
         }
     </style>
 </head>
 
-<body>
-    <div class="presentation-container">
+<body class="font-sans overflow-hidden">
+    <div class="w-screen h-screen relative gradient-primary">
         <!-- Slide 1: Titre -->
-        <div class="slide active title-slide">
-            <div class="floating-elements">
-                <div class="floating-icon">📊</div>
-                <div class="floating-icon">💼</div>
-                <div class="floating-icon">🎯</div>
-                <div class="floating-icon">🚀</div>
+        <div
+            class="slide w-full h-full flex flex-col justify-center items-center p-10 gradient-primary relative overflow-hidden floating-bg">
+            <div class="absolute inset-0 pointer-events-none z-10">
+                <div class="absolute top-[10%] left-[10%] text-4xl opacity-10 float-icon">📊</div>
+                <div class="absolute top-[20%] right-[10%] text-4xl opacity-10 float-icon" style="animation-delay: 1s;">
+                    💼</div>
+                <div class="absolute bottom-[30%] left-[15%] text-4xl opacity-10 float-icon"
+                    style="animation-delay: 2s;">🎯</div>
+                <div class="absolute bottom-[10%] right-[20%] text-4xl opacity-10 float-icon"
+                    style="animation-delay: 3s;">🚀</div>
             </div>
-            <div class="slide-content">
-                <div class="icon">🚀</div>
-                <h1>Plateforme de Gestion de Candidatures <span class="text-green-500">SubitEase</span></h1>
-                <p class="subtitle">Pour concours, formations et offres d'emploi</p>
-                <p class="subtitle">Une solution moderne, sécurisée et centralisée</p>
-                <button class="cta-button">Découvrir la solution</button>
+            <div class="max-w-6xl text-center relative z-20">
+                <div class="text-6xl mb-5 bounce-icon">🚀</div>
+                <h1 class="text-6xl mb-8 text-white drop-shadow-lg glow-text">
+                    Plateforme de Gestion de Candidatures
+                    <span class="text-warning">SubmitEase</span>
+                </h1>
+                <p class="text-2xl mb-10 text-white/90 font-light">Pour concours, formations et offres d'emploi</p>
+                <p class="text-2xl mb-10 text-white/90 font-light">Une solution moderne, sécurisée et centralisée</p>
+                <button
+                    class="gradient-accent text-base-content px-10 py-5 rounded-xl text-xl font-bold cursor-pointer transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+                    Découvrir la solution
+                </button>
             </div>
         </div>
 
         <!-- Slide 2: Problème -->
-        <div class="slide">
-            <div class="slide-content">
-                <div class="icon">❌</div>
-                <h2>Le Problème Actuel</h2>
-                <div class="problem-solution">
-                    <div class="problem-card">
-                        <div class="feature-icon">😵</div>
-                        <h3>Désorganisation</h3>
-                        <p>• Réception des dossiers par email<br>
+        <div class="slide w-full h-full hidden flex-col justify-center items-center p-10 gradient-primary">
+            <div class="max-w-6xl text-center text-white">
+                <div class="text-6xl mb-5">❌</div>
+                <h2 class="text-5xl mb-8 text-warning drop-shadow-lg">Le Problème Actuel</h2>
+                <div class="flex flex-row gap-10">
+                    <div class="flex-1 glass rounded-xl p-8 border-l-4 border-error">
+                        <div class="text-5xl mb-5">😵</div>
+                        <h3 class="text-2xl mb-4 text-warning">Désorganisation</h3>
+                        <p class="text-lg leading-relaxed">
+                            • Réception des dossiers par email<br>
                             • Gestion manuelle sur Excel<br>
                             • Communication confuse<br>
-                            • Retards et pertes d'informations</p>
+                            • Retards et pertes d'informations
+                        </p>
                     </div>
-                    <div class="solution-card">
-                        <div class="feature-icon">💡</div>
-                        <h3>Impact</h3>
-                        <p>• Perte de temps considérable<br>
+                    <div class="flex-1 glass rounded-xl p-8 border-l-4 border-accent">
+                        <div class="text-5xl mb-5">💡</div>
+                        <h3 class="text-2xl mb-4 text-warning">Impact</h3>
+                        <p class="text-lg leading-relaxed">
+                            • Perte de temps considérable<br>
                             • Erreurs fréquentes<br>
                             • Mauvaise expérience candidat<br>
-                            • Manque de transparence</p>
+                            • Manque de transparence
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Slide 3: Solution -->
-        <div class="slide">
-            <div class="slide-content">
-                <div class="icon">✨</div>
-                <h2>Notre Solution</h2>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">🏢</div>
-                        <div class="feature-title">Pour les Structures</div>
-                        <div class="feature-description">
+        <div class="slide w-full h-full hidden flex-col justify-center items-center p-10 gradient-primary">
+            <div class="max-w-6xl text-center text-white">
+                <div class="text-6xl mb-5">✨</div>
+                <h2 class="text-5xl mb-8 text-warning drop-shadow-lg">Notre Solution</h2>
+                <div class="flex flex-row gap-8 justify-center">
+                    <div
+                        class="w-80 glass rounded-xl p-8 text-center transition-all duration-300 hover:-translate-y-3 hover:shadow-2xl">
+                        <div class="text-5xl mb-5">🏢</div>
+                        <div class="text-2xl mb-4 text-warning">Pour les Structures</div>
+                        <div class="text-lg leading-relaxed opacity-90">
                             Compte vérifié, création de campagnes, tableau de bord en temps réel
                         </div>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">👥</div>
-                        <div class="feature-title">Pour les Candidats</div>
-                        <div class="feature-description">
+                    <div
+                        class="w-80 glass rounded-xl p-8 text-center transition-all duration-300 hover:-translate-y-3 hover:shadow-2xl">
+                        <div class="text-5xl mb-5">👥</div>
+                        <div class="text-2xl mb-4 text-warning">Pour les Candidats</div>
+                        <div class="text-lg leading-relaxed opacity-90">
                             Inscription simplifiée, suivi en temps réel, notifications automatiques
                         </div>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🔒</div>
-                        <div class="feature-title">Sécurisé</div>
-                        <div class="feature-description">
+                    <div
+                        class="w-80 glass rounded-xl p-8 text-center transition-all duration-300 hover:-translate-y-3 hover:shadow-2xl">
+                        <div class="text-5xl mb-5">🔒</div>
+                        <div class="text-2xl mb-4 text-warning">Sécurisé</div>
+                        <div class="text-lg leading-relaxed opacity-90">
                             Comptes vérifiés, données protégées, accès contrôlé
                         </div>
                     </div>
@@ -526,86 +245,108 @@
         </div>
 
         <!-- Slide 4: Fonctionnalités Structures -->
-        <div class="slide">
-            <div class="slide-content">
-                <div class="icon">🏢</div>
-                <h2>Fonctionnalités pour les Structures</h2>
-                <div class="process-steps">
-                    <div class="step">
-                        <div class="step-number">1</div>
-                        <h3>Création de Compte</h3>
-                        <p>Compte vérifié par nos administrateurs pour éviter les faux profils</p>
+        <div class="slide w-full h-full hidden flex-col justify-center items-center p-10 gradient-primary">
+            <div class="max-w-6xl text-center text-white">
+                <div class="text-6xl mb-5">🏢</div>
+                <h2 class="text-5xl mb-8 text-warning drop-shadow-lg">Fonctionnalités pour les Structures</h2>
+                <div class="flex flex-row gap-8 justify-center">
+                    <div class="flex-1 glass rounded-xl p-8 text-center relative min-w-64">
+                        <div
+                            class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-warning text-base-content w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl">
+                            1</div>
+                        <h3 class="text-2xl mb-4 mt-4">Création de Compte</h3>
+                        <p class="text-lg leading-relaxed">Compte vérifié par nos administrateurs pour éviter les faux
+                            profils</p>
                     </div>
-                    <div class="step">
-                        <div class="step-number">2</div>
-                        <h3>Création de Campagne</h3>
-                        <p>Définition complète : intitulé, description, critères, pièces requises</p>
+                    <div class="flex-1 glass rounded-xl p-8 text-center relative min-w-64">
+                        <div
+                            class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-warning text-base-content w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl">
+                            2</div>
+                        <h3 class="text-2xl mb-4 mt-4">Création de Campagne</h3>
+                        <p class="text-lg leading-relaxed">Définition complète : intitulé, description, critères, pièces
+                            requises</p>
                     </div>
-                    <div class="step">
-                        <div class="step-number">3</div>
-                        <h3>Gestion & Suivi</h3>
-                        <p>Tableau de bord en temps réel, validation des dossiers, résultats</p>
+                    <div class="flex-1 glass rounded-xl p-8 text-center relative min-w-64">
+                        <div
+                            class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-warning text-base-content w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl">
+                            3</div>
+                        <h3 class="text-2xl mb-4 mt-4">Gestion & Suivi</h3>
+                        <p class="text-lg leading-relaxed">Tableau de bord en temps réel, validation des dossiers,
+                            résultats</p>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Slide 5: Fonctionnalités Candidats -->
-        <div class="slide">
-            <div class="slide-content">
-                <div class="icon">👥</div>
-                <h2>Expérience Candidat</h2>
-                <div class="process-steps">
-                    <div class="step">
-                        <div class="step-number">1</div>
-                        <h3>Accès Simplifié</h3>
-                        <p>Lien public partagé, consultation des détails, inscription directe</p>
+        <div class="slide w-full h-full hidden flex-col justify-center items-center p-10 gradient-primary">
+            <div class="max-w-6xl text-center text-white">
+                <div class="text-6xl mb-5">👥</div>
+                <h2 class="text-5xl mb-8 text-warning drop-shadow-lg">Expérience Candidat</h2>
+                <div class="flex flex-row gap-8 justify-center">
+                    <div class="flex-1 glass rounded-xl p-8 text-center relative min-w-64">
+                        <div
+                            class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-warning text-base-content w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl">
+                            1</div>
+                        <h3 class="text-2xl mb-4 mt-4">Accès Simplifié</h3>
+                        <p class="text-lg leading-relaxed">Lien public partagé, consultation des détails, inscription
+                            directe</p>
                     </div>
-                    <div class="step">
-                        <div class="step-number">2</div>
-                        <h3>Dépôt de Dossier</h3>
-                        <p>Formulaire intelligent, attachement des pièces, soumission sécurisée</p>
+                    <div class="flex-1 glass rounded-xl p-8 text-center relative min-w-64">
+                        <div
+                            class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-warning text-base-content w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl">
+                            2</div>
+                        <h3 class="text-2xl mb-4 mt-4">Dépôt de Dossier</h3>
+                        <p class="text-lg leading-relaxed">Formulaire intelligent, attachement des pièces, soumission
+                            sécurisée</p>
                     </div>
-                    <div class="step">
-                        <div class="step-number">3</div>
-                        <h3>Suivi en Temps Réel</h3>
-                        <p>Vérification du statut, notifications automatiques, transparence totale</p>
+                    <div class="flex-1 glass rounded-xl p-8 text-center relative min-w-64">
+                        <div
+                            class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-warning text-base-content w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl">
+                            3</div>
+                        <h3 class="text-2xl mb-4 mt-4">Suivi en Temps Réel</h3>
+                        <p class="text-lg leading-relaxed">Vérification du statut, notifications automatiques,
+                            transparence totale</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 6: Valeurs Clés -->
-        <div class="slide">
-            <div class="slide-content">
-                <div class="icon">💎</div>
-                <h2>Valeurs Clés du Projet</h2>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">🔍</div>
-                        <div class="feature-title">Transparence</div>
-                        <div class="feature-description">
+        <!-- Slide 7: Valeurs Clés -->
+        <div class="slide w-full h-full hidden flex-col justify-center items-center p-10 gradient-primary">
+            <div class="max-w-6xl text-center text-white">
+                <div class="text-6xl mb-5">💎</div>
+                <h2 class="text-5xl mb-8 text-warning drop-shadow-lg">Valeurs Clés du Projet</h2>
+                <div class="flex flex-row gap-8 justify-center">
+                    <div
+                        class="w-72 glass rounded-xl p-8 text-center transition-all duration-300 hover:-translate-y-3 hover:shadow-2xl">
+                        <div class="text-5xl mb-5">🔍</div>
+                        <div class="text-2xl mb-4 text-warning">Transparence</div>
+                        <div class="text-lg leading-relaxed opacity-90">
                             Clarté totale dans la gestion des candidatures
                         </div>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">⚡</div>
-                        <div class="feature-title">Efficacité</div>
-                        <div class="feature-description">
+                    <div
+                        class="w-72 glass rounded-xl p-8 text-center transition-all duration-300 hover:-translate-y-3 hover:shadow-2xl">
+                        <div class="text-5xl mb-5">⚡</div>
+                        <div class="text-2xl mb-4 text-warning">Efficacité</div>
+                        <div class="text-lg leading-relaxed opacity-90">
                             Gain de temps considérable pour les structures
                         </div>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">📱</div>
-                        <div class="feature-title">Simplicité</div>
-                        <div class="feature-description">
+                    <div
+                        class="w-72 glass rounded-xl p-8 text-center transition-all duration-300 hover:-translate-y-3 hover:shadow-2xl">
+                        <div class="text-5xl mb-5">📱</div>
+                        <div class="text-2xl mb-4 text-warning">Simplicité</div>
+                        <div class="text-lg leading-relaxed opacity-90">
                             Suivi facile et intuitif pour les candidats
                         </div>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🛡️</div>
-                        <div class="feature-title">Fiabilité</div>
-                        <div class="feature-description">
+                    <div
+                        class="w-72 glass rounded-xl p-8 text-center transition-all duration-300 hover:-translate-y-3 hover:shadow-2xl">
+                        <div class="text-5xl mb-5">🛡️</div>
+                        <div class="text-2xl mb-4 text-warning">Fiabilité</div>
+                        <div class="text-lg leading-relaxed opacity-90">
                             Réduction des erreurs et pertes de dossiers
                         </div>
                     </div>
@@ -613,70 +354,141 @@
             </div>
         </div>
 
-        <!-- Slide 7: Public Cible -->
-        <div class="slide">
-            <div class="slide-content">
-                <div class="icon">🎯</div>
-                <h2>Public Cible</h2>
-                <div class="target-audience">
-                    <div class="audience-item">
-                        <div class="feature-icon">🌍</div>
-                        <h3>ONG</h3>
-                        <p>Organisations non gouvernementales</p>
+        <!-- Slide 8: Public Cible -->
+        <div class="slide w-full h-full hidden flex-col justify-center items-center p-10 gradient-primary">
+            <div class="max-w-6xl text-center text-white">
+                <div class="text-6xl mb-5">🎯</div>
+                <h2 class="text-5xl mb-8 text-warning drop-shadow-lg">Public Cible</h2>
+                <div class="flex flex-row gap-8 justify-center">
+                    <div class="glass rounded-xl p-6 text-center min-w-52 transition-all duration-300 hover:scale-105">
+                        <div class="text-5xl mb-4">🌍</div>
+                        <h3 class="text-2xl mb-2 text-warning">ONG</h3>
+                        <p class="text-lg">Organisations non gouvernementales</p>
                     </div>
-                    <div class="audience-item">
-                        <div class="feature-icon">🏛️</div>
-                        <h3>Institutions</h3>
-                        <p>Publiques et privées</p>
+                    <div class="glass rounded-xl p-6 text-center min-w-52 transition-all duration-300 hover:scale-105">
+                        <div class="text-5xl mb-4">🏛️</div>
+                        <h3 class="text-2xl mb-2 text-warning">Institutions</h3>
+                        <p class="text-lg">Publiques et privées</p>
                     </div>
-                    <div class="audience-item">
-                        <div class="feature-icon">🎓</div>
-                        <h3>Éducation</h3>
-                        <p>Écoles et universités</p>
+                    <div class="glass rounded-xl p-6 text-center min-w-52 transition-all duration-300 hover:scale-105">
+                        <div class="text-5xl mb-4">🎓</div>
+                        <h3 class="text-2xl mb-2 text-warning">Éducation</h3>
+                        <p class="text-lg">Écoles et universités</p>
                     </div>
-                    <div class="audience-item">
-                        <div class="feature-icon">🏢</div>
-                        <h3>Entreprises</h3>
-                        <p>Tous secteurs d'activité</p>
+                    <div class="glass rounded-xl p-6 text-center min-w-52 transition-all duration-300 hover:scale-105">
+                        <div class="text-5xl mb-4">🏢</div>
+                        <h3 class="text-2xl mb-2 text-warning">Entreprises</h3>
+                        <p class="text-lg">Tous secteurs d'activité</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 8: Conclusion -->
-        <div class="slide">
-            <div class="slide-content">
-                <div class="icon">🎯</div>
-                <h2>Révolutionnons le Recrutement</h2>
-                <p class="subtitle">Une plateforme moderne pour une gestion efficace des candidatures</p>
-                <div class="stats-container">
-                    <div class="stat-item">
-                        <span class="stat-number">100%</span>
-                        <span class="stat-label">Numérique</span>
+        <!-- Slide 6: Technologies Utilisées -->
+        <div class="slide w-full h-full hidden flex-col justify-center items-center p-10 gradient-primary">
+            <div class="max-w-6xl text-center text-white">
+                <div class="text-6xl mb-5">⚡</div>
+                <h2 class="text-5xl mb-8 text-warning drop-shadow-lg">Technologies Utilisées</h2>
+                <div class="grid grid-cols-4 gap-6 mt-10">
+                    <div class="glass rounded-xl p-6 text-center transition-all duration-300 hover:-translate-y-2">
+                        <div class="text-5xl mb-4">💎</div>
+                        <div class="text-xl mb-3 text-warning font-bold">Ruby on Rails API</div>
+                        <div class="text-sm leading-relaxed opacity-90">Backend robuste avec Devise et Devise JWT pour
+                            l'authentification sécurisée</div>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-number">0</span>
-                        <span class="stat-label">Perte de dossier</span>
+                    <div class="glass rounded-xl p-6 text-center transition-all duration-300 hover:-translate-y-2">
+                        <div class="text-5xl mb-4">⚛️</div>
+                        <div class="text-xl mb-3 text-warning font-bold">React.js & TypeScript</div>
+                        <div class="text-sm leading-relaxed opacity-90">Interface moderne et typée pour une expérience
+                            utilisateur optimale</div>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-number">24/7</span>
-                        <span class="stat-label">Disponible</span>
+                    <div class="glass rounded-xl p-6 text-center transition-all duration-300 hover:-translate-y-2">
+                        <div class="text-5xl mb-4">🎨</div>
+                        <div class="text-xl mb-3 text-warning font-bold">Tailwind CSS & DaisyUI</div>
+                        <div class="text-sm leading-relaxed opacity-90">Design system moderne et responsive avec
+                            composants élégants</div>
+                    </div>
+                    <div class="glass rounded-xl p-6 text-center transition-all duration-300 hover:-translate-y-2">
+                        <div class="text-5xl mb-4">🔒</div>
+                        <div class="text-xl mb-3 text-warning font-bold">React AuthKit</div>
+                        <div class="text-sm leading-relaxed opacity-90">Gestion sécurisée de l'authentification côté
+                            client</div>
+                    </div>
+                    <div class="glass rounded-xl p-6 text-center transition-all duration-300 hover:-translate-y-2">
+                        <div class="text-5xl mb-4">🎯</div>
+                        <div class="text-xl mb-3 text-warning font-bold">Lucide React</div>
+                        <div class="text-sm leading-relaxed opacity-90">Icônes modernes et cohérentes pour une interface
+                            intuitive</div>
+                    </div>
+                    <div class="glass rounded-xl p-6 text-center transition-all duration-300 hover:-translate-y-2">
+                        <div class="text-5xl mb-4">🚀</div>
+                        <div class="text-xl mb-3 text-warning font-bold">Architecture Moderne</div>
+                        <div class="text-sm leading-relaxed opacity-90">API RESTful, SPA responsive, authentification
+                            JWT</div>
+                    </div>
+                    <div class="glass rounded-xl p-6 text-center transition-all duration-300 hover:-translate-y-2">
+                        <div class="text-5xl mb-4">💾</div>
+                        <div class="text-xl mb-3 text-warning font-bold">Base de données SQLite</div>
+                        <div class="text-sm leading-relaxed opacity-90">
+                            Simple, légère et rapide pour démarrer.
+                        </div>
+                    </div>
+                    <div class="glass rounded-xl p-6 text-center transition-all duration-300 hover:-translate-y-2">
+                        <div class="text-5xl mb-4">🐙</div>
+                        <div class="text-xl mb-3 text-warning font-bold">Intégration GitHub</div>
+                        <div class="text-sm leading-relaxed opacity-90">
+                            Gestion centralisée du code, suivi des versions et collaboration efficace.
+                        </div>
                     </div>
                 </div>
-                <a href="http://127.0.0.1:5173/" target="_blank" rel="noopener noreferrer" class="cta-button">Commencer
-                    maintenant</a>
+            </div>
+        </div>
 
+
+        <!-- Slide 9: Conclusion -->
+        <div class="slide w-full h-full hidden flex-col justify-center items-center p-10 gradient-primary">
+            <div class="max-w-6xl text-center text-white">
+                <div class="text-6xl mb-5">🎯</div>
+                <h2 class="text-5xl mb-8 text-warning drop-shadow-lg">Révolutionnons le Recrutement</h2>
+                <p class="text-2xl mb-10 text-white/90 font-light">Une plateforme moderne pour une gestion efficace des
+                    candidatures</p>
+                <div class="flex flex-row gap-8 justify-center mb-10">
+                    <div class="glass rounded-xl p-6 text-center min-w-40">
+                        <span class="text-5xl font-bold text-warning block">100%</span>
+                        <span class="text-lg opacity-90">Numérique</span>
+                    </div>
+                    <div class="glass rounded-xl p-6 text-center min-w-40">
+                        <span class="text-5xl font-bold text-warning block">0</span>
+                        <span class="text-lg opacity-90">Perte de dossier</span>
+                    </div>
+                    <div class="glass rounded-xl p-6 text-center min-w-40">
+                        <span class="text-5xl font-bold text-warning block">24/7</span>
+                        <span class="text-lg opacity-90">Disponible</span>
+                    </div>
+                </div>
+                <a href="http://127.0.0.1:5173/" target="_blank" rel="noopener noreferrer"
+                    class="gradient-accent text-base-content px-10 py-5 rounded-xl text-xl font-bold cursor-pointer transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 inline-block">
+                    Commencer maintenant
+                </a>
             </div>
         </div>
     </div>
 
-    <div class="slide-counter">
-        <span id="current-slide">1</span> / <span id="total-slides">8</span>
+    <!-- Compteur de slides -->
+    <div class="fixed top-8 right-8 glass rounded-xl px-5 py-3 text-white z-50">
+        <span id="current-slide">1</span> / <span id="total-slides">9</span>
     </div>
 
-    <div class="navigation">
-        <button class="nav-btn" onclick="previousSlide()">← Précédent</button>
-        <button class="nav-btn" onclick="nextSlide()">Suivant →</button>
+    <!-- Navigation -->
+    <div class="fixed bottom-8 left-1/2 transform -translate-x-1/2 flex gap-5 z-50 hidden">
+        <button onclick="previousSlide()"
+            class="glass text-white px-8 py-4 rounded-xl text-lg cursor-pointer transition-all duration-300 hover:bg-white/20 hover:-translate-y-1">
+            ← Précédent
+        </button>
+        <button onclick="nextSlide()"
+            class="glass text-white px-8 py-4 rounded-xl text-lg cursor-pointer transition-all duration-300 hover:bg-white/20 hover:-translate-y-1">
+            Suivant →
+        </button>
     </div>
 
     <script>
@@ -687,9 +499,14 @@
         document.getElementById('total-slides').textContent = totalSlides;
 
         function showSlide(n) {
-            slides[currentSlide].classList.remove('active');
+            slides[currentSlide].classList.add('hidden');
+            slides[currentSlide].classList.remove('flex', 'slide-active');
+
             currentSlide = (n + totalSlides) % totalSlides;
-            slides[currentSlide].classList.add('active');
+
+            slides[currentSlide].classList.remove('hidden');
+            slides[currentSlide].classList.add('flex', 'slide-active');
+
             document.getElementById('current-slide').textContent = currentSlide + 1;
         }
 
@@ -706,12 +523,14 @@
             if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
                 previousSlide();
             } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                e.preventDefault();
                 nextSlide();
             }
         });
 
-        // Auto-avancement (optionnel)
-        // setInterval(nextSlide, 10000); // Change de slide toutes les 10 secondes
+        // Initialisation
+        slides[0].classList.add('flex');
+        slides[0].classList.remove('hidden');
     </script>
 </body>
 
